@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: aug  9 2023 (11:06) 
 ## Version: 
-## Last-Updated: okt 31 2023 (09:25) 
+## Last-Updated: nov  9 2023 (14:40) 
 ##           By: Brice Ozenne
-##     update #: 47
+##     update #: 48
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -16,15 +16,16 @@
 ### Code:
 
 library(DelayedGSD)
+DelayedGSD.options(FCT.p_value = "FinalPvalue2", continuity.correction = 1)
 
 ## * User interface
-iter_sim <- 8
+iter_sim <- 19
 n.iter_sim <- 100
 
 missing <- TRUE 
-binding <- FALSE 
+binding <- TRUE 
 cNotBelowFixedc <- TRUE 
-ar.factor <- 10 
+ar.factor <- 5 
 delta.factor <- 0
 n.method <- 3 
 
@@ -114,7 +115,7 @@ RES <- NULL
 cat("Sample size: ",paste(nGSD, collapse = ", "),"\n",sep="")
 
 ## * Loop
-myseedi <- 37219983
+myseedi <- 402321297
 
 ## ** simulate
 res <- GenData(n=max(nGSD), 

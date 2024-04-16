@@ -50,7 +50,6 @@ ciNA <- function(x, digits = 4){
 #+END_SRC
 
 #+RESULTS:
-: [1] "org_babel_R_eoe"
 
 
 #+BEGIN_SRC R :exports none :results output :session *R* :cache no
@@ -101,8 +100,8 @@ res3stage[type == "final",range(completeData)]
 #+END_SRC
 
 #+RESULTS:
-: [1] 491 557
-: [1] 495 504
+: [1] 656 741
+: [1] 664 674
 
 
 * Rejection rate
@@ -132,15 +131,15 @@ print(table2stage.PrintH1, row.names = FALSE)
 #+RESULTS:
 #+begin_example
  scenario n.sim missing binding  fixC ar method 1 method 2 method 3
-        1 10000    TRUE    TRUE FALSE 10   81.00%   80.93%   80.43%
-        3 10000    TRUE    TRUE FALSE  5   80.53%   80.53%   80.14%
-        5 10000    TRUE    TRUE  TRUE 10   80.15%   80.35%   80.43%
-        7 10000    TRUE    TRUE  TRUE  5   80.08%   80.20%   80.14%
-        9 10000    TRUE   FALSE  TRUE 10   79.86%   80.12%   80.26%
-       11 10000    TRUE   FALSE  TRUE  5   79.93%   80.04%   80.06%
-       13 10000    TRUE   FALSE FALSE 10   80.50%   80.44%   80.26%
-       15 10000    TRUE   FALSE FALSE  5   80.37%   80.36%   80.06%
-       17 10000   FALSE    TRUE FALSE  5   80.31%   80.30%   79.92%
+        1 10000    TRUE    TRUE FALSE 10   90.43%   90.37%   90.18%
+        3 10000    TRUE    TRUE FALSE  5   90.13%   90.11%   89.78%
+        5 10000    TRUE    TRUE  TRUE 10   90.00%   90.10%   90.18%
+        7 10000    TRUE    TRUE  TRUE  5   89.73%   89.79%   89.78%
+        9  9900    TRUE   FALSE  TRUE 10   90.20%   90.33%   90.41%
+       11  9900    TRUE   FALSE  TRUE  5   90.31%   90.47%   90.46%
+       13  9900    TRUE   FALSE FALSE 10   90.74%   90.67%   90.41%
+       15  9900    TRUE   FALSE FALSE  5   90.67%   90.66%   90.46%
+       17 10000   FALSE    TRUE FALSE  5   90.38%   90.38%   90.09%
 #+end_example
 
 \bigskip
@@ -156,15 +155,15 @@ print(table2stage.PrintH0, row.names = FALSE)
 #+RESULTS:
 #+begin_example
  scenario n.sim missing binding  fixC ar method 1 method 2 method 3
-        2 10000    TRUE    TRUE FALSE 10    2.42%    2.39%    2.37%
-        4 10000    TRUE    TRUE FALSE  5    2.40%    2.40%    2.35%
-        6 10000    TRUE    TRUE  TRUE 10    2.24%    2.22%    2.37%
-        8 10000    TRUE    TRUE  TRUE  5    2.32%    2.31%    2.35%
-       10 10000    TRUE   FALSE  TRUE 10    2.45%    2.47%    2.57%
-       12 10000    TRUE   FALSE  TRUE  5    2.63%    2.64%    2.66%
-       14 10000    TRUE   FALSE FALSE 10    2.53%    2.53%    2.57%
-       16 10000    TRUE   FALSE FALSE  5    2.68%    2.68%    2.66%
-       18 10000   FALSE    TRUE FALSE  5    2.46%    2.46%    2.45%
+        2 10000    TRUE    TRUE FALSE 10    2.76%    2.75%    2.68%
+        4 10000    TRUE    TRUE FALSE  5    2.72%    2.72%    2.70%
+        6 10000    TRUE    TRUE  TRUE 10    2.56%    2.56%    2.68%
+        8 10000    TRUE    TRUE  TRUE  5    2.62%    2.62%    2.70%
+       10 10000    TRUE   FALSE  TRUE 10    2.14%    2.15%    2.33%
+       12 10000    TRUE   FALSE  TRUE  5    2.29%    2.30%    2.34%
+       14 10000    TRUE   FALSE FALSE 10    2.29%    2.27%    2.33%
+       16 10000    TRUE   FALSE FALSE  5    2.36%    2.36%    2.34%
+       18  9900   FALSE    TRUE FALSE  5    2.70%    2.70%    2.66%
 #+end_example
 
 \clearpage
@@ -185,8 +184,8 @@ ggsave(gg2stage.P, filename = file.path("report","figures","gg2stage-pvalue-dens
 
 #+RESULTS:
 : Advarselsbeskeder:
-: 1: [1m[22mRemoved 375681 rows containing non-finite values (`stat_density()`). 
-: 2: [1m[22mRemoved 375681 rows containing non-finite values (`stat_density()`).
+: 1: [1m[22mRemoved 375343 rows containing non-finite values (`stat_density()`). 
+: 2: [1m[22mRemoved 375343 rows containing non-finite values (`stat_density()`).
 
 #+ATTR_LaTeX: :width 1\textwidth :options trim={0 0 0 0} :placement [!h]
 #+CAPTION: Naive and adjusted p-value distribution over all simulations under the null. Each row correspond to a different scenario
@@ -208,8 +207,8 @@ ggsave(gg2stage.P2, filename = file.path("report","figures","gg2stage-pvalue2-de
 
 #+RESULTS:
 : Advarselsbeskeder:
-: 1: [1m[22mRemoved 386959 rows containing non-finite values (`stat_density()`). 
-: 2: [1m[22mRemoved 386959 rows containing non-finite values (`stat_density()`).
+: 1: [1m[22mRemoved 412131 rows containing non-finite values (`stat_density()`). 
+: 2: [1m[22mRemoved 412131 rows containing non-finite values (`stat_density()`).
 
 #+ATTR_LaTeX: :width 1\textwidth :options trim={0 0 0 0} :placement [!h]
 #+CAPTION: Naive and adjusted p-value distribution over all simulations under the alternative. Each row correspond to a different scenario
@@ -242,15 +241,15 @@ print(table3stage.PrintH1, row.names = FALSE)
 #+RESULTS:
 #+begin_example
  scenario n.sim missing binding  fixC ar method 1 method 2 method 3
-        1 10000    TRUE    TRUE FALSE 10   80.87%   80.79%   80.14%
-        3 10000    TRUE    TRUE FALSE  5   80.54%   80.53%   80.07%
-        5 10000    TRUE    TRUE  TRUE 10   79.84%   80.05%   80.14%
-        7 10000    TRUE    TRUE  TRUE  5   79.96%   80.07%   80.07%
-        9 10000    TRUE   FALSE  TRUE 10   79.58%   79.94%   80.06%
-       11 10000    TRUE   FALSE  TRUE  5   79.92%   80.15%   79.96%
-       13 10000    TRUE   FALSE FALSE 10   80.52%   80.44%   80.06%
-       15 10000    TRUE   FALSE FALSE  5   80.44%   80.42%   79.96%
-       17 10000   FALSE    TRUE FALSE  5   80.23%   80.21%   79.80%
+        1 10000    TRUE    TRUE FALSE 10   90.96%   90.85%   90.44%
+        3 10000    TRUE    TRUE FALSE  5   90.62%   90.61%   90.28%
+        5 10000    TRUE    TRUE  TRUE 10   90.30%   90.44%   90.44%
+        7 10000    TRUE    TRUE  TRUE  5   90.21%   90.34%   90.28%
+        9 10000    TRUE   FALSE  TRUE 10   90.01%   90.27%   90.40%
+       11 10000    TRUE   FALSE  TRUE  5   89.94%   90.12%   90.04%
+       13 10000    TRUE   FALSE FALSE 10   90.60%   90.49%   90.40%
+       15 10000    TRUE   FALSE FALSE  5   90.31%   90.31%   90.04%
+       17 10000   FALSE    TRUE FALSE  5   89.85%   89.81%   89.57%
 #+end_example
 
 
@@ -267,15 +266,15 @@ print(table3stage.PrintH0, row.names = FALSE)
 #+RESULTS:
 #+begin_example
  scenario n.sim missing binding  fixC ar method 1 method 2 method 3
-        2 10000    TRUE    TRUE FALSE 10    2.50%    2.48%    2.38%
-        4 10000    TRUE    TRUE FALSE  5    2.42%    2.43%    2.40%
-        6 10000    TRUE    TRUE  TRUE 10    2.31%    2.33%    2.38%
-        8 10000    TRUE    TRUE  TRUE  5    2.37%    2.36%    2.40%
-       10 10000    TRUE   FALSE  TRUE 10    2.44%    2.42%    2.52%
-       12 10000    TRUE   FALSE  TRUE  5    2.48%    2.48%    2.54%
-       14 10000    TRUE   FALSE FALSE 10    2.54%    2.53%    2.52%
-       16 10000    TRUE   FALSE FALSE  5    2.61%    2.61%    2.54%
-       18 10000   FALSE    TRUE FALSE  5    2.57%    2.57%    2.48%
+        2 10000    TRUE    TRUE FALSE 10    2.46%    2.51%    2.44%
+        4 10000    TRUE    TRUE FALSE  5    2.52%    2.52%    2.49%
+        6 10000    TRUE    TRUE  TRUE 10    2.25%    2.24%    2.44%
+        8 10000    TRUE    TRUE  TRUE  5    2.41%    2.43%    2.49%
+       10  9931    TRUE   FALSE  TRUE 10    2.30%    2.32%    2.47%
+       12 10000    TRUE   FALSE  TRUE  5    2.50%    2.51%    2.64%
+       14  9931    TRUE   FALSE FALSE 10    2.45%    2.42%    2.47%
+       16 10000    TRUE   FALSE FALSE  5    2.52%    2.52%    2.64%
+       18 10000   FALSE    TRUE FALSE  5    2.65%    2.65%    2.52%
 #+end_example
 
 \clearpage
@@ -296,8 +295,8 @@ ggsave(gg3stage.P, filename = file.path("report","figures","gg3stage-pvalue-dens
 
 #+RESULTS:
 : Advarselsbeskeder:
-: 1: [1m[22mRemoved 472958 rows containing non-finite values (`stat_density()`). 
-: 2: [1m[22mRemoved 472958 rows containing non-finite values (`stat_density()`).
+: 1: [1m[22mRemoved 471271 rows containing non-finite values (`stat_density()`). 
+: 2: [1m[22mRemoved 471271 rows containing non-finite values (`stat_density()`).
 
 #+ATTR_LaTeX: :width 1\textwidth :options trim={0 0 0 0} :placement [!h]
 #+CAPTION: Naive and adjusted p-value distribution over all simulations under the null. Each row correspond to a different scenario
@@ -319,8 +318,8 @@ ggsave(gg3stage.P2, filename = file.path("report","figures","gg-pvalue2-density.
 
 #+RESULTS:
 : Advarselsbeskeder:
-: 1: [1m[22mRemoved 478561 rows containing non-finite values (`stat_density()`). 
-: 2: [1m[22mRemoved 478561 rows containing non-finite values (`stat_density()`).
+: 1: [1m[22mRemoved 461131 rows containing non-finite values (`stat_density()`). 
+: 2: [1m[22mRemoved 461131 rows containing non-finite values (`stat_density()`).
 
 #+ATTR_LaTeX: :width 1\textwidth :options trim={0 0 0 0} :placement [!h]
 #+CAPTION: Naive and adjusted p-value distribution over all simulations under the alternative. Each row correspond to a different scenario
@@ -357,24 +356,24 @@ print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")])
 #+RESULTS:
 #+begin_example
         N missing  hypo binding  fixC ar decision.eff decision.fut final.eff final.fut
- 1: 10000    TRUE power    TRUE FALSE 10       37.79%        5.93%    43.21%    13.07%
- 2: 10000    TRUE typeI    TRUE FALSE 10        0.80%       71.13%     1.62%    26.45%
- 3: 10000    TRUE power    TRUE FALSE  5       35.74%        5.98%    44.79%    13.49%
- 4: 10000    TRUE typeI    TRUE FALSE  5        0.74%       69.32%     1.66%    28.28%
- 5: 10000    TRUE power    TRUE  TRUE 10       36.94%        6.78%    43.21%    13.07%
- 6: 10000    TRUE typeI    TRUE  TRUE 10        0.62%       71.31%     1.62%    26.45%
- 7: 10000    TRUE power    TRUE  TRUE  5       35.29%        6.43%    44.79%    13.49%
- 8: 10000    TRUE typeI    TRUE  TRUE  5        0.66%       69.40%     1.66%    28.28%
- 9: 10000    TRUE power   FALSE  TRUE 10       38.05%        6.57%    41.81%    13.57%
-10: 10000    TRUE typeI   FALSE  TRUE 10        0.61%        0.20%     1.84%    97.35%
-11: 10000    TRUE power   FALSE  TRUE  5       36.35%        6.15%    43.58%    13.92%
-12: 10000    TRUE typeI   FALSE  TRUE  5        0.70%        0.06%     1.93%    97.31%
-13: 10000    TRUE power   FALSE FALSE 10       38.69%        5.93%    41.81%    13.57%
-14: 10000    TRUE typeI   FALSE FALSE 10        0.69%        0.12%     1.84%    97.35%
-15: 10000    TRUE power   FALSE FALSE  5       36.79%        5.71%    43.58%    13.92%
-16: 10000    TRUE typeI   FALSE FALSE  5        0.75%        0.01%     1.93%    97.31%
-17: 10000   FALSE power    TRUE FALSE  5       33.98%        5.33%    46.33%    14.36%
-18: 10000   FALSE typeI    TRUE FALSE  5        0.74%       67.48%     1.72%    30.06%
+ 1: 10000    TRUE power    TRUE FALSE 10       51.23%        2.90%    39.20%     6.67%
+ 2: 10000    TRUE typeI    TRUE FALSE 10        0.86%       71.79%     1.90%    25.45%
+ 3: 10000    TRUE power    TRUE FALSE  5       48.74%        2.99%    41.39%     6.88%
+ 4: 10000    TRUE typeI    TRUE FALSE  5        0.81%       69.49%     1.91%    27.79%
+ 5: 10000    TRUE power    TRUE  TRUE 10       50.80%        3.33%    39.20%     6.67%
+ 6: 10000    TRUE typeI    TRUE  TRUE 10        0.66%       71.99%     1.90%    25.45%
+ 7: 10000    TRUE power    TRUE  TRUE  5       48.34%        3.39%    41.39%     6.88%
+ 8: 10000    TRUE typeI    TRUE  TRUE  5        0.71%       69.59%     1.91%    27.79%
+ 9:  9900    TRUE power   FALSE  TRUE 10       50.62%        3.70%    39.59%     6.10%
+10: 10000    TRUE typeI   FALSE  TRUE 10        0.45%        0.23%     1.69%    97.63%
+11:  9900    TRUE power   FALSE  TRUE  5       48.34%        3.47%    41.97%     6.21%
+12: 10000    TRUE typeI   FALSE  TRUE  5        0.55%        0.09%     1.74%    97.62%
+13:  9900    TRUE power   FALSE FALSE 10       51.15%        3.16%    39.59%     6.10%
+14: 10000    TRUE typeI   FALSE FALSE 10        0.60%        0.08%     1.69%    97.63%
+15:  9900    TRUE power   FALSE FALSE  5       48.70%        3.12%    41.97%     6.21%
+16: 10000    TRUE typeI   FALSE FALSE  5        0.62%        0.02%     1.74%    97.62%
+17: 10000   FALSE power    TRUE FALSE  5       47.04%        2.46%    43.34%     7.16%
+18:  9900   FALSE typeI    TRUE FALSE  5        0.82%       67.88%     1.88%    29.42%
 #+end_example
 
 \clearpage
@@ -391,24 +390,24 @@ print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")])
 #+RESULTS:
 #+begin_example
         N missing  hypo binding  fixC ar decision.eff decision.fut final.eff final.fut
- 1: 10000    TRUE power    TRUE FALSE 10       37.85%        6.19%    43.08%    12.88%
- 2: 10000    TRUE typeI    TRUE FALSE 10        0.79%       71.64%     1.60%    25.97%
- 3: 10000    TRUE power    TRUE FALSE  5       35.77%        5.99%    44.76%    13.48%
- 4: 10000    TRUE typeI    TRUE FALSE  5        0.74%       69.38%     1.66%    28.22%
- 5: 10000    TRUE power    TRUE  TRUE 10       36.69%        6.24%    43.66%    13.41%
- 6: 10000    TRUE typeI    TRUE  TRUE 10        0.59%       69.61%     1.63%    28.17%
- 7: 10000    TRUE power    TRUE  TRUE  5       35.02%        6.05%    45.18%    13.75%
- 8: 10000    TRUE typeI    TRUE  TRUE  5        0.63%       68.36%     1.68%    29.33%
- 9: 10000    TRUE power   FALSE  TRUE 10       37.85%        6.04%    42.27%    13.84%
-10: 10000    TRUE typeI   FALSE  TRUE 10        0.61%        0.19%     1.86%    97.34%
-11: 10000    TRUE power   FALSE  TRUE  5       36.18%        5.84%    43.86%    14.12%
-12: 10000    TRUE typeI   FALSE  TRUE  5        0.69%        0.06%     1.95%    97.30%
-13: 10000    TRUE power   FALSE FALSE 10       38.70%        6.09%    41.74%    13.47%
-14: 10000    TRUE typeI   FALSE FALSE 10        0.69%        0.12%     1.84%    97.35%
-15: 10000    TRUE power   FALSE FALSE  5       36.82%        5.75%    43.54%    13.89%
-16: 10000    TRUE typeI   FALSE FALSE  5        0.75%        0.01%     1.93%    97.31%
-17: 10000   FALSE power    TRUE FALSE  5       34.03%        5.36%    46.27%    14.34%
-18: 10000   FALSE typeI    TRUE FALSE  5        0.74%       67.55%     1.72%    29.99%
+ 1: 10000    TRUE power    TRUE FALSE 10       51.29%        3.13%    39.08%     6.50%
+ 2: 10000    TRUE typeI    TRUE FALSE 10        0.86%       72.69%     1.89%    24.56%
+ 3: 10000    TRUE power    TRUE FALSE  5       48.74%        3.01%    41.37%     6.88%
+ 4: 10000    TRUE typeI    TRUE FALSE  5        0.82%       69.59%     1.90%    27.69%
+ 5: 10000    TRUE power    TRUE  TRUE 10       50.50%        2.92%    39.60%     6.98%
+ 6: 10000    TRUE typeI    TRUE  TRUE 10        0.66%       70.13%     1.90%    27.31%
+ 7: 10000    TRUE power    TRUE  TRUE  5       48.22%        3.19%    41.57%     7.02%
+ 8: 10000    TRUE typeI    TRUE  TRUE  5        0.69%       68.11%     1.93%    29.27%
+ 9:  9900    TRUE power   FALSE  TRUE 10       50.46%        3.36%    39.87%     6.30%
+10: 10000    TRUE typeI   FALSE  TRUE 10        0.44%        0.23%     1.71%    97.62%
+11:  9900    TRUE power   FALSE  TRUE  5       48.22%        3.18%    42.25%     6.34%
+12: 10000    TRUE typeI   FALSE  TRUE  5        0.55%        0.09%     1.75%    97.61%
+13:  9900    TRUE power   FALSE FALSE 10       51.20%        3.32%    39.46%     6.01%
+14: 10000    TRUE typeI   FALSE FALSE 10        0.58%        0.10%     1.69%    97.63%
+15:  9900    TRUE power   FALSE FALSE  5       48.71%        3.14%    41.95%     6.20%
+16: 10000    TRUE typeI   FALSE FALSE  5        0.62%        0.02%     1.74%    97.62%
+17: 10000   FALSE power    TRUE FALSE  5       47.04%        2.46%    43.34%     7.16%
+18:  9900   FALSE typeI    TRUE FALSE  5        0.82%       67.97%     1.88%    29.33%
 #+end_example
 
 Method 3:
@@ -422,24 +421,24 @@ print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")])
 #+RESULTS:
 #+begin_example
         N missing  hypo binding  fixC ar decision.eff decision.fut final.eff final.fut
- 1: 10000    TRUE power    TRUE FALSE 10       40.58%        6.53%    39.85%    13.04%
- 2: 10000    TRUE typeI    TRUE FALSE 10        0.74%       68.79%     1.63%    28.84%
- 3: 10000    TRUE power    TRUE FALSE  5       36.54%        6.30%    43.60%    13.56%
- 4: 10000    TRUE typeI    TRUE FALSE  5        0.69%       68.41%     1.66%    29.24%
- 5: 10000    TRUE power    TRUE  TRUE 10       40.58%        6.53%    39.85%    13.04%
- 6: 10000    TRUE typeI    TRUE  TRUE 10        0.74%       68.79%     1.63%    28.84%
- 7: 10000    TRUE power    TRUE  TRUE  5       36.54%        6.30%    43.60%    13.56%
- 8: 10000    TRUE typeI    TRUE  TRUE  5        0.69%       68.41%     1.66%    29.24%
- 9: 10000    TRUE power   FALSE  TRUE 10       41.34%        6.20%    38.92%    13.54%
-10: 10000    TRUE typeI   FALSE  TRUE 10        0.77%        0.33%     1.80%    97.10%
-11: 10000    TRUE power   FALSE  TRUE  5       37.71%        6.03%    42.35%    13.91%
-12: 10000    TRUE typeI   FALSE  TRUE  5        0.73%        0.09%     1.93%    97.25%
-13: 10000    TRUE power   FALSE FALSE 10       41.34%        6.20%    38.92%    13.54%
-14: 10000    TRUE typeI   FALSE FALSE 10        0.77%        0.33%     1.80%    97.10%
-15: 10000    TRUE power   FALSE FALSE  5       37.71%        6.03%    42.35%    13.91%
-16: 10000    TRUE typeI   FALSE FALSE  5        0.73%        0.09%     1.93%    97.25%
-17: 10000   FALSE power    TRUE FALSE  5       34.65%        5.59%    45.27%    14.49%
-18: 10000   FALSE typeI    TRUE FALSE  5        0.68%       66.54%     1.77%    31.01%
+ 1: 10000    TRUE power    TRUE FALSE 10       54.76%        3.19%    35.42%     6.63%
+ 2: 10000    TRUE typeI    TRUE FALSE 10        0.88%       68.45%     1.80%    28.87%
+ 3: 10000    TRUE power    TRUE FALSE  5       49.73%        3.32%    40.05%     6.90%
+ 4: 10000    TRUE typeI    TRUE FALSE  5        0.80%       67.87%     1.90%    29.43%
+ 5: 10000    TRUE power    TRUE  TRUE 10       54.76%        3.19%    35.42%     6.63%
+ 6: 10000    TRUE typeI    TRUE  TRUE 10        0.88%       68.45%     1.80%    28.87%
+ 7: 10000    TRUE power    TRUE  TRUE  5       49.73%        3.32%    40.05%     6.90%
+ 8: 10000    TRUE typeI    TRUE  TRUE  5        0.80%       67.87%     1.90%    29.43%
+ 9:  9900    TRUE power   FALSE  TRUE 10       54.39%        3.44%    36.02%     6.14%
+10: 10000    TRUE typeI   FALSE  TRUE 10        0.61%        0.36%     1.72%    97.31%
+11:  9900    TRUE power   FALSE  TRUE  5       49.62%        3.29%    40.85%     6.24%
+12: 10000    TRUE typeI   FALSE  TRUE  5        0.59%        0.13%     1.75%    97.53%
+13:  9900    TRUE power   FALSE FALSE 10       54.39%        3.44%    36.02%     6.14%
+14: 10000    TRUE typeI   FALSE FALSE 10        0.61%        0.36%     1.72%    97.31%
+15:  9900    TRUE power   FALSE FALSE  5       49.62%        3.29%    40.85%     6.24%
+16: 10000    TRUE typeI   FALSE FALSE  5        0.59%        0.13%     1.75%    97.53%
+17: 10000   FALSE power    TRUE FALSE  5       47.93%        2.75%    42.16%     7.16%
+18:  9900   FALSE typeI    TRUE FALSE  5        0.77%       66.12%     1.89%    31.22%
 #+end_example
 
 \clearpage
@@ -455,26 +454,26 @@ tablePrint[rejectionBelow196!="0"]
 #+RESULTS:
 #+begin_example
     scenario missing method binding  fixC ar  hypo     N rejection rejectionBelow196
- 1:        1    TRUE      1    TRUE FALSE 10 power 10000    81.00%             0.85%
- 2:        1    TRUE      2    TRUE FALSE 10 power 10000    80.93%             0.84%
- 3:        2    TRUE      1    TRUE FALSE 10 typeI 10000     2.42%             0.18%
- 4:        2    TRUE      2    TRUE FALSE 10 typeI 10000     2.39%             0.17%
- 5:        3    TRUE      1    TRUE FALSE  5 power 10000    80.53%             0.45%
- 6:        3    TRUE      2    TRUE FALSE  5 power 10000    80.53%             0.45%
- 7:        4    TRUE      1    TRUE FALSE  5 typeI 10000     2.40%             0.08%
- 8:        4    TRUE      2    TRUE FALSE  5 typeI 10000     2.40%             0.08%
- 9:       13    TRUE      1   FALSE FALSE 10 power 10000    80.50%             0.64%
-10:       13    TRUE      2   FALSE FALSE 10 power 10000    80.44%             0.64%
-11:       14    TRUE      1   FALSE FALSE 10 typeI 10000     2.53%             0.08%
-12:       14    TRUE      2   FALSE FALSE 10 typeI 10000     2.53%             0.08%
-13:       15    TRUE      1   FALSE FALSE  5 power 10000    80.37%             0.44%
-14:       15    TRUE      2   FALSE FALSE  5 power 10000    80.36%             0.44%
-15:       16    TRUE      1   FALSE FALSE  5 typeI 10000     2.68%             0.05%
-16:       16    TRUE      2   FALSE FALSE  5 typeI 10000     2.68%             0.05%
-17:       17   FALSE      1    TRUE FALSE  5 power 10000    80.31%             0.42%
-18:       17   FALSE      2    TRUE FALSE  5 power 10000    80.30%             0.43%
-19:       18   FALSE      1    TRUE FALSE  5 typeI 10000     2.46%             0.08%
-20:       18   FALSE      2    TRUE FALSE  5 typeI 10000     2.46%             0.08%
+ 1:        1    TRUE      1    TRUE FALSE 10 power 10000    90.43%             0.43%
+ 2:        1    TRUE      2    TRUE FALSE 10 power 10000    90.37%             0.47%
+ 3:        2    TRUE      1    TRUE FALSE 10 typeI 10000     2.76%             0.20%
+ 4:        2    TRUE      2    TRUE FALSE 10 typeI 10000     2.75%             0.20%
+ 5:        3    TRUE      1    TRUE FALSE  5 power 10000    90.13%             0.40%
+ 6:        3    TRUE      2    TRUE FALSE  5 power 10000    90.11%             0.40%
+ 7:        4    TRUE      1    TRUE FALSE  5 typeI 10000     2.72%             0.10%
+ 8:        4    TRUE      2    TRUE FALSE  5 typeI 10000     2.72%             0.10%
+ 9:       13    TRUE      1   FALSE FALSE 10 power  9900    90.74%             0.54%
+10:       13    TRUE      2   FALSE FALSE 10 power  9900    90.67%             0.56%
+11:       14    TRUE      1   FALSE FALSE 10 typeI 10000     2.29%             0.15%
+12:       14    TRUE      2   FALSE FALSE 10 typeI 10000     2.27%             0.13%
+13:       15    TRUE      1   FALSE FALSE  5 power  9900    90.67%             0.35%
+14:       15    TRUE      2   FALSE FALSE  5 power  9900    90.66%             0.36%
+15:       16    TRUE      1   FALSE FALSE  5 typeI 10000     2.36%             0.07%
+16:       16    TRUE      2   FALSE FALSE  5 typeI 10000     2.36%             0.07%
+17:       17   FALSE      1    TRUE FALSE  5 power 10000    90.38%             0.43%
+18:       17   FALSE      2    TRUE FALSE  5 power 10000    90.38%             0.43%
+19:       18   FALSE      1    TRUE FALSE  5 typeI  9900     2.70%             0.10%
+20:       18   FALSE      2    TRUE FALSE  5 typeI  9900     2.70%             0.10%
 #+end_example
 
 \clearpage
@@ -508,24 +507,24 @@ print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")])
 #+RESULTS:
 #+begin_example
         N missing  hypo binding  fixC ar dec1.eff dec1.fut dec2.eff dec2.fut final.eff final.fut
- 1: 10000    TRUE power    TRUE FALSE 10   19.91%    2.95%   29.31%    5.36%    31.65%    10.82%
- 2: 10000    TRUE typeI    TRUE FALSE 10    0.38%   46.24%    0.67%   35.38%     1.45%    15.88%
- 3: 10000    TRUE power    TRUE FALSE  5   18.32%    2.80%   28.80%    5.47%    33.42%    11.19%
- 4: 10000    TRUE typeI    TRUE FALSE  5    0.36%   44.03%    0.59%   36.50%     1.47%    17.05%
- 5: 10000    TRUE power    TRUE  TRUE 10   19.39%    3.47%   28.80%    5.87%    31.65%    10.82%
- 6: 10000    TRUE typeI    TRUE  TRUE 10    0.30%   46.32%    0.56%   35.49%     1.45%    15.88%
- 7: 10000    TRUE power    TRUE  TRUE  5   18.06%    3.06%   28.48%    5.79%    33.42%    11.19%
- 8: 10000    TRUE typeI    TRUE  TRUE  5    0.34%   44.05%    0.56%   36.53%     1.47%    17.05%
- 9: 10000    TRUE power   FALSE  TRUE 10   20.80%    3.52%   27.86%    5.59%    30.92%    11.31%
-10: 10000    TRUE typeI   FALSE  TRUE 10    0.31%    0.10%    0.51%    0.63%     1.62%    96.83%
-11: 10000    TRUE power   FALSE  TRUE  5   19.31%    3.03%   28.11%    5.68%    32.50%    11.37%
-12: 10000    TRUE typeI   FALSE  TRUE  5    0.31%    0.04%    0.52%    0.10%     1.65%    97.38%
-13: 10000    TRUE power   FALSE FALSE 10   21.28%    3.04%   28.32%    5.13%    30.92%    11.31%
-14: 10000    TRUE typeI   FALSE FALSE 10    0.35%    0.06%    0.57%    0.57%     1.62%    96.83%
-15: 10000    TRUE power   FALSE FALSE  5   19.50%    2.84%   28.44%    5.35%    32.50%    11.37%
-16: 10000    TRUE typeI   FALSE FALSE  5    0.35%        0    0.61%    0.01%     1.65%    97.38%
-17: 10000   FALSE power    TRUE FALSE  5   17.63%    2.93%   28.90%    5.11%    33.70%    11.73%
-18: 10000   FALSE typeI    TRUE FALSE  5    0.48%   42.39%    0.71%   36.38%     1.38%    18.66%
+ 1: 10000    TRUE power    TRUE FALSE 10   28.83%    1.34%   34.78%    2.69%    27.35%     5.01%
+ 2: 10000    TRUE typeI    TRUE FALSE 10    0.47%   47.36%    0.63%   35.07%     1.36%    15.11%
+ 3: 10000    TRUE power    TRUE FALSE  5   26.51%    1.38%   34.74%    2.85%    29.37%     5.15%
+ 4: 10000    TRUE typeI    TRUE FALSE  5    0.44%   44.88%    0.69%   35.90%     1.39%    16.70%
+ 5: 10000    TRUE power    TRUE  TRUE 10   28.46%    1.71%   34.49%    2.98%    27.35%     5.01%
+ 6: 10000    TRUE typeI    TRUE  TRUE 10    0.34%   47.49%    0.55%   35.15%     1.36%    15.11%
+ 7: 10000    TRUE power    TRUE  TRUE  5   26.31%    1.58%   34.53%    3.06%    29.37%     5.15%
+ 8: 10000    TRUE typeI    TRUE  TRUE  5    0.41%   44.91%    0.61%   35.98%     1.39%    16.70%
+ 9: 10000    TRUE power   FALSE  TRUE 10   28.18%    1.89%   35.13%    2.93%    26.70%     5.17%
+10:  9931    TRUE typeI   FALSE  TRUE 10    0.35%    0.14%    0.49%    0.40%     1.45%    97.16%
+11: 10000    TRUE power   FALSE  TRUE  5   26.02%    1.75%   35.41%    2.97%    28.51%     5.34%
+12: 10000    TRUE typeI   FALSE  TRUE  5    0.42%    0.01%    0.58%    0.08%     1.50%    97.41%
+13: 10000    TRUE power   FALSE FALSE 10   28.52%    1.55%   35.38%    2.68%    26.70%     5.17%
+14:  9931    TRUE typeI   FALSE FALSE 10    0.44%    0.05%    0.55%    0.34%     1.45%    97.16%
+15: 10000    TRUE power   FALSE FALSE  5   26.21%    1.56%   35.59%    2.79%    28.51%     5.34%
+16: 10000    TRUE typeI   FALSE FALSE  5    0.43%        0    0.59%    0.07%     1.50%    97.41%
+17: 10000   FALSE power    TRUE FALSE  5   25.38%    1.48%   34.27%    2.45%    30.20%     6.22%
+18: 10000   FALSE typeI    TRUE FALSE  5    0.35%   42.84%    0.67%   36.11%     1.63%    18.40%
 #+end_example
 
 - Method 2
@@ -540,24 +539,24 @@ print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")], digits =
 #+RESULTS:
 #+begin_example
         N missing  hypo binding  fixC ar dec1.eff dec1.fut dec2.eff dec2.fut final.eff final.fut
- 1: 10000    TRUE power    TRUE FALSE 10   19.94%    2.99%   29.32%    5.69%    31.53%    10.53%
- 2: 10000    TRUE typeI    TRUE FALSE 10    0.38%   46.48%    0.66%   35.66%     1.44%    15.38%
- 3: 10000    TRUE power    TRUE FALSE  5   18.33%    2.83%   28.86%    5.49%    33.34%    11.15%
- 4: 10000    TRUE typeI    TRUE FALSE  5    0.36%   44.08%    0.59%   36.47%     1.48%    17.02%
- 5: 10000    TRUE power    TRUE  TRUE 10   19.17%    3.16%   28.74%    5.67%    32.14%    11.12%
- 6: 10000    TRUE typeI    TRUE  TRUE 10    0.29%   44.63%    0.56%   36.01%     1.48%    17.03%
- 7: 10000    TRUE power    TRUE  TRUE  5   17.91%    2.98%   28.31%    5.40%    33.85%    11.55%
- 8: 10000    TRUE typeI    TRUE  TRUE  5    0.34%   43.09%    0.54%   36.68%     1.48%    17.87%
- 9: 10000    TRUE power   FALSE  TRUE 10   20.72%    3.21%   27.71%    5.29%    31.51%    11.56%
-10: 10000    TRUE typeI   FALSE  TRUE 10    0.29%    0.10%    0.50%    0.49%     1.63%    96.99%
-11: 10000    TRUE power   FALSE  TRUE  5   19.19%    2.94%   28.01%    5.23%    32.95%    11.68%
-12: 10000    TRUE typeI   FALSE  TRUE  5    0.31%    0.04%    0.50%    0.09%     1.67%    97.39%
-13: 10000    TRUE power   FALSE FALSE 10   21.30%    3.09%   28.33%    5.27%    30.81%    11.20%
-14: 10000    TRUE typeI   FALSE FALSE 10    0.35%    0.06%    0.57%    0.58%     1.61%    96.83%
-15: 10000    TRUE power   FALSE FALSE  5   19.51%    2.84%   28.44%    5.39%    32.47%    11.35%
-16: 10000    TRUE typeI   FALSE FALSE  5    0.35%        0    0.61%    0.01%     1.65%    97.38%
-17: 10000   FALSE power    TRUE FALSE  5   17.68%    2.94%   28.89%    5.17%    33.64%    11.68%
-18: 10000   FALSE typeI    TRUE FALSE  5    0.48%   42.46%    0.71%   36.41%     1.38%    18.56%
+ 1: 10000    TRUE power    TRUE FALSE 10   28.87%    1.42%   34.79%    2.82%    27.19%     4.91%
+ 2: 10000    TRUE typeI    TRUE FALSE 10    0.47%   47.79%    0.65%   35.40%     1.39%    14.30%
+ 3: 10000    TRUE power    TRUE FALSE  5   26.53%    1.38%   34.80%    2.86%    29.28%     5.15%
+ 4: 10000    TRUE typeI    TRUE FALSE  5    0.44%   44.92%    0.69%   35.99%     1.39%    16.57%
+ 5: 10000    TRUE power    TRUE  TRUE 10   28.18%    1.51%   34.40%    2.85%    27.86%     5.20%
+ 6: 10000    TRUE typeI    TRUE  TRUE 10    0.33%   44.96%    0.53%   36.43%     1.38%    16.37%
+ 7: 10000    TRUE power    TRUE  TRUE  5   26.18%    1.41%   34.45%    2.84%    29.71%     5.41%
+ 8: 10000    TRUE typeI    TRUE  TRUE  5    0.41%   43.53%    0.59%   36.40%     1.43%    17.64%
+ 9: 10000    TRUE power   FALSE  TRUE 10   28.03%    1.62%   35.14%    2.82%    27.10%     5.29%
+10:  9931    TRUE typeI   FALSE  TRUE 10    0.35%    0.12%    0.48%    0.35%     1.48%    97.21%
+11: 10000    TRUE power   FALSE  TRUE  5   25.81%    1.60%   35.45%    2.72%    28.86%     5.56%
+12: 10000    TRUE typeI   FALSE  TRUE  5    0.40%    0.01%    0.59%    0.07%     1.52%    97.41%
+13: 10000    TRUE power   FALSE FALSE 10   28.53%    1.61%   35.47%    2.88%    26.49%     5.02%
+14:  9931    TRUE typeI   FALSE FALSE 10    0.44%    0.05%    0.52%    0.40%     1.45%    97.13%
+15: 10000    TRUE power   FALSE FALSE  5   26.21%    1.56%   35.66%    2.81%    28.44%     5.32%
+16: 10000    TRUE typeI   FALSE FALSE  5    0.43%        0    0.60%    0.07%     1.49%    97.41%
+17: 10000   FALSE power    TRUE FALSE  5   25.42%    1.50%   34.24%    2.50%    30.15%     6.19%
+18: 10000   FALSE typeI    TRUE FALSE  5    0.35%   42.87%    0.67%   36.23%     1.63%    18.25%
 #+end_example
 
 \clearpage
@@ -574,24 +573,24 @@ print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")], digits =
 #+RESULTS:
 #+begin_example
         N missing  hypo binding  fixC ar dec1.eff dec1.fut dec2.eff dec2.fut final.eff final.fut
- 1: 10000    TRUE power    TRUE FALSE 10   21.49%    3.26%   29.79%    5.96%    28.86%    10.64%
- 2: 10000    TRUE typeI    TRUE FALSE 10    0.32%   44.14%    0.60%   35.96%     1.46%    17.52%
- 3: 10000    TRUE power    TRUE FALSE  5   18.53%    3.11%   28.98%    5.51%    32.56%    11.31%
- 4: 10000    TRUE typeI    TRUE FALSE  5    0.37%   43.25%    0.56%   36.60%     1.47%    17.75%
- 5: 10000    TRUE power    TRUE  TRUE 10   21.49%    3.26%   29.79%    5.96%    28.86%    10.64%
- 6: 10000    TRUE typeI    TRUE  TRUE 10    0.32%   44.14%    0.60%   35.96%     1.46%    17.52%
- 7: 10000    TRUE power    TRUE  TRUE  5   18.53%    3.11%   28.98%    5.51%    32.56%    11.31%
- 8: 10000    TRUE typeI    TRUE  TRUE  5    0.37%   43.25%    0.56%   36.60%     1.47%    17.75%
- 9: 10000    TRUE power   FALSE  TRUE 10   22.78%    3.32%   28.92%    5.74%    28.36%    10.88%
-10: 10000    TRUE typeI   FALSE  TRUE 10    0.33%    0.14%    0.65%    0.81%     1.54%    96.53%
-11: 10000    TRUE power   FALSE  TRUE  5   19.70%    3.12%   28.62%    5.49%    31.64%    11.43%
-12: 10000    TRUE typeI   FALSE  TRUE  5    0.32%    0.06%    0.59%    0.13%     1.63%    97.27%
-13: 10000    TRUE power   FALSE FALSE 10   22.78%    3.32%   28.92%    5.74%    28.36%    10.88%
-14: 10000    TRUE typeI   FALSE FALSE 10    0.33%    0.14%    0.65%    0.81%     1.54%    96.53%
-15: 10000    TRUE power   FALSE FALSE  5   19.70%    3.12%   28.62%    5.49%    31.64%    11.43%
-16: 10000    TRUE typeI   FALSE FALSE  5    0.32%    0.06%    0.59%    0.13%     1.63%    97.27%
-17: 10000   FALSE power    TRUE FALSE  5   18.08%    3.12%   29.02%    5.26%    32.70%    11.82%
-18: 10000   FALSE typeI    TRUE FALSE  5    0.41%   41.65%    0.68%   36.42%     1.39%    19.45%
+ 1: 10000    TRUE power    TRUE FALSE 10   31.44%    1.68%   35.60%    2.80%    23.40%     5.08%
+ 2: 10000    TRUE typeI    TRUE FALSE 10    0.42%   43.69%    0.61%   36.37%     1.41%    17.50%
+ 3: 10000    TRUE power    TRUE FALSE  5   26.95%    1.47%   35.22%    2.96%    28.11%     5.29%
+ 4: 10000    TRUE typeI    TRUE FALSE  5    0.41%   43.52%    0.62%   36.31%     1.46%    17.68%
+ 5: 10000    TRUE power    TRUE  TRUE 10   31.44%    1.68%   35.60%    2.80%    23.40%     5.08%
+ 6: 10000    TRUE typeI    TRUE  TRUE 10    0.42%   43.69%    0.61%   36.37%     1.41%    17.50%
+ 7: 10000    TRUE power    TRUE  TRUE  5   26.95%    1.47%   35.22%    2.96%    28.11%     5.29%
+ 8: 10000    TRUE typeI    TRUE  TRUE  5    0.41%   43.52%    0.62%   36.31%     1.46%    17.68%
+ 9: 10000    TRUE power   FALSE  TRUE 10   30.84%    1.66%   36.22%    2.90%    23.34%     5.04%
+10:  9931    TRUE typeI   FALSE  TRUE 10    0.41%    0.16%    0.63%    0.58%     1.42%    96.79%
+11: 10000    TRUE power   FALSE  TRUE  5   26.83%    1.67%   35.85%    2.85%    27.36%     5.44%
+12: 10000    TRUE typeI   FALSE  TRUE  5    0.45%    0.02%    0.67%    0.13%     1.52%    97.21%
+13: 10000    TRUE power   FALSE FALSE 10   30.84%    1.66%   36.22%    2.90%    23.34%     5.04%
+14:  9931    TRUE typeI   FALSE FALSE 10    0.41%    0.16%    0.63%    0.58%     1.42%    96.79%
+15: 10000    TRUE power   FALSE FALSE  5   26.83%    1.67%   35.85%    2.85%    27.36%     5.44%
+16: 10000    TRUE typeI   FALSE FALSE  5    0.45%    0.02%    0.67%    0.13%     1.52%    97.21%
+17: 10000   FALSE power    TRUE FALSE  5   25.94%    1.64%   34.58%    2.53%    29.05%     6.26%
+18: 10000   FALSE typeI    TRUE FALSE  5    0.32%   41.33%    0.62%   36.51%     1.58%    19.64%
 #+end_example
 
 Relative frequency of stopping for with a threshold below 1.96:
@@ -605,26 +604,26 @@ tablePrint[rejectionBelow196!=0]
 #+RESULTS:
 #+begin_example
     scenario missing method binding  fixC ar  hypo     N rejection rejectionBelow196
- 1:        1    TRUE      1    TRUE FALSE 10 power 10000    80.87%             1.03%
- 2:        1    TRUE      2    TRUE FALSE 10 power 10000    80.79%             0.96%
- 3:        2    TRUE      1    TRUE FALSE 10 typeI 10000     2.50%             0.19%
- 4:        2    TRUE      2    TRUE FALSE 10 typeI 10000     2.48%             0.17%
- 5:        3    TRUE      1    TRUE FALSE  5 power 10000    80.54%             0.58%
- 6:        3    TRUE      2    TRUE FALSE  5 power 10000    80.53%             0.58%
- 7:        4    TRUE      1    TRUE FALSE  5 typeI 10000     2.42%             0.05%
- 8:        4    TRUE      2    TRUE FALSE  5 typeI 10000     2.43%             0.05%
- 9:       13    TRUE      1   FALSE FALSE 10 power 10000    80.52%             0.94%
-10:       13    TRUE      2   FALSE FALSE 10 power 10000    80.44%             0.92%
-11:       14    TRUE      1   FALSE FALSE 10 typeI 10000     2.54%             0.10%
-12:       14    TRUE      2   FALSE FALSE 10 typeI 10000     2.53%             0.10%
-13:       15    TRUE      1   FALSE FALSE  5 power 10000    80.44%             0.52%
-14:       15    TRUE      2   FALSE FALSE  5 power 10000    80.42%             0.50%
-15:       16    TRUE      1   FALSE FALSE  5 typeI 10000     2.61%             0.13%
-16:       16    TRUE      2   FALSE FALSE  5 typeI 10000     2.61%             0.13%
-17:       17   FALSE      1    TRUE FALSE  5 power 10000    80.23%             0.52%
-18:       17   FALSE      2    TRUE FALSE  5 power 10000    80.21%             0.51%
-19:       18   FALSE      1    TRUE FALSE  5 typeI 10000     2.57%             0.18%
-20:       18   FALSE      2    TRUE FALSE  5 typeI 10000     2.57%             0.18%
+ 1:        1    TRUE      1    TRUE FALSE 10 power 10000    90.96%             0.66%
+ 2:        1    TRUE      2    TRUE FALSE 10 power 10000    90.85%             0.62%
+ 3:        2    TRUE      1    TRUE FALSE 10 typeI 10000     2.46%             0.21%
+ 4:        2    TRUE      2    TRUE FALSE 10 typeI 10000     2.51%             0.21%
+ 5:        3    TRUE      1    TRUE FALSE  5 power 10000    90.62%             0.41%
+ 6:        3    TRUE      2    TRUE FALSE  5 power 10000    90.61%             0.42%
+ 7:        4    TRUE      1    TRUE FALSE  5 typeI 10000     2.52%             0.11%
+ 8:        4    TRUE      2    TRUE FALSE  5 typeI 10000     2.52%             0.11%
+ 9:       13    TRUE      1   FALSE FALSE 10 power 10000    90.60%             0.59%
+10:       13    TRUE      2   FALSE FALSE 10 power 10000    90.49%             0.57%
+11:       14    TRUE      1   FALSE FALSE 10 typeI  9931     2.45%             0.15%
+12:       14    TRUE      2   FALSE FALSE 10 typeI  9931     2.42%             0.13%
+13:       15    TRUE      1   FALSE FALSE  5 power 10000    90.31%             0.37%
+14:       15    TRUE      2   FALSE FALSE  5 power 10000    90.31%             0.38%
+15:       16    TRUE      1   FALSE FALSE  5 typeI 10000     2.52%             0.02%
+16:       16    TRUE      2   FALSE FALSE  5 typeI 10000     2.52%             0.02%
+17:       17   FALSE      1    TRUE FALSE  5 power 10000    89.85%             0.39%
+18:       17   FALSE      2    TRUE FALSE  5 power 10000    89.81%             0.38%
+19:       18   FALSE      1    TRUE FALSE  5 typeI 10000     2.65%             0.13%
+20:       18   FALSE      2    TRUE FALSE  5 typeI 10000     2.65%             0.13%
 #+end_example
 
 
@@ -671,30 +670,33 @@ tablePrint <- dcast(res2stageS.bias,
                     value.var = c("bias_MLE","bias_MUE"))
 setkeyv(tablePrint,"scenario")
 names(tablePrint) <- gsub("_","",names(tablePrint),fixed = TRUE)
-print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")], digits = 2)
+
+col.num <- c("biasMLE1","biasMLE2","biasMLE3","biasMUE1","biasMUE2","biasMUE3")
+tablePrint[, c(col.num) := lapply(lapply(.SD, round, 5), format, scientific = FALSE), .SDcols = col.num]
+print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")])
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
      hypo missing binding  fixC ar biasMLE1 biasMLE2 biasMLE3 biasMUE1 biasMUE2 biasMUE3
- 1: power    TRUE    TRUE FALSE 10  0.01345  0.01315  0.01468  0.00598  0.00566 -0.00330
- 2: typeI    TRUE    TRUE FALSE 10 -0.01794 -0.01784 -0.01856 -0.00453 -0.00448 -0.01675
- 3: power    TRUE    TRUE FALSE  5  0.02257  0.02255  0.02358  0.01044  0.01047  0.00305
- 4: typeI    TRUE    TRUE FALSE  5 -0.03034 -0.03031 -0.03065 -0.01186 -0.01182 -0.02468
- 5: power    TRUE    TRUE  TRUE 10  0.01345  0.01403  0.01468 -0.01705 -0.01731 -0.00330
- 6: typeI    TRUE    TRUE  TRUE 10 -0.01794 -0.01871 -0.01856 -0.05000 -0.05241 -0.01675
- 7: power    TRUE    TRUE  TRUE  5  0.02257  0.02309  0.02358 -0.01895 -0.01892  0.00305
- 8: typeI    TRUE    TRUE  TRUE  5 -0.03034 -0.03085 -0.03065 -0.07533 -0.07692 -0.02468
- 9: power    TRUE   FALSE  TRUE 10  0.01433  0.01490  0.01529  0.01725  0.01500  0.02897
-10: typeI    TRUE   FALSE  TRUE 10  0.00019  0.00019  0.00051 -0.00087 -0.00079  0.00073
-11: power    TRUE   FALSE  TRUE  5  0.02366  0.02402  0.02438  0.01667  0.01524  0.03653
-12: typeI    TRUE   FALSE  TRUE  5  0.00091  0.00085  0.00101  0.00033  0.00027  0.00086
-13: power    TRUE   FALSE FALSE 10  0.01433  0.01416  0.01529  0.03552  0.03589  0.02897
-14: typeI    TRUE   FALSE FALSE 10  0.00019  0.00019  0.00051 -0.00020 -0.00021  0.00073
-15: power    TRUE   FALSE FALSE  5  0.02366  0.02365  0.02438  0.04186  0.04202  0.03653
-16: typeI    TRUE   FALSE FALSE  5  0.00091  0.00091  0.00101  0.00087  0.00087  0.00086
-17: power   FALSE    TRUE FALSE  5  0.02284  0.02277  0.02381  0.01197  0.01196  0.00348
-18: typeI   FALSE    TRUE FALSE  5 -0.02952 -0.02945 -0.02992 -0.01111 -0.01106 -0.02650
+ 1: power    TRUE    TRUE FALSE 10  0.01251  0.01233  0.01275  0.00470  0.00452 -0.00450
+ 2: typeI    TRUE    TRUE FALSE 10 -0.01673 -0.01655 -0.01713 -0.00518 -0.00508 -0.01539
+ 3: power    TRUE    TRUE FALSE  5  0.02412  0.02410  0.02442  0.01141  0.01138  0.00302
+ 4: typeI    TRUE    TRUE FALSE  5 -0.02839 -0.02837 -0.02897 -0.01206 -0.01207 -0.02288
+ 5: power    TRUE    TRUE  TRUE 10  0.01251  0.01278  0.01275 -0.01829 -0.01939 -0.00450
+ 6: typeI    TRUE    TRUE  TRUE 10 -0.01673 -0.01725 -0.01713 -0.04244 -0.04509 -0.01539
+ 7: power    TRUE    TRUE  TRUE  5  0.02412  0.02444  0.02442 -0.02060 -0.02149  0.00302
+ 8: typeI    TRUE    TRUE  TRUE  5 -0.02839 -0.02907 -0.02897 -0.06515 -0.06704 -0.02288
+ 9: power    TRUE   FALSE  TRUE 10  0.01191  0.01234  0.01241 -0.00291 -0.00536  0.01012
+10: typeI    TRUE   FALSE  TRUE 10 -0.00049 -0.00049 -0.00029 -0.00156 -0.00154  0.00000
+11: power    TRUE   FALSE  TRUE  5  0.02382  0.02410  0.02409 -0.00384 -0.00573  0.01884
+12: typeI    TRUE   FALSE  TRUE  5 -0.00004 -0.00004  0.00004 -0.00057 -0.00056 -0.00010
+13: power    TRUE   FALSE FALSE 10  0.01191  0.01174  0.01241  0.01785  0.01836  0.01012
+14: typeI    TRUE   FALSE FALSE 10 -0.00049 -0.00049 -0.00029 -0.00060 -0.00072  0.00000
+15: power    TRUE   FALSE FALSE  5  0.02382  0.02379  0.02409  0.02577  0.02582  0.01884
+16: typeI    TRUE   FALSE FALSE  5 -0.00004 -0.00004  0.00004 -0.00002 -0.00002 -0.00010
+17: power   FALSE    TRUE FALSE  5  0.02542  0.02542  0.02598  0.01365  0.01366  0.00371
+18: typeI   FALSE    TRUE FALSE  5 -0.02471 -0.02472 -0.02520 -0.00941 -0.00941 -0.02205
 #+end_example
 #+LaTeX: \end{adjustwidth}
 
@@ -706,30 +708,30 @@ tablePrint <- dcast(res2stageS.bias,
                     value.var = c("mbias_MLE","mbias_MUE"))
 setkeyv(tablePrint,"scenario")
 names(tablePrint) <- gsub("_","",names(tablePrint),fixed = TRUE)
-print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")], digits = 2)
+print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")], digits = 3)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
      hypo missing binding  fixC ar mbiasMLE1 mbiasMLE2 mbiasMLE3 mbiasMUE1 mbiasMUE2 mbiasMUE3
- 1: power    TRUE    TRUE FALSE 10    0.0261    0.0260    0.0301  -0.00240  -0.00250  -0.00545
- 2: typeI    TRUE    TRUE FALSE 10   -0.0173   -0.0170   -0.0202   0.00100   0.00075  -0.02325
- 3: power    TRUE    TRUE FALSE  5    0.0405    0.0405    0.0432  -0.00345  -0.00335  -0.00545
- 4: typeI    TRUE    TRUE FALSE  5   -0.0330   -0.0329   -0.0345   0.00055   0.00055  -0.02096
- 5: power    TRUE    TRUE  TRUE 10    0.0261    0.0265    0.0301  -0.01110  -0.01050  -0.00545
- 6: typeI    TRUE    TRUE  TRUE 10   -0.0173   -0.0197   -0.0202  -0.08352  -0.08396  -0.02325
- 7: power    TRUE    TRUE  TRUE  5    0.0405    0.0407    0.0432  -0.00865  -0.00755  -0.00545
- 8: typeI    TRUE    TRUE  TRUE  5   -0.0330   -0.0346   -0.0345  -0.10498  -0.10438  -0.02096
- 9: power    TRUE   FALSE  TRUE 10    0.0326    0.0332    0.0327   0.02719   0.02475   0.02804
-10: typeI    TRUE   FALSE  TRUE 10   -0.0009   -0.0009   -0.0009  -0.00190  -0.00185  -0.00025
-11: power    TRUE   FALSE  TRUE  5    0.0462    0.0459    0.0489   0.02568   0.02469   0.02799
-12: typeI    TRUE   FALSE  TRUE  5   -0.0009   -0.0010   -0.0009  -0.00130  -0.00140  -0.00015
-13: power    TRUE   FALSE FALSE 10    0.0326    0.0324    0.0327   0.03094   0.03184   0.02804
-14: typeI    TRUE   FALSE FALSE 10   -0.0009   -0.0009   -0.0009  -0.00150  -0.00140  -0.00025
-15: power    TRUE   FALSE FALSE  5    0.0462    0.0464    0.0489   0.02832   0.02865   0.02799
-16: typeI    TRUE   FALSE FALSE  5   -0.0009   -0.0009   -0.0009  -0.00105  -0.00105  -0.00015
-17: power   FALSE    TRUE FALSE  5    0.0383    0.0383    0.0400  -0.00265  -0.00255  -0.00485
-18: typeI   FALSE    TRUE FALSE  5   -0.0329   -0.0327   -0.0353   0.00420   0.00420  -0.02551
+ 1: power    TRUE    TRUE FALSE 10    0.0218    0.0218    0.0198  -0.00560  -0.00550  -0.01340
+ 2: typeI    TRUE    TRUE FALSE 10   -0.0272   -0.0265   -0.0296  -0.00520  -0.00606  -0.02692
+ 3: power    TRUE    TRUE FALSE  5    0.0472    0.0472    0.0471  -0.00425  -0.00425  -0.00760
+ 4: typeI    TRUE    TRUE FALSE  5   -0.0446   -0.0444   -0.0478  -0.00700  -0.00746  -0.02836
+ 5: power    TRUE    TRUE  TRUE 10    0.0218    0.0216    0.0198  -0.02751  -0.02951  -0.01340
+ 6: typeI    TRUE    TRUE  TRUE 10   -0.0272   -0.0292   -0.0296  -0.08467  -0.08715  -0.02692
+ 7: power    TRUE    TRUE  TRUE  5    0.0472    0.0471    0.0471  -0.02956  -0.03136  -0.00760
+ 8: typeI    TRUE    TRUE  TRUE  5   -0.0446   -0.0472   -0.0478  -0.10726  -0.10396  -0.02836
+ 9: power    TRUE   FALSE  TRUE 10    0.0256    0.0257    0.0261  -0.00808  -0.01103   0.00434
+10: typeI    TRUE   FALSE  TRUE 10   -0.0040   -0.0040   -0.0040  -0.00516  -0.00516  -0.00301
+11: power    TRUE   FALSE  TRUE  5    0.0499    0.0495    0.0503  -0.01402  -0.01674   0.00559
+12: typeI    TRUE   FALSE  TRUE  5   -0.0040   -0.0040   -0.0040  -0.00455  -0.00455  -0.00396
+13: power    TRUE   FALSE FALSE 10    0.0256    0.0256    0.0261   0.01372   0.01458   0.00434
+14: typeI    TRUE   FALSE FALSE 10   -0.0040   -0.0040   -0.0040  -0.00440  -0.00450  -0.00301
+15: power    TRUE   FALSE FALSE  5    0.0499    0.0499    0.0503   0.00871   0.00881   0.00559
+16: typeI    TRUE   FALSE FALSE  5   -0.0040   -0.0040   -0.0040  -0.00420  -0.00420  -0.00396
+17: power   FALSE    TRUE FALSE  5    0.0479    0.0479    0.0481  -0.00425  -0.00435  -0.01240
+18: typeI   FALSE    TRUE FALSE  5   -0.0417   -0.0418   -0.0437  -0.00425  -0.00445  -0.02922
 #+end_example
 
 #+LaTeX: \end{adjustwidth}
@@ -775,24 +777,24 @@ print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")], digits =
 #+RESULTS:
 #+begin_example
      hypo missing binding  fixC ar biasMLE1 biasMLE2 biasMLE3 biasMUE1 biasMUE2 biasMUE3
- 1: power    TRUE    TRUE FALSE 10   0.0228   0.0226   0.0248  0.01623  0.01605   0.0058
- 2: typeI    TRUE    TRUE FALSE 10  -0.0340  -0.0338  -0.0340 -0.01485 -0.01470  -0.0284
- 3: power    TRUE    TRUE FALSE  5   0.0344   0.0344   0.0356  0.02036  0.02030   0.0114
- 4: typeI    TRUE    TRUE FALSE  5  -0.0522  -0.0522  -0.0527 -0.02540 -0.02533  -0.0397
- 5: power    TRUE    TRUE  TRUE 10   0.0228   0.0234   0.0248 -0.00783 -0.00786   0.0058
- 6: typeI    TRUE    TRUE  TRUE 10  -0.0340  -0.0341  -0.0340 -0.06617 -0.06797  -0.0284
- 7: power    TRUE    TRUE  TRUE  5   0.0344   0.0348   0.0356 -0.01043 -0.01050   0.0114
- 8: typeI    TRUE    TRUE  TRUE  5  -0.0522  -0.0527  -0.0527 -0.09895 -0.09964  -0.0397
- 9: power    TRUE   FALSE  TRUE 10   0.0223   0.0230   0.0246  0.03980  0.03755   0.0524
-10: typeI    TRUE   FALSE  TRUE 10   0.0011   0.0010   0.0014 -0.00021 -0.00038   0.0016
-11: power    TRUE   FALSE  TRUE  5   0.0343   0.0348   0.0351  0.03931  0.03719   0.0579
-12: typeI    TRUE   FALSE  TRUE  5   0.0017   0.0016   0.0019  0.00064  0.00066   0.0014
-13: power    TRUE   FALSE FALSE 10   0.0223   0.0222   0.0246  0.05767  0.05820   0.0524
-14: typeI    TRUE   FALSE FALSE 10   0.0011   0.0011   0.0014  0.00058  0.00057   0.0016
-15: power    TRUE   FALSE FALSE  5   0.0343   0.0343   0.0351  0.06492  0.06503   0.0579
-16: typeI    TRUE   FALSE FALSE  5   0.0017   0.0017   0.0019  0.00170  0.00170   0.0014
-17: power   FALSE    TRUE FALSE  5   0.0346   0.0346   0.0360  0.02204  0.02206   0.0131
-18: typeI   FALSE    TRUE FALSE  5  -0.0491  -0.0491  -0.0492 -0.02218 -0.02221  -0.0393
+ 1: power    TRUE    TRUE FALSE 10   0.0240   0.0238   0.0255   0.0161   0.0159   0.0074
+ 2: typeI    TRUE    TRUE FALSE 10  -0.0281  -0.0279  -0.0280  -0.0134  -0.0129  -0.0249
+ 3: power    TRUE    TRUE FALSE  5   0.0380   0.0380   0.0388   0.0216   0.0217   0.0130
+ 4: typeI    TRUE    TRUE FALSE  5  -0.0447  -0.0447  -0.0448  -0.0226  -0.0226  -0.0348
+ 5: power    TRUE    TRUE  TRUE 10   0.0240   0.0245   0.0255  -0.0076  -0.0083   0.0074
+ 6: typeI    TRUE    TRUE  TRUE 10  -0.0281  -0.0283  -0.0280  -0.0562  -0.0582  -0.0249
+ 7: power    TRUE    TRUE  TRUE  5   0.0380   0.0386   0.0388  -0.0105  -0.0104   0.0130
+ 8: typeI    TRUE    TRUE  TRUE  5  -0.0447  -0.0449  -0.0448  -0.0848  -0.0859  -0.0348
+ 9: power    TRUE   FALSE  TRUE 10   0.0242   0.0246   0.0253   0.0150   0.0129   0.0274
+10: typeI    TRUE   FALSE  TRUE 10   0.0024   0.0023   0.0027   0.0010   0.0011   0.0031
+11: power    TRUE   FALSE  TRUE  5   0.0380   0.0385   0.0388   0.0133   0.0112   0.0353
+12: typeI    TRUE   FALSE  TRUE  5   0.0035   0.0035   0.0038   0.0029   0.0029   0.0038
+13: power    TRUE   FALSE FALSE 10   0.0242   0.0241   0.0253   0.0348   0.0356   0.0274
+14: typeI    TRUE   FALSE FALSE 10   0.0024   0.0024   0.0027   0.0021   0.0019   0.0031
+15: power    TRUE   FALSE FALSE  5   0.0380   0.0380   0.0388   0.0427   0.0428   0.0353
+16: typeI    TRUE   FALSE FALSE  5   0.0035   0.0035   0.0038   0.0032   0.0033   0.0038
+17: power   FALSE    TRUE FALSE  5   0.0373   0.0372   0.0379   0.0221   0.0220   0.0122
+18: typeI   FALSE    TRUE FALSE  5  -0.0420  -0.0419  -0.0423  -0.0203  -0.0202  -0.0344
 #+end_example
 #+LaTeX: \end{adjustwidth}
 
@@ -810,24 +812,24 @@ print(tablePrint[,.SD,.SDcols = setdiff(names(tablePrint),"scenario")], digits =
 #+RESULTS:
 #+begin_example
      hypo missing binding  fixC ar mbiasMLE1 mbiasMLE2 mbiasMLE3 mbiasMUE1 mbiasMUE2 mbiasMUE3
- 1: power    TRUE    TRUE FALSE 10    0.0359    0.0358    0.0374   -0.0038   -0.0040   -0.0095
- 2: typeI    TRUE    TRUE FALSE 10   -0.0367   -0.0365   -0.0380    0.0104    0.0102   -0.0024
- 3: power    TRUE    TRUE FALSE  5    0.0552    0.0552    0.0566   -0.0040   -0.0038   -0.0082
- 4: typeI    TRUE    TRUE FALSE  5   -0.0556   -0.0557   -0.0574    0.0088    0.0088   -0.0049
- 5: power    TRUE    TRUE  TRUE 10    0.0359    0.0355    0.0374   -0.0166   -0.0171   -0.0095
- 6: typeI    TRUE    TRUE  TRUE 10   -0.0367   -0.0379   -0.0380   -0.0222   -0.0278   -0.0025
- 7: power    TRUE    TRUE  TRUE  5    0.0552    0.0548    0.0566   -0.0160   -0.0163   -0.0082
- 8: typeI    TRUE    TRUE  TRUE  5   -0.0556   -0.0569   -0.0574   -0.0421   -0.0441   -0.0047
- 9: power    TRUE   FALSE  TRUE 10    0.0321    0.0326    0.0358    0.0285    0.0249    0.0367
-10: typeI    TRUE   FALSE  TRUE 10   -0.0056   -0.0060   -0.0056   -0.0072   -0.0076   -0.0053
-11: power    TRUE   FALSE  TRUE  5    0.0498    0.0494    0.0502    0.0297    0.0258    0.0347
-12: typeI    TRUE   FALSE  TRUE  5   -0.0061   -0.0061   -0.0061   -0.0068   -0.0067   -0.0060
-13: power    TRUE   FALSE FALSE 10    0.0321    0.0322    0.0358    0.0367    0.0376    0.0367
-14: typeI    TRUE   FALSE FALSE 10   -0.0056   -0.0056   -0.0056   -0.0067   -0.0066   -0.0054
-15: power    TRUE   FALSE FALSE  5    0.0498    0.0498    0.0502    0.0396    0.0398    0.0349
-16: typeI    TRUE   FALSE FALSE  5   -0.0061   -0.0061   -0.0061   -0.0062   -0.0063   -0.0060
-17: power   FALSE    TRUE FALSE  5    0.0573    0.0576    0.0595    0.0073    0.0075    0.0016
-18: typeI   FALSE    TRUE FALSE  5   -0.0529   -0.0528   -0.0540    0.0095    0.0094   -0.0070
+ 1: power    TRUE    TRUE FALSE 10    0.0348    0.0346    0.0360   0.00130   0.00120   -0.0128
+ 2: typeI    TRUE    TRUE FALSE 10   -0.0428   -0.0423   -0.0426   0.00205   0.00200   -0.0161
+ 3: power    TRUE    TRUE FALSE  5    0.0577    0.0576    0.0573  -0.00085  -0.00085   -0.0185
+ 4: typeI    TRUE    TRUE FALSE  5   -0.0589   -0.0588   -0.0589  -0.00455  -0.00415   -0.0195
+ 5: power    TRUE    TRUE  TRUE 10    0.0348    0.0350    0.0360  -0.03457  -0.03658   -0.0128
+ 6: typeI    TRUE    TRUE  TRUE 10   -0.0428   -0.0426   -0.0426  -0.02798  -0.03293   -0.0161
+ 7: power    TRUE    TRUE  TRUE  5    0.0577    0.0578    0.0573  -0.05581  -0.05901   -0.0185
+ 8: typeI    TRUE    TRUE  TRUE  5   -0.0589   -0.0589   -0.0589  -0.04987  -0.05342   -0.0192
+ 9: power    TRUE   FALSE  TRUE 10    0.0413    0.0408    0.0420  -0.00557  -0.01015    0.0046
+10: typeI    TRUE   FALSE  TRUE 10    0.0012    0.0012    0.0012  -0.00101  -0.00066    0.0026
+11: power    TRUE   FALSE  TRUE  5    0.0633    0.0633    0.0629  -0.03128  -0.03685    0.0062
+12: typeI    TRUE   FALSE  TRUE  5    0.0015    0.0015    0.0015   0.00075   0.00070    0.0023
+13: power    TRUE   FALSE FALSE 10    0.0413    0.0415    0.0420   0.02261   0.02398    0.0046
+14: typeI    TRUE   FALSE FALSE 10    0.0012    0.0012    0.0012  -0.00025  -0.00010    0.0026
+15: power    TRUE   FALSE FALSE  5    0.0633    0.0630    0.0629   0.02410   0.02421    0.0063
+16: typeI    TRUE   FALSE FALSE  5    0.0015    0.0015    0.0015   0.00085   0.00075    0.0022
+17: power   FALSE    TRUE FALSE  5    0.0584    0.0586    0.0585   0.00285   0.00275   -0.0157
+18: typeI   FALSE    TRUE FALSE  5   -0.0589   -0.0584   -0.0587   0.00190   0.00230   -0.0117
 #+end_example
 
 #+LaTeX: \end{adjustwidth}
@@ -860,10 +862,10 @@ ggsave(gg2stage.E %+% dt2stage.estimate[scenario == 1] + theme(legend.position =
 
 #+RESULTS:
 : Advarselsbesked:
-: [1m[22mRemoved 7476 rows containing non-finite values (`stat_density()`).
-: [1m[22mSaving 10 x 7 in image
+: [1m[22mRemoved 4278 rows containing non-finite values (`stat_density()`). 
+: + [1m[22mSaving 10 x 6.38 in image
 : Advarselsbesked:
-: [1m[22mRemoved 1 rows containing non-finite values (`stat_density()`).
+: [1m[22mRemoved 6 rows containing non-finite values (`stat_density()`).
 
 #+ATTR_LaTeX: :width 1\textwidth :options trim={0 0 0 0} :placement [!h]
 #+CAPTION: Naive and Median unbiased estimate distribution over all simulations. Each row correspond to a different scenario
@@ -892,7 +894,7 @@ ggsave(gg2stage.estimateC, filename = file.path("report","figures","gg2stage-est
 
 #+RESULTS:
 : Advarselsbesked:
-: [1m[22mRemoved 7476 rows containing non-finite values (`stat_density()`).
+: [1m[22mRemoved 4278 rows containing non-finite values (`stat_density()`).
 
 #+ATTR_LaTeX: :width 1\textwidth :options trim={0 0 0 0} :placement [!h]
 #+CAPTION: Median unbiased estimate distribution conditional to the stage. Each row correspond to a different scenario.
@@ -925,10 +927,10 @@ ggsave(gg3stage.E %+% dt3stage.estimate[scenario == 1] + theme(legend.position =
 
 #+RESULTS:
 : Advarselsbesked:
-: [1m[22mRemoved 10669 rows containing non-finite values (`stat_density()`).
-: [1m[22mSaving 10 x 7 in image
+: [1m[22mRemoved 5834 rows containing non-finite values (`stat_density()`).
+: [1m[22mSaving 10 x 6.38 in image
 : Advarselsbesked:
-: [1m[22mRemoved 16 rows containing non-finite values (`stat_density()`).
+: [1m[22mRemoved 17 rows containing non-finite values (`stat_density()`).
 
 #+ATTR_LaTeX: :width 1\textwidth :options trim={0 0 0 0} :placement [!h]
 #+CAPTION: Naive and Median unbiased estimate distribution over all simulations. Each row correspond to a different scenario
@@ -957,7 +959,7 @@ ggsave(gg3stage.estimateC, filename = file.path("report","figures","gg3stage-est
 
 #+RESULTS:
 : Advarselsbesked:
-: [1m[22mRemoved 10669 rows containing non-finite values (`stat_density()`).
+: [1m[22mRemoved 5834 rows containing non-finite values (`stat_density()`).
 
 #+ATTR_LaTeX: :width 1\textwidth :options trim={0 0 0 0} :placement [!h]
 #+CAPTION: Median unbiased estimate distribution conditional to the stage. Each row correspond to a different scenario.
@@ -982,24 +984,18 @@ ftable(reason = res2stage[scenario %in% 1:8,reason],
 #+begin_example
                                     scenario    1    2    3    4    5    6    7    8
 reason                       method                                                 
-decreasing information       1                  0    0    1    1    0    0    1    1
-                             2                  0    0    1    1    0    0    1    1
-                             3                  0    0    1    1    0    0    1    1
-efficacy                     1               3739   81 3573   74 3739   81 3573   74
-                             2               3744   81 3576   74 3718   79 3545   71
-                             3               4165  108 3721   82 4165  108 3721   82
-futility                     1                632 7111  599 6932  632 7111  599 6932
-                             2                659 7161  600 6938  574 6940  562 6828
-                             3                545 6844  563 6828  545 6844  563 6828
-Imax reached                 1                  1    1    0    0    1    1    0    0
-                             2                  1    1    0    0    1    1    0    0
-                             3                  1    1    0    0    1    1    0    0
-no boundary crossed          1               5628 2807 5828 2994 5628 2807 5828 2994
-                             2               5596 2757 5824 2988 5707 2980 5893 3101
-                             3               5289 3047 5716 3090 5289 3047 5716 3090
+efficacy                     1               5093   86 4874   80 5093   86 4874   80
+                             2               5093   86 4874   81 5068   86 4861   77
+                             3               5553  128 5028   91 5553  128 5028   91
+futility                     1                320 7179  299 6950  320 7179  299 6950
+                             2                349 7269  301 6960  274 6993  280 6803
+                             3                242 6805  277 6776  242 6805  277 6776
+no boundary crossed          1               4587 2735 4827 2970 4587 2735 4827 2970
+                             2               4558 2645 4825 2959 4658 2921 4859 3120
+                             3               4205 3067 4695 3133 4205 3067 4695 3133
 stop for futility at interim 1                  0    0    0    0    0    0    0    0
                              2                  0    0    0    0    0    0    0    0
-                             3                 11    1    2    0   11    1    2    0
+                             3                 10    3    0    0   10    3    0    0
 #+end_example
 
 #+BEGIN_SRC R :exports results :results output :session *R* :cache no
@@ -1012,18 +1008,18 @@ ftable(reason = res2stage[scenario %in% 9:18,reason],
 #+begin_example
                                     scenario    9   10   11   12   13   14   15   16   17   18
 reason                       method                                                           
-efficacy                     1               3849   81 3680   76 3849   81 3680   76 3396   74
-                             2               3829   80 3661   75 3850   81 3683   76 3400   74
-                             3               4238  110 3831   82 4238  110 3831   82 3528   80
-futility                     1                613 7122  570 6945  613 7122  570 6945  535 6748
-                             2                560 6975  541 6838  629 7164  574 6950  539 6755
-                             3                516 6890  543 6842  516 6890  543 6842  496 6642
-no boundary crossed          1               5538 2797 5750 2979 5538 2797 5750 2979 6069 3178
-                             2               5611 2945 5798 3087 5521 2755 5743 2974 6061 3171
-                             3               5246 3000 5626 3076 5246 3000 5626 3076 5976 3278
+efficacy                     1               5039   68 4821   64 5039   68 4821   64 4700   82
+                             2               5028   67 4806   64 5039   68 4821   64 4700   82
+                             3               5460   97 4959   72 5460   97 4959   72 4845   90
+futility                     1                338 7164  309 6964  338 7164  309 6964  250 6719
+                             2                301 6978  283 6833  359 7258  312 6973  250 6728
+                             3                266 6800  279 6816  266 6800  279 6816  223 6532
+no boundary crossed          1               4523 2768 4770 2972 4523 2768 4770 2972 5050 3099
+                             2               4571 2955 4811 3103 4502 2674 4767 2963 5050 3090
+                             3               4174 3103 4662 3112 4174 3103 4662 3112 4932 3278
 stop for futility at interim 1                  0    0    0    0    0    0    0    0    0    0
                              2                  0    0    0    0    0    0    0    0    0    0
-                             3                  8    0    0    0    8    0    0    0    1    0
+                             3                 15    0    0    0   15    0    0    0    1    0
 #+end_example
 
 \clearpage
@@ -1043,24 +1039,21 @@ ftable(reason = res3stage[scenario %in% 1:8,reason],
 #+begin_example
                                     scenario     1     2     3     4     5     6     7     8
 reason                       method                                                         
-decreasing information       1                   0     0     0     1     0     0     0     1
-                             2                   0     0     0     1     0     0     0     1
-                             3                   0     0     0     1     0     0     0     1
-efficacy                     1                4871   107  4709   100  4871   107  4709   100
-                             2                4873   107  4715   100  4846   105  4677    98
-                             3                5264   136  4828   105  5264   136  4828   105
-futility                     1                 854  8147   830  8048   854  8147   830  8048
-                             2                 890  8198   836  8050   805  8034   783  7967
-                             3                 761  7951   785  7973   761  7951   785  7973
-Imax reached                 1                  28    13     0     0    28    13     0     0
-                             2                  31    13     0     0    23    10     0     0
-                             3                  25    15     0     0    25    15     0     0
-no boundary crossed          1               11961  7071 12349  7413 11961  7071 12349  7413
-                             2               11913  6996 12333  7406 12093  7359 12451  7592
-                             3               11475  7452 12223  7560 11475  7452 12223  7560
+efficacy                     1                6306   115  6116   113  6306   115  6116   113
+                             2                6305   115  6123   113  6275   114  6095   111
+                             3                6785   155  6270   120  6785   155  6270   120
+futility                     1                 444  8228   432  8078   444  8228   432  8078
+                             2                 469  8306   434  8091   412  8102   393  7982
+                             3                 357  7943   390  7966   357  7943   390  7966
+Imax reached                 1                  14    10     0     0    14    10     0     0
+                             2                  16    10     0     0     7     9     0     0
+                             3                  10    11     0     0    10    11     0     0
+no boundary crossed          1               10219  6864 10663  7277 10219  6864 10663  7277
+                             2               10181  6743 10652  7260 10337  7246 10753  7513
+                             3                9536  7480 10498  7521  9536  7480 10498  7521
 stop for futility at interim 1                   0     0     0     0     0     0     0     0
                              2                   0     0     0     0     0     0     0     0
-                             3                  28     2     1     0    28     2     1     0
+                             3                  24     2     3     0    24     2     3     0
 #+end_example
 
 #+BEGIN_SRC R :exports results :results output :session *R* :cache no
@@ -1073,24 +1066,21 @@ ftable(reason = res3stage[scenario %in% 9:18,reason],
 #+begin_example
                                     scenario     9    10    11    12    13    14    15    16    17    18
 reason                       method                                                                     
-decreasing information       1                   0     0     1     0     0     0     1     0     0     0
-                             2                   0     0     1     0     0     0     1     0     0     0
-                             3                   0     0     1     0     0     0     1     0     0     0
-efficacy                     1                4912   112  4794    97  4912   112  4794    97  4643   116
-                             2                4890   109  4771    94  4914   112  4797    97  4648   116
-                             3                5311   149  4921   110  5311   149  4921   110  4780   126
-futility                     1                 841 12703   819 12404   841 12703   819 12404   814  7880
-                             2                 785 12441   766 12253   860 12774   821 12416   820  7890
-                             3                 741 12311   772 12273   741 12311   772 12273   768  7790
-Imax reached                 1                  24    43     0     0    24    43     0     0     0     0
-                             2                  18    29     0     0    25    44     0     0     0     0
-                             3                  24    44     0     0    24    44     0     0     0     0
-no boundary crossed          1               11791  7101 12153  7464 11791  7101 12153  7464 12487  7717
-                             2               11914  7382 12250  7618 11762  7029 12147  7452 12470  7700
-                             3               11314  7449 12025  7579 11314  7449 12025  7579 12332  7878
+efficacy                     1                6334   116  6177   109  6334   116  6177   109  5961   101
+                             2                6322   113  6160   107  6337   116  6182   110  5963   101
+                             3                6782   156  6325   127  6782   156  6325   127  6105   110
+futility                     1                 465 12836   438 12525   465 12836   438 12525   397  7896
+                             2                 427 12493   398 12326   496 12946   442 12540   403  7911
+                             3                 368 12227   395 12319   368 12227   395 12319   364  7768
+Imax reached                 1                  14    22     0     0    14    22     0     0     0     0
+                             2                  12    17     0     0    16    25     0     0     0     0
+                             3                  12    22     0     0    12    22     0     0     0     0
+no boundary crossed          1               10180  6839 10608  7323 10180  6839 10608  7323 10956  7684
+                             2               10274  7192 10701  7526 10137  6726 10599  7307 10942  7666
+                             3                9588  7400 10430  7507  9588  7400 10430  7507 10773  7957
 stop for futility at interim 1                   0     0     0     0     0     0     0     0     0     0
                              2                   0     0     0     0     0     0     0     0     0     0
-                             3                  26     0     1     0    26     0     1     0     3     0
+                             3                  27     0     1     0    27     0     1     0     0     0
 #+end_example
 
 \clearpage
@@ -1114,24 +1104,24 @@ print(tablePrint[order(tablePrint$scenario),.SD,.SDcols = setdiff(names(tablePri
 #+RESULTS:
 #+begin_example
         N  hypo missing ar binding  fixC fu2eff_1 fu2eff_2 fu2eff_3 eff2fu_1 eff2fu_2 eff2fu_3
- 1: 10000 power    TRUE 10    TRUE FALSE    0.57%    0.61%        0    0.17%    0.20%    1.07%
- 2: 10000 typeI    TRUE 10    TRUE FALSE    0.10%    0.09%        0    0.11%    0.11%    0.34%
- 3: 10000 power    TRUE  5    TRUE FALSE    0.08%    0.08%        0    0.07%    0.07%    0.67%
- 4: 10000 typeI    TRUE  5    TRUE FALSE    0.02%    0.02%        0    0.02%    0.02%    0.13%
- 5: 10000 power    TRUE 10    TRUE  TRUE    0.22%    0.16%        0    0.67%    0.65%    1.07%
- 6: 10000 typeI    TRUE 10    TRUE  TRUE    0.02%    0.01%        0    0.21%    0.21%    0.34%
- 7: 10000 power    TRUE  5    TRUE  TRUE    0.02%    0.02%        0    0.46%    0.45%    0.67%
- 8: 10000 typeI    TRUE  5    TRUE  TRUE        0        0        0    0.08%    0.08%    0.13%
- 9: 10000 power    TRUE 10   FALSE  TRUE    0.14%    0.11%        0    0.58%    0.55%    1.04%
-10: 10000 typeI    TRUE 10   FALSE  TRUE        0        0        0    0.20%    0.19%    0.33%
-11: 10000 power    TRUE  5   FALSE  TRUE    0.01%    0.01%        0    0.46%    0.44%    0.60%
-12: 10000 typeI    TRUE  5   FALSE  TRUE        0        0        0    0.06%    0.06%    0.09%
-13: 10000 power    TRUE 10   FALSE FALSE    0.41%    0.42%        0    0.21%    0.22%    1.04%
-14: 10000 typeI    TRUE 10   FALSE FALSE        0        0        0    0.12%    0.12%    0.33%
-15: 10000 power    TRUE  5   FALSE FALSE    0.03%    0.03%        0    0.04%    0.04%    0.60%
-16: 10000 typeI    TRUE  5   FALSE FALSE        0        0        0    0.01%    0.01%    0.09%
-17: 10000 power   FALSE  5    TRUE FALSE    0.06%    0.07%        0    0.04%    0.04%    0.63%
-18: 10000 typeI   FALSE  5    TRUE FALSE    0.01%    0.01%        0    0.01%    0.01%    0.12%
+ 1: 10000 power    TRUE 10    TRUE FALSE    0.43%    0.50%        0    0.13%    0.14%    0.77%
+ 2: 10000 typeI    TRUE 10    TRUE FALSE    0.13%    0.13%        0    0.13%    0.13%    0.40%
+ 3: 10000 power    TRUE  5    TRUE FALSE    0.05%    0.05%        0    0.05%    0.05%    0.55%
+ 4: 10000 typeI    TRUE  5    TRUE FALSE    0.03%    0.03%        0    0.02%    0.02%    0.11%
+ 5: 10000 power    TRUE 10    TRUE  TRUE    0.24%    0.19%        0    0.37%    0.37%    0.77%
+ 6: 10000 typeI    TRUE 10    TRUE  TRUE    0.04%    0.04%        0    0.24%    0.24%    0.40%
+ 7: 10000 power    TRUE  5    TRUE  TRUE        0        0        0    0.40%    0.39%    0.55%
+ 8: 10000 typeI    TRUE  5    TRUE  TRUE        0        0        0    0.09%    0.08%    0.11%
+ 9:  9900 power    TRUE 10   FALSE  TRUE    0.21%    0.17%        0    0.49%    0.49%    0.76%
+10: 10000 typeI    TRUE 10   FALSE  TRUE        0        0        0    0.23%    0.23%    0.36%
+11:  9900 power    TRUE  5   FALSE  TRUE        0        0        0    0.35%    0.32%    0.47%
+12: 10000 typeI    TRUE  5   FALSE  TRUE        0        0        0    0.09%    0.09%    0.13%
+13:  9900 power    TRUE 10   FALSE FALSE    0.40%    0.46%        0    0.15%    0.16%    0.76%
+14: 10000 typeI    TRUE 10   FALSE FALSE        0        0        0    0.08%    0.10%    0.36%
+15:  9900 power    TRUE  5   FALSE FALSE    0.04%    0.05%        0    0.04%    0.04%    0.47%
+16: 10000 typeI    TRUE  5   FALSE FALSE        0        0        0    0.02%    0.02%    0.13%
+17: 10000 power   FALSE  5    TRUE FALSE    0.08%    0.08%        0    0.04%    0.04%    0.52%
+18:  9900 typeI   FALSE  5    TRUE FALSE    0.02%    0.02%        0    0.03%    0.03%    0.14%
 #+end_example
 
 #+BEGIN_SRC R :exports none :results output :session *R* :cache no
@@ -1144,7 +1134,7 @@ table.tempo[,100*range(eff2fu_3-eff2fu_2)]
 #+END_SRC
 
 #+RESULTS:
-: [1] 0.03 0.87
+: [1] 0.03 0.63
 
 
 \clearpage
@@ -1166,24 +1156,24 @@ print(tablePrint[order(tablePrint$scenario),.SD,.SDcols = setdiff(names(tablePri
 #+RESULTS:
 #+begin_example
         N  hypo missing ar binding  fixC fu2eff_1 fu2eff_2 fu2eff_3 eff2fu_1 eff2fu_2 eff2fu_3
- 1: 10000 power    TRUE 10    TRUE FALSE    0.68%    0.69%        0    0.39%    0.41%    1.55%
- 2: 10000 typeI    TRUE 10    TRUE FALSE    0.12%    0.11%        0    0.14%    0.14%    0.44%
- 3: 10000 power    TRUE  5    TRUE FALSE    0.13%    0.14%        0    0.10%    0.10%    0.77%
- 4: 10000 typeI    TRUE  5    TRUE FALSE        0        0        0    0.05%    0.05%    0.12%
- 5: 10000 power    TRUE 10    TRUE  TRUE    0.36%    0.32%        0    1.10%    1.06%    1.55%
- 6: 10000 typeI    TRUE 10    TRUE  TRUE    0.04%    0.03%        0    0.25%    0.23%    0.44%
- 7: 10000 power    TRUE  5    TRUE  TRUE    0.01%    0.01%        0    0.56%    0.56%    0.77%
- 8: 10000 typeI    TRUE  5    TRUE  TRUE        0        0        0    0.10%    0.10%    0.12%
- 9: 10000 power    TRUE 10   FALSE  TRUE    0.36%    0.32%        0    1.00%    0.94%    1.60%
-10: 10000 typeI    TRUE 10   FALSE  TRUE        0        0        0    0.30%    0.30%    0.51%
-11: 10000 power    TRUE  5   FALSE  TRUE    0.02%    0.02%        0    0.54%    0.53%    0.89%
-12: 10000 typeI    TRUE  5   FALSE  TRUE        0        0        0    0.14%    0.13%    0.19%
-13: 10000 power    TRUE 10   FALSE FALSE    0.68%    0.69%        0    0.38%    0.39%    1.60%
-14: 10000 typeI    TRUE 10   FALSE FALSE        0        0        0    0.20%    0.20%    0.51%
-15: 10000 power    TRUE  5   FALSE FALSE    0.11%    0.10%        0    0.11%    0.12%    0.89%
-16: 10000 typeI    TRUE  5   FALSE FALSE        0        0        0    0.01%    0.01%    0.19%
-17: 10000 power   FALSE  5    TRUE FALSE    0.15%    0.14%        0    0.05%    0.05%    0.70%
-18: 10000 typeI   FALSE  5    TRUE FALSE    0.06%    0.06%        0    0.03%    0.03%    0.17%
+ 1: 10000 power    TRUE 10    TRUE FALSE    0.57%    0.66%        0    0.15%    0.19%    0.91%
+ 2: 10000 typeI    TRUE 10    TRUE FALSE    0.16%    0.18%        0    0.22%    0.22%    0.52%
+ 3: 10000 power    TRUE  5    TRUE FALSE    0.15%    0.16%        0    0.06%    0.06%    0.53%
+ 4: 10000 typeI    TRUE  5    TRUE FALSE    0.02%    0.02%        0    0.02%    0.02%    0.17%
+ 5: 10000 power    TRUE 10    TRUE  TRUE    0.37%    0.36%        0    0.61%    0.60%    0.91%
+ 6: 10000 typeI    TRUE 10    TRUE  TRUE    0.06%    0.04%        0    0.33%    0.32%    0.52%
+ 7: 10000 power    TRUE  5    TRUE  TRUE    0.05%    0.03%        0    0.37%    0.35%    0.53%
+ 8: 10000 typeI    TRUE  5    TRUE  TRUE    0.01%        0        0    0.12%    0.11%    0.17%
+ 9: 10000 power    TRUE 10   FALSE  TRUE    0.41%    0.39%        0    0.58%    0.56%    0.88%
+10:  9931 typeI    TRUE 10   FALSE  TRUE        0        0        0    0.33%    0.30%    0.53%
+11: 10000 power    TRUE  5   FALSE  TRUE    0.02%    0.01%        0    0.36%    0.35%    0.57%
+12: 10000 typeI    TRUE  5   FALSE  TRUE        0        0        0    0.09%    0.08%    0.15%
+13: 10000 power    TRUE 10   FALSE FALSE    0.66%    0.74%        0    0.24%    0.26%    0.88%
+14:  9931 typeI    TRUE 10   FALSE FALSE        0        0        0    0.18%    0.21%    0.53%
+15: 10000 power    TRUE  5   FALSE FALSE    0.10%    0.12%        0    0.07%    0.07%    0.57%
+16: 10000 typeI    TRUE  5   FALSE FALSE        0        0        0    0.07%    0.07%    0.15%
+17: 10000 power   FALSE  5    TRUE FALSE    0.11%    0.10%        0    0.07%    0.07%    0.53%
+18: 10000 typeI   FALSE  5    TRUE FALSE    0.04%    0.04%        0    0.03%    0.03%    0.16%
 #+end_example
 
 
@@ -1273,19 +1263,19 @@ res3stageW.PmismatchFU[order(scenario),.SD,.SDcols = setdiff(names(res3stageW.Pm
      hypo missing ar binding  fixC method 1 method 2 method 3
  1: power    TRUE 10    TRUE FALSE        0        0        0
  2: typeI    TRUE 10    TRUE FALSE        0        0        0
- 3: power    TRUE  5    TRUE FALSE        0        0        0
- 4: typeI    TRUE  5    TRUE FALSE        0        0        0
+ 3: power    TRUE  5    TRUE FALSE        0        0    0.10%
+ 4: typeI    TRUE  5    TRUE FALSE        0    0.01%        0
  5: power    TRUE 10    TRUE  TRUE        0        0        0
  6: typeI    TRUE 10    TRUE  TRUE        0        0        0
- 7: power    TRUE  5    TRUE  TRUE        0        0        0
+ 7: power    TRUE  5    TRUE  TRUE        0        0    0.10%
  8: typeI    TRUE  5    TRUE  TRUE        0        0        0
- 9: power    TRUE 10   FALSE  TRUE        0    0.05%        0
+ 9: power    TRUE 10   FALSE  TRUE        0        0        0
 10: typeI    TRUE 10   FALSE  TRUE        0        0        0
-11: power    TRUE  5   FALSE  TRUE        0        0        0
+11: power    TRUE  5   FALSE  TRUE    0.10%        0        0
 12: typeI    TRUE  5   FALSE  TRUE        0        0        0
 13: power    TRUE 10   FALSE FALSE        0        0        0
 14: typeI    TRUE 10   FALSE FALSE        0        0        0
-15: power    TRUE  5   FALSE FALSE        0        0        0
+15: power    TRUE  5   FALSE FALSE    0.10%        0        0
 16: typeI    TRUE  5   FALSE FALSE        0        0        0
 17: power   FALSE  5    TRUE FALSE        0        0        0
 18: typeI   FALSE  5    TRUE FALSE        0        0        0
@@ -1297,7 +1287,7 @@ print(res3stage[decision=="futility" & p.value_MUE<0.025,min(p.value_MUE)], digi
 #+END_SRC
 
 #+RESULTS:
-: [1] 0.02499483653
+: [1] 0.02499104799
 
 
 When concluding for efficacy:
@@ -1311,11 +1301,11 @@ res3stageW.PmismatchEFF[order(scenario),.SD,.SDcols = setdiff(names(res3stageW.P
 #+RESULTS:
 #+begin_example
      hypo missing ar binding  fixC method 1 method 2 method 3
- 1: power    TRUE 10    TRUE FALSE        0        0        0
+ 1: power    TRUE 10    TRUE FALSE    0.01%        0        0
  2: typeI    TRUE 10    TRUE FALSE        0        0        0
  3: power    TRUE  5    TRUE FALSE        0        0        0
- 4: typeI    TRUE  5    TRUE FALSE        0    0.41%        0
- 5: power    TRUE 10    TRUE  TRUE        0    0.01%        0
+ 4: typeI    TRUE  5    TRUE FALSE        0        0        0
+ 5: power    TRUE 10    TRUE  TRUE    0.01%        0        0
  6: typeI    TRUE 10    TRUE  TRUE        0        0        0
  7: power    TRUE  5    TRUE  TRUE        0        0        0
  8: typeI    TRUE  5    TRUE  TRUE        0        0        0
@@ -1323,12 +1313,12 @@ res3stageW.PmismatchEFF[order(scenario),.SD,.SDcols = setdiff(names(res3stageW.P
 10: typeI    TRUE 10   FALSE  TRUE        0        0        0
 11: power    TRUE  5   FALSE  TRUE        0        0        0
 12: typeI    TRUE  5   FALSE  TRUE        0        0        0
-13: power    TRUE 10   FALSE FALSE        0        0        0
+13: power    TRUE 10   FALSE FALSE        0        0    0.01%
 14: typeI    TRUE 10   FALSE FALSE        0        0        0
 15: power    TRUE  5   FALSE FALSE        0        0        0
 16: typeI    TRUE  5   FALSE FALSE        0        0        0
-17: power   FALSE  5    TRUE FALSE        0        0    0.01%
-18: typeI   FALSE  5    TRUE FALSE        0    0.39%        0
+17: power   FALSE  5    TRUE FALSE        0        0        0
+18: typeI   FALSE  5    TRUE FALSE        0        0        0
 #+end_example
 
 Largest mismatch:
@@ -1337,7 +1327,7 @@ print(res3stage[decision=="efficacy" & p.value_MUE>0.025,max(p.value_MUE)], digi
 #+END_SRC
 
 #+RESULTS:
-: [1] 0.02500576079
+: [1] 0.02500693409
 
 \clearpage
 
@@ -1364,14 +1354,14 @@ res2stageW.CImismatchFU[order(scenario),.SD,.SDcols = setdiff(names(res2stageW.C
  6: typeI    TRUE 10    TRUE  TRUE              0              0              0
  7: power    TRUE  5    TRUE  TRUE              0              0              0
  8: typeI    TRUE  5    TRUE  TRUE              0              0              0
- 9: power    TRUE 10   FALSE  TRUE 0 (NA: 32.62%) 0 (NA: 30.38%) 0 (NA: 31.41%)
-10: typeI    TRUE 10   FALSE  TRUE  0 (NA: 0.21%)  0 (NA: 0.19%)  0 (NA: 0.34%)
-11: power    TRUE  5   FALSE  TRUE 0 (NA: 30.64%) 0 (NA: 29.26%) 0 (NA: 30.24%)
-12: typeI    TRUE  5   FALSE  TRUE  0 (NA: 0.06%)  0 (NA: 0.06%)  0 (NA: 0.09%)
-13: power    TRUE 10   FALSE FALSE 0 (NA: 30.41%) 0 (NA: 31.13%) 0 (NA: 31.41%)
-14: typeI    TRUE 10   FALSE FALSE  0 (NA: 0.12%)  0 (NA: 0.12%)  0 (NA: 0.34%)
-15: power    TRUE  5   FALSE FALSE 0 (NA: 29.09%) 0 (NA: 29.28%) 0 (NA: 30.24%)
-16: typeI    TRUE  5   FALSE FALSE  0 (NA: 0.01%)  0 (NA: 0.01%)  0 (NA: 0.09%)
+ 9: power    TRUE 10   FALSE  TRUE 0 (NA: 37.73%) 0 (NA: 34.80%) 0 (NA: 35.93%)
+10: typeI    TRUE 10   FALSE  TRUE  0 (NA: 0.24%)  0 (NA: 0.24%)  0 (NA: 0.37%)
+11: power    TRUE  5   FALSE  TRUE 0 (NA: 35.87%) 0 (NA: 33.40%) 0 (NA: 34.53%)
+12: typeI    TRUE  5   FALSE  TRUE  0 (NA: 0.09%)  0 (NA: 0.09%)  0 (NA: 0.13%)
+13: power    TRUE 10   FALSE FALSE 0 (NA: 34.13%) 0 (NA: 35.61%) 0 (NA: 35.93%)
+14: typeI    TRUE 10   FALSE FALSE  0 (NA: 0.08%)  0 (NA: 0.10%)  0 (NA: 0.37%)
+15: power    TRUE  5   FALSE FALSE 0 (NA: 33.44%) 0 (NA: 33.62%) 0 (NA: 34.53%)
+16: typeI    TRUE  5   FALSE FALSE  0 (NA: 0.02%)  0 (NA: 0.02%)  0 (NA: 0.13%)
 17: power   FALSE  5    TRUE FALSE              0              0              0
 18: typeI   FALSE  5    TRUE FALSE              0              0              0
 #+end_example
@@ -1381,11 +1371,11 @@ res2stage[binding==FALSE & decision %in% c("futility","efficacy"),.(CINA.pc=100*
 #+END_SRC
 
 #+RESULTS:
-:    decision stage CINA.pc     min.p median.p
-: 1: efficacy     2       0 4.423e-03 0.009003
-: 2: futility     1     100 9.862e-01 1.000000
-: 3: efficacy     1       0 3.395e-11 0.000861
-: 4: futility     2       0 2.500e-02 0.448205
+:    decision stage CINA.pc     min.p  median.p
+: 1: efficacy     2       0 4.112e-03 0.0084281
+: 2: efficacy     1       0 2.024e-11 0.0004663
+: 3: futility     2       0 2.500e-02 0.4854286
+: 4: futility     1     100 9.906e-01 1.0000000
 
 When concluding for efficacy:
 #+BEGIN_SRC R :exports results :results output :session *R* :cache no
@@ -1439,14 +1429,14 @@ res3stageW.CImismatchFU[order(scenario),.SD,.SDcols = setdiff(names(res3stageW.C
  6: typeI    TRUE 10    TRUE  TRUE              0              0              0
  7: power    TRUE  5    TRUE  TRUE              0              0              0
  8: typeI    TRUE  5    TRUE  TRUE              0              0              0
- 9: power    TRUE 10   FALSE  TRUE 0 (NA: 44.32%) 0 (NA: 42.22%) 0 (NA: 45.19%)
-10: typeI    TRUE 10   FALSE  TRUE  0 (NA: 0.31%)  0 (NA: 0.31%)  0 (NA: 0.52%)
-11: power    TRUE  5   FALSE  TRUE 0 (NA: 43.38%) 0 (NA: 41.16%) 0 (NA: 42.96%)
-12: typeI    TRUE  5   FALSE  TRUE  0 (NA: 0.14%)  0 (NA: 0.13%)  0 (NA: 0.19%)
-13: power    TRUE 10   FALSE FALSE 0 (NA: 41.63%) 0 (NA: 42.43%) 0 (NA: 45.19%)
-14: typeI    TRUE 10   FALSE FALSE  0 (NA: 0.21%)  0 (NA: 0.21%)  0 (NA: 0.52%)
-15: power    TRUE  5   FALSE FALSE 0 (NA: 41.87%) 0 (NA: 42.03%) 0 (NA: 42.96%)
-16: typeI    TRUE  5   FALSE FALSE  0 (NA: 0.01%)  0 (NA: 0.01%)  0 (NA: 0.19%)
+ 9: power    TRUE 10   FALSE  TRUE 0 (NA: 48.25%) 0 (NA: 45.63%) 0 (NA: 47.50%)
+10: typeI    TRUE 10   FALSE  TRUE  0 (NA: 0.34%)  0 (NA: 0.31%)  0 (NA: 0.55%)
+11: power    TRUE  5   FALSE  TRUE 0 (NA: 46.92%) 0 (NA: 43.72%) 0 (NA: 45.38%)
+12: typeI    TRUE  5   FALSE  TRUE  0 (NA: 0.09%)  0 (NA: 0.08%)  0 (NA: 0.15%)
+13: power    TRUE 10   FALSE FALSE 0 (NA: 45.00%) 0 (NA: 47.11%) 0 (NA: 47.50%)
+14: typeI    TRUE 10   FALSE FALSE  0 (NA: 0.19%)  0 (NA: 0.22%)  0 (NA: 0.55%)
+15: power    TRUE  5   FALSE FALSE 0 (NA: 44.89%) 0 (NA: 45.10%) 0 (NA: 45.38%)
+16: typeI    TRUE  5   FALSE FALSE  0 (NA: 0.07%)  0 (NA: 0.07%)  0 (NA: 0.15%)
 17: power   FALSE  5    TRUE FALSE              0              0              0
 18: typeI   FALSE  5    TRUE FALSE              0              0              0
 #+end_example
@@ -1456,13 +1446,13 @@ res3stage[binding==FALSE & decision %in% c("futility","efficacy"),.(CINA.pc=100*
 #+END_SRC
 
 #+RESULTS:
-:    decision stage CINA.pc    min.p  median.p
-: 1: efficacy     3    0.00 0.005945 0.0122023
-: 2: futility     3    0.00 0.024995 0.4585199
-: 3: efficacy     2    0.00 0.001856 0.0046410
-: 4: efficacy     1    0.00 0.000000 0.0006087
-: 5: futility     2   96.01 0.025561 1.0000000
-: 6: futility     1  100.00 0.995828 1.0000000
+:    decision stage CINA.pc     min.p  median.p
+: 1: efficacy     3    0.00 6.662e-03 0.0115725
+: 2: futility     2   96.62 3.184e-02 1.0000000
+: 3: futility     3    0.00 2.500e-02 0.4881406
+: 4: efficacy     1    0.00 1.718e-10 0.0003669
+: 5: futility     1  100.00 9.972e-01 1.0000000
+: 6: efficacy     2    0.00 2.098e-03 0.0042770
 
 When concluding for efficacy:
 #+BEGIN_SRC R :exports results :results output :session *R* :cache no
@@ -1483,11 +1473,11 @@ res3stageW.CImismatchEFF[order(scenario),.SD,.SDcols = setdiff(names(res3stageW.
  6: typeI    TRUE 10    TRUE  TRUE        0        0        0
  7: power    TRUE  5    TRUE  TRUE        0        0        0
  8: typeI    TRUE  5    TRUE  TRUE        0        0        0
- 9: power    TRUE 10   FALSE  TRUE        0        0    0.01%
+ 9: power    TRUE 10   FALSE  TRUE        0        0        0
 10: typeI    TRUE 10   FALSE  TRUE        0        0        0
 11: power    TRUE  5   FALSE  TRUE        0        0        0
 12: typeI    TRUE  5   FALSE  TRUE        0        0        0
-13: power    TRUE 10   FALSE FALSE        0        0        0
+13: power    TRUE 10   FALSE FALSE        0        0    0.01%
 14: typeI    TRUE 10   FALSE FALSE        0        0        0
 15: power    TRUE  5   FALSE FALSE        0        0        0
 16: typeI    TRUE  5   FALSE FALSE        0        0        0
@@ -1500,7 +1490,7 @@ print(res3stage[decision=="efficacy" & lower_MUE<0,min(lower_MUE)], digits = 10)
 #+END_SRC
 
 #+RESULTS:
-: [1] -2.220446049e-16
+: [1] -1.665334537e-16
 
 
 
@@ -1517,25 +1507,25 @@ res2W.stage.rangep[order(scenario),.SD,.SDcols = setdiff(names(res2W.stage.range
 
 #+RESULTS:
 #+begin_example
-    missing binding  fixC ar  hypo       method 1       method 2       method 3
- 1:    TRUE    TRUE FALSE 10 power     [0;0.9147]     [0;0.9147]      [0;0.919]
- 2:    TRUE    TRUE FALSE 10 typeI [1e-04;0.9999] [1e-04;0.9999]      [1e-04;1]
- 3:    TRUE    TRUE FALSE  5 power     [0;0.9015]     [0;0.9015]     [0;0.9146]
- 4:    TRUE    TRUE FALSE  5 typeI [1e-04;0.9998] [1e-04;0.9998] [1e-04;0.9999]
- 5:    TRUE    TRUE  TRUE 10 power     [0;0.9494]     [0;0.9516]      [0;0.919]
- 6:    TRUE    TRUE  TRUE 10 typeI      [2e-04;1]      [2e-04;1]      [1e-04;1]
- 7:    TRUE    TRUE  TRUE  5 power     [0;0.9533]     [0;0.9545]     [0;0.9146]
- 8:    TRUE    TRUE  TRUE  5 typeI      [3e-04;1]      [3e-04;1] [1e-04;0.9999]
- 9:    TRUE   FALSE  TRUE 10 power          [0;1]          [0;1]          [0;1]
-10:    TRUE   FALSE  TRUE 10 typeI      [1e-04;1]      [1e-04;1]      [1e-04;1]
-11:    TRUE   FALSE  TRUE  5 power          [0;1]          [0;1]          [0;1]
-12:    TRUE   FALSE  TRUE  5 typeI      [2e-04;1]      [2e-04;1]      [1e-04;1]
-13:    TRUE   FALSE FALSE 10 power          [0;1]          [0;1]          [0;1]
-14:    TRUE   FALSE FALSE 10 typeI      [1e-04;1]      [1e-04;1]      [1e-04;1]
-15:    TRUE   FALSE FALSE  5 power          [0;1]          [0;1]          [0;1]
-16:    TRUE   FALSE FALSE  5 typeI          [0;1]          [0;1]      [1e-04;1]
-17:   FALSE    TRUE FALSE  5 power     [0;0.9642]     [0;0.9642]       [0;0.97]
-18:   FALSE    TRUE FALSE  5 typeI          [0;1]          [0;1]      [1e-04;1]
+    missing binding  fixC ar  hypo   method 1   method 2   method 3
+ 1:    TRUE    TRUE FALSE 10 power [0;0.9163] [0;0.9163] [0;0.9163]
+ 2:    TRUE    TRUE FALSE 10 typeI      [0;1]      [0;1]      [0;1]
+ 3:    TRUE    TRUE FALSE  5 power [0;0.9194] [0;0.9194] [0;0.9202]
+ 4:    TRUE    TRUE FALSE  5 typeI      [0;1]      [0;1]      [0;1]
+ 5:    TRUE    TRUE  TRUE 10 power [0;0.9534] [0;0.9557] [0;0.9163]
+ 6:    TRUE    TRUE  TRUE 10 typeI      [0;1]      [0;1]      [0;1]
+ 7:    TRUE    TRUE  TRUE  5 power [0;0.9606] [0;0.9624] [0;0.9202]
+ 8:    TRUE    TRUE  TRUE  5 typeI  [1e-04;1]  [1e-04;1]      [0;1]
+ 9:    TRUE   FALSE  TRUE 10 power      [0;1]      [0;1]      [0;1]
+10:    TRUE   FALSE  TRUE 10 typeI  [3e-04;1]  [4e-04;1]  [2e-04;1]
+11:    TRUE   FALSE  TRUE  5 power      [0;1]      [0;1]      [0;1]
+12:    TRUE   FALSE  TRUE  5 typeI  [3e-04;1]  [3e-04;1]  [1e-04;1]
+13:    TRUE   FALSE FALSE 10 power      [0;1]      [0;1]      [0;1]
+14:    TRUE   FALSE FALSE 10 typeI  [1e-04;1]  [1e-04;1]  [2e-04;1]
+15:    TRUE   FALSE FALSE  5 power      [0;1]      [0;1]      [0;1]
+16:    TRUE   FALSE FALSE  5 typeI  [1e-04;1]  [1e-04;1]  [1e-04;1]
+17:   FALSE    TRUE FALSE  5 power  [0;0.867]  [0;0.867]  [0;0.882]
+18:   FALSE    TRUE FALSE  5 typeI [0;0.9999] [0;0.9999]      [0;1]
 #+end_example
 
 \clearpage
@@ -1550,25 +1540,25 @@ res3W.stage.rangep[order(scenario),.SD,.SDcols = setdiff(names(res3W.stage.range
 
 #+RESULTS:
 #+begin_example
-    missing binding  fixC ar  hypo       method 1       method 2       method 3
- 1:    TRUE    TRUE FALSE 10 power     [0;0.9547]     [0;0.9547]     [0;0.9547]
- 2:    TRUE    TRUE FALSE 10 typeI [2e-04;0.9999] [2e-04;0.9999] [4e-04;0.9999]
- 3:    TRUE    TRUE FALSE  5 power     [0;0.9954]     [0;0.9954]      [0;0.996]
- 4:    TRUE    TRUE FALSE  5 typeI      [1e-04;1]      [1e-04;1]      [1e-04;1]
- 5:    TRUE    TRUE  TRUE 10 power     [0;0.9852]      [0;0.986]     [0;0.9547]
- 6:    TRUE    TRUE  TRUE 10 typeI      [6e-04;1]      [6e-04;1] [4e-04;0.9999]
- 7:    TRUE    TRUE  TRUE  5 power     [0;0.9993]     [0;0.9993]      [0;0.996]
- 8:    TRUE    TRUE  TRUE  5 typeI      [5e-04;1]      [5e-04;1]      [1e-04;1]
- 9:    TRUE   FALSE  TRUE 10 power          [0;1]          [0;1]          [0;1]
-10:    TRUE   FALSE  TRUE 10 typeI      [6e-04;1]      [6e-04;1]      [3e-04;1]
-11:    TRUE   FALSE  TRUE  5 power          [0;1]          [0;1]          [0;1]
-12:    TRUE   FALSE  TRUE  5 typeI      [6e-04;1]      [6e-04;1]      [1e-04;1]
-13:    TRUE   FALSE FALSE 10 power          [0;1]          [0;1]          [0;1]
-14:    TRUE   FALSE FALSE 10 typeI      [2e-04;1]      [2e-04;1]      [3e-04;1]
-15:    TRUE   FALSE FALSE  5 power          [0;1]          [0;1]          [0;1]
-16:    TRUE   FALSE FALSE  5 typeI      [1e-04;1]      [1e-04;1]      [1e-04;1]
-17:   FALSE    TRUE FALSE  5 power     [0;0.9812]     [0;0.9812]     [0;0.9849]
-18:   FALSE    TRUE FALSE  5 typeI      [4e-04;1]      [4e-04;1]      [4e-04;1]
+    missing binding  fixC ar  hypo       method 1       method 2   method 3
+ 1:    TRUE    TRUE FALSE 10 power     [0;0.8665]     [0;0.8663] [0;0.9035]
+ 2:    TRUE    TRUE FALSE 10 typeI [1e-04;0.9999] [1e-04;0.9999]  [2e-04;1]
+ 3:    TRUE    TRUE FALSE  5 power     [0;0.8959]     [0;0.8959] [0;0.9405]
+ 4:    TRUE    TRUE FALSE  5 typeI     [0;0.9998]     [0;0.9998] [0;0.9999]
+ 5:    TRUE    TRUE  TRUE 10 power      [0;0.935]     [0;0.9394] [0;0.9035]
+ 6:    TRUE    TRUE  TRUE 10 typeI      [3e-04;1]      [3e-04;1]  [2e-04;1]
+ 7:    TRUE    TRUE  TRUE  5 power      [0;0.965]     [0;0.9659] [0;0.9405]
+ 8:    TRUE    TRUE  TRUE  5 typeI          [0;1]      [1e-04;1] [0;0.9999]
+ 9:    TRUE   FALSE  TRUE 10 power          [0;1]          [0;1]      [0;1]
+10:    TRUE   FALSE  TRUE 10 typeI      [4e-04;1]      [5e-04;1]  [3e-04;1]
+11:    TRUE   FALSE  TRUE  5 power          [0;1]          [0;1]      [0;1]
+12:    TRUE   FALSE  TRUE  5 typeI      [3e-04;1]      [4e-04;1]  [1e-04;1]
+13:    TRUE   FALSE FALSE 10 power          [0;1]          [0;1]      [0;1]
+14:    TRUE   FALSE FALSE 10 typeI      [1e-04;1]      [1e-04;1]  [3e-04;1]
+15:    TRUE   FALSE FALSE  5 power          [0;1]          [0;1]      [0;1]
+16:    TRUE   FALSE FALSE  5 typeI      [1e-04;1]      [1e-04;1]  [1e-04;1]
+17:   FALSE    TRUE FALSE  5 power     [0;0.8745]     [0;0.8745]  [0;0.906]
+18:   FALSE    TRUE FALSE  5 typeI     [0;0.9998]     [0;0.9998] [0;0.9999]
 #+end_example
 
 \clearpage 
@@ -1586,24 +1576,24 @@ dcast(res2stage.coverage, hypo + missing + ar + binding + fixC ~ method.char, va
 #+RESULTS:
 #+begin_example
      hypo missing ar binding  fixC           method 1           method 2           method 3
- 1: power   FALSE  5    TRUE FALSE             94.80%             94.80%             95.07%
- 2: power    TRUE  5   FALSE FALSE 95.89% (NA: 5.71%) 95.88% (NA: 5.75%) 95.98% (NA: 5.46%)
- 3: power    TRUE  5   FALSE  TRUE 97.79% (NA: 6.15%) 97.77% (NA: 5.84%) 95.98% (NA: 5.46%)
- 4: power    TRUE  5    TRUE FALSE 94.73% (NA: 0.01%) 94.74% (NA: 0.01%) 94.86% (NA: 0.01%)
- 5: power    TRUE  5    TRUE  TRUE 94.92% (NA: 0.01%) 95.02% (NA: 0.01%) 94.86% (NA: 0.01%)
- 6: power    TRUE 10   FALSE FALSE 95.92% (NA: 5.93%) 95.92% (NA: 6.09%) 95.90% (NA: 5.12%)
- 7: power    TRUE 10   FALSE  TRUE 97.40% (NA: 6.57%) 97.47% (NA: 6.04%) 95.90% (NA: 5.12%)
- 8: power    TRUE 10    TRUE FALSE             94.85%             94.83%             95.00%
- 9: power    TRUE 10    TRUE  TRUE             94.98%             95.18%             95.00%
-10: typeI   FALSE  5    TRUE FALSE             95.14%             95.14%             94.45%
-11: typeI    TRUE  5   FALSE FALSE 94.87% (NA: 0.01%) 94.87% (NA: 0.01%) 94.96% (NA: 0.09%)
-12: typeI    TRUE  5   FALSE  TRUE 94.92% (NA: 0.06%) 94.91% (NA: 0.06%) 94.96% (NA: 0.09%)
-13: typeI    TRUE  5    TRUE FALSE 94.82% (NA: 0.01%) 94.82% (NA: 0.01%) 94.30% (NA: 0.01%)
-14: typeI    TRUE  5    TRUE  TRUE 91.76% (NA: 0.01%) 91.61% (NA: 0.01%) 94.30% (NA: 0.01%)
-15: typeI    TRUE 10   FALSE FALSE 95.01% (NA: 0.12%) 95.01% (NA: 0.12%) 95.28% (NA: 0.31%)
-16: typeI    TRUE 10   FALSE  TRUE 95.09% (NA: 0.20%) 95.07% (NA: 0.19%) 95.28% (NA: 0.31%)
-17: typeI    TRUE 10    TRUE FALSE             95.16%             95.19%             94.70%
-18: typeI    TRUE 10    TRUE  TRUE             92.94%             92.79%             94.70%
+ 1: power   FALSE  5    TRUE FALSE             95.32%             95.35%             95.50%
+ 2: power    TRUE  5   FALSE FALSE 96.06% (NA: 3.12%) 96.06% (NA: 3.14%) 96.26% (NA: 2.86%)
+ 3: power    TRUE  5   FALSE  TRUE 97.57% (NA: 3.47%) 97.56% (NA: 3.18%) 96.26% (NA: 2.86%)
+ 4: power    TRUE  5    TRUE FALSE             94.68%             94.69%             94.86%
+ 5: power    TRUE  5    TRUE  TRUE             95.98%             95.90%             94.86%
+ 6: power    TRUE 10   FALSE FALSE 96.16% (NA: 3.16%) 96.22% (NA: 3.32%) 95.96% (NA: 2.52%)
+ 7: power    TRUE 10   FALSE  TRUE 97.11% (NA: 3.70%) 97.07% (NA: 3.36%) 95.96% (NA: 2.52%)
+ 8: power    TRUE 10    TRUE FALSE             94.76%             94.75%             95.04%
+ 9: power    TRUE 10    TRUE  TRUE             95.55%             95.67%             95.04%
+10: typeI   FALSE  5    TRUE FALSE             94.96%             94.96%             94.30%
+11: typeI    TRUE  5   FALSE FALSE 95.02% (NA: 0.02%) 95.02% (NA: 0.02%) 95.11% (NA: 0.12%)
+12: typeI    TRUE  5   FALSE  TRUE 95.09% (NA: 0.09%) 95.08% (NA: 0.09%) 95.11% (NA: 0.12%)
+13: typeI    TRUE  5    TRUE FALSE             94.63%             94.63%             94.19%
+14: typeI    TRUE  5    TRUE  TRUE             91.68%             91.52%             94.19%
+15: typeI    TRUE 10   FALSE FALSE 95.09% (NA: 0.08%) 95.11% (NA: 0.10%) 95.29% (NA: 0.35%)
+16: typeI    TRUE 10   FALSE  TRUE 95.23% (NA: 0.23%) 95.22% (NA: 0.23%) 95.29% (NA: 0.35%)
+17: typeI    TRUE 10    TRUE FALSE             94.56%             94.57%             94.17%
+18: typeI    TRUE 10    TRUE  TRUE             92.67%             92.39%             94.17%
 #+end_example
 
 #+BEGIN_SRC R :exports none :results output :session *R* :cache no
@@ -1616,7 +1606,7 @@ range(res2stage.coverage$coverage)
 #+END_SRC
 
 #+RESULTS:
-: [1] 91.61 97.79
+: [1] 91.52 97.57
 
 Average width of the confidence intervals
 #+BEGIN_SRC R :exports results :results output :session *R* :cache no
@@ -1632,24 +1622,24 @@ dcast(res2stage.width, hypo + missing + ar + binding + fixC ~ method.char, value
 #+RESULTS:
 #+begin_example
      hypo missing ar binding  fixC method 1 method 2 method 3
- 1: power   FALSE  5    TRUE FALSE   1.0518   1.0518    1.053
- 2: power    TRUE  5   FALSE FALSE   1.0356   1.0356    1.036
- 3: power    TRUE  5   FALSE  TRUE   1.0411   1.0415    1.036
- 4: power    TRUE  5    TRUE FALSE   1.0513   1.0514    1.052
- 5: power    TRUE  5    TRUE  TRUE   1.0564   1.0562    1.052
- 6: power    TRUE 10   FALSE FALSE   1.0474   1.0475    1.046
- 7: power    TRUE 10   FALSE  TRUE   1.0540   1.0547    1.046
- 8: power    TRUE 10    TRUE FALSE   1.0624   1.0627    1.060
- 9: power    TRUE 10    TRUE  TRUE   1.0685   1.0683    1.060
-10: typeI   FALSE  5    TRUE FALSE   1.0432   1.0431    1.045
-11: typeI    TRUE  5   FALSE FALSE   0.9996   0.9996    1.012
-12: typeI    TRUE  5   FALSE  TRUE   0.9996   0.9996    1.012
-13: typeI    TRUE  5    TRUE FALSE   1.0416   1.0416    1.044
-14: typeI    TRUE  5    TRUE  TRUE   1.0383   1.0388    1.044
-15: typeI    TRUE 10   FALSE FALSE   1.0001   1.0000    1.041
-16: typeI    TRUE 10   FALSE  TRUE   1.0000   0.9996    1.041
-17: typeI    TRUE 10    TRUE FALSE   1.0460   1.0454    1.054
-18: typeI    TRUE 10    TRUE  TRUE   1.0404   1.0417    1.054
+ 1: power   FALSE  5    TRUE FALSE   1.0532   1.0533    1.053
+ 2: power    TRUE  5   FALSE FALSE   1.0453   1.0453    1.045
+ 3: power    TRUE  5   FALSE  TRUE   1.0520   1.0526    1.045
+ 4: power    TRUE  5    TRUE FALSE   1.0520   1.0520    1.051
+ 5: power    TRUE  5    TRUE  TRUE   1.0586   1.0587    1.051
+ 6: power    TRUE 10   FALSE FALSE   1.0559   1.0558    1.051
+ 7: power    TRUE 10   FALSE  TRUE   1.0638   1.0649    1.051
+ 8: power    TRUE 10    TRUE FALSE   1.0627   1.0631    1.058
+ 9: power    TRUE 10    TRUE  TRUE   1.0708   1.0712    1.058
+10: typeI   FALSE  5    TRUE FALSE   1.0444   1.0443    1.047
+11: typeI    TRUE  5   FALSE FALSE   0.9995   0.9995    1.014
+12: typeI    TRUE  5   FALSE  TRUE   0.9994   0.9996    1.014
+13: typeI    TRUE  5    TRUE FALSE   1.0431   1.0429    1.047
+14: typeI    TRUE  5    TRUE  TRUE   1.0396   1.0406    1.047
+15: typeI    TRUE 10   FALSE FALSE   1.0009   1.0009    1.044
+16: typeI    TRUE 10   FALSE  TRUE   1.0005   1.0005    1.044
+17: typeI    TRUE 10    TRUE FALSE   1.0469   1.0457    1.057
+18: typeI    TRUE 10    TRUE  TRUE   1.0412   1.0425    1.057
 #+end_example
 
 Average ratio between the length of the MUE CIs vs. the ML CIs
@@ -1666,24 +1656,24 @@ dcast(res2stage.length, hypo + missing + ar + binding + fixC ~ method.char, valu
 #+RESULTS:
 #+begin_example
      hypo missing ar binding  fixC method 1 method 2 method 3
- 1: power   FALSE  5    TRUE FALSE   1.0554   1.0554    1.056
- 2: power    TRUE  5   FALSE FALSE   1.0477   1.0477    1.049
- 3: power    TRUE  5   FALSE  TRUE   1.0531   1.0531    1.049
- 4: power    TRUE  5    TRUE FALSE   1.0557   1.0557    1.056
- 5: power    TRUE  5    TRUE  TRUE   1.0600   1.0597    1.056
- 6: power    TRUE 10   FALSE FALSE   1.0544   1.0547    1.053
- 7: power    TRUE 10   FALSE  TRUE   1.0611   1.0612    1.053
- 8: power    TRUE 10    TRUE FALSE   1.0642   1.0645    1.062
- 9: power    TRUE 10    TRUE  TRUE   1.0697   1.0694    1.062
-10: typeI   FALSE  5    TRUE FALSE   1.0497   1.0496    1.052
-11: typeI    TRUE  5   FALSE FALSE   0.9995   0.9995    1.013
-12: typeI    TRUE  5   FALSE  TRUE   0.9996   0.9997    1.013
-13: typeI    TRUE  5    TRUE FALSE   1.0487   1.0486    1.052
-14: typeI    TRUE  5    TRUE  TRUE   1.0455   1.0461    1.052
-15: typeI    TRUE 10   FALSE FALSE   1.0002   1.0002    1.042
-16: typeI    TRUE 10   FALSE  TRUE   1.0003   0.9999    1.042
-17: typeI    TRUE 10    TRUE FALSE   1.0497   1.0492    1.059
-18: typeI    TRUE 10    TRUE  TRUE   1.0445   1.0458    1.059
+ 1: power   FALSE  5    TRUE FALSE   1.0579   1.0580    1.058
+ 2: power    TRUE  5   FALSE FALSE   1.0539   1.0539    1.053
+ 3: power    TRUE  5   FALSE  TRUE   1.0602   1.0604    1.053
+ 4: power    TRUE  5    TRUE FALSE   1.0574   1.0574    1.057
+ 5: power    TRUE  5    TRUE  TRUE   1.0633   1.0632    1.057
+ 6: power    TRUE 10   FALSE FALSE   1.0603   1.0603    1.056
+ 7: power    TRUE 10   FALSE  TRUE   1.0680   1.0688    1.056
+ 8: power    TRUE 10    TRUE FALSE   1.0652   1.0656    1.060
+ 9: power    TRUE 10    TRUE  TRUE   1.0727   1.0730    1.060
+10: typeI   FALSE  5    TRUE FALSE   1.0506   1.0506    1.054
+11: typeI    TRUE  5   FALSE FALSE   0.9995   0.9995    1.014
+12: typeI    TRUE  5   FALSE  TRUE   0.9996   0.9997    1.014
+13: typeI    TRUE  5    TRUE FALSE   1.0499   1.0497    1.054
+14: typeI    TRUE  5    TRUE  TRUE   1.0467   1.0477    1.054
+15: typeI    TRUE 10   FALSE FALSE   1.0009   1.0010    1.045
+16: typeI    TRUE 10   FALSE  TRUE   1.0008   1.0009    1.045
+17: typeI    TRUE 10    TRUE FALSE   1.0502   1.0490    1.061
+18: typeI    TRUE 10    TRUE  TRUE   1.0448   1.0461    1.061
 #+end_example
 
 \clearpage
@@ -1701,24 +1691,24 @@ dcast(res3stage.coverage, hypo + missing + ar + binding + fixC ~ method.char, va
 #+RESULTS:
 #+begin_example
      hypo missing ar binding  fixC           method 1           method 2           method 3
- 1: power   FALSE  5    TRUE FALSE 94.91% (NA: 0.01%) 94.91% (NA: 0.01%)             95.43%
- 2: power    TRUE  5   FALSE FALSE 96.44% (NA: 8.21%) 96.46% (NA: 8.25%) 96.24% (NA: 7.76%)
- 3: power    TRUE  5   FALSE  TRUE 98.43% (NA: 8.73%) 98.44% (NA: 8.19%) 96.25% (NA: 7.76%)
- 4: power    TRUE  5    TRUE FALSE 95.35% (NA: 0.03%) 95.34% (NA: 0.02%) 95.80% (NA: 0.04%)
- 5: power    TRUE  5    TRUE  TRUE 96.61% (NA: 0.03%) 96.60% (NA: 0.04%) 95.80% (NA: 0.03%)
- 6: power    TRUE 10   FALSE FALSE 96.09% (NA: 8.11%) 96.12% (NA: 8.30%) 95.30% (NA: 7.12%)
- 7: power    TRUE 10   FALSE  TRUE 98.04% (NA: 9.05%) 98.09% (NA: 8.47%) 95.30% (NA: 7.12%)
- 8: power    TRUE 10    TRUE FALSE 95.30% (NA: 0.01%) 95.29% (NA: 0.02%) 95.62% (NA: 0.01%)
- 9: power    TRUE 10    TRUE  TRUE 96.31% (NA: 0.01%) 96.32% (NA: 0.01%) 95.62% (NA: 0.01%)
-10: typeI   FALSE  5    TRUE FALSE 95.12% (NA: 0.13%) 95.13% (NA: 0.09%) 94.24% (NA: 0.12%)
-11: typeI    TRUE  5   FALSE FALSE 94.94% (NA: 0.40%) 94.96% (NA: 0.41%) 95.09% (NA: 0.52%)
-12: typeI    TRUE  5   FALSE  TRUE 95.06% (NA: 0.53%) 95.10% (NA: 0.57%) 95.09% (NA: 0.50%)
-13: typeI    TRUE  5    TRUE FALSE 95.07% (NA: 0.21%) 95.06% (NA: 0.19%) 94.26% (NA: 0.17%)
-14: typeI    TRUE  5    TRUE  TRUE 89.80% (NA: 0.21%) 89.63% (NA: 0.21%) 94.26% (NA: 0.22%)
-15: typeI    TRUE 10   FALSE FALSE 95.02% (NA: 0.64%) 95.03% (NA: 0.61%) 95.36% (NA: 0.84%)
-16: typeI    TRUE 10   FALSE  TRUE 95.11% (NA: 0.74%) 95.14% (NA: 0.75%) 95.35% (NA: 0.81%)
-17: typeI    TRUE 10    TRUE FALSE 94.89% (NA: 0.15%) 94.91% (NA: 0.14%) 94.31% (NA: 0.13%)
-18: typeI    TRUE 10    TRUE  TRUE 91.21% (NA: 0.17%) 91.02% (NA: 0.10%) 94.31% (NA: 0.15%)
+ 1: power   FALSE  5    TRUE FALSE             94.74% 94.73% (NA: 0.02%) 95.00% (NA: 0.01%)
+ 2: power    TRUE  5   FALSE FALSE 95.81% (NA: 4.35%) 95.85% (NA: 4.37%) 95.85% (NA: 3.85%)
+ 3: power    TRUE  5   FALSE  TRUE 97.75% (NA: 4.72%) 97.73% (NA: 4.32%) 95.86% (NA: 3.85%)
+ 4: power    TRUE  5    TRUE FALSE 95.11% (NA: 0.04%) 95.14% (NA: 0.04%) 95.32% (NA: 0.03%)
+ 5: power    TRUE  5    TRUE  TRUE 96.03% (NA: 0.03%) 96.15% (NA: 0.03%) 95.32% (NA: 0.03%)
+ 6: power    TRUE 10   FALSE FALSE 95.81% (NA: 4.23%) 95.89% (NA: 4.48%) 95.54% (NA: 3.21%)
+ 7: power    TRUE 10   FALSE  TRUE 97.48% (NA: 4.82%) 97.50% (NA: 4.44%) 95.52% (NA: 3.21%)
+ 8: power    TRUE 10    TRUE FALSE             95.15%             95.16%             95.33%
+ 9: power    TRUE 10    TRUE  TRUE             95.97%             95.91%             95.33%
+10: typeI   FALSE  5    TRUE FALSE 94.80% (NA: 0.13%) 94.80% (NA: 0.13%) 94.19% (NA: 0.15%)
+11: typeI    TRUE  5   FALSE FALSE 94.78% (NA: 0.30%) 94.83% (NA: 0.35%) 94.71% (NA: 0.40%)
+12: typeI    TRUE  5   FALSE  TRUE 94.80% (NA: 0.32%) 94.79% (NA: 0.30%) 94.75% (NA: 0.40%)
+13: typeI    TRUE  5    TRUE FALSE 95.05% (NA: 0.12%) 95.05% (NA: 0.12%) 94.20% (NA: 0.16%)
+14: typeI    TRUE  5    TRUE  TRUE 89.80% (NA: 0.13%) 89.53% (NA: 0.15%) 94.20% (NA: 0.15%)
+15: typeI    TRUE 10   FALSE FALSE 94.85% (NA: 0.42%) 94.90% (NA: 0.47%) 95.13% (NA: 0.77%)
+16: typeI    TRUE 10   FALSE  TRUE 95.00% (NA: 0.57%) 95.01% (NA: 0.59%) 95.12% (NA: 0.79%)
+17: typeI    TRUE 10    TRUE FALSE 95.02% (NA: 0.22%) 94.97% (NA: 0.14%) 94.30% (NA: 0.09%)
+18: typeI    TRUE 10    TRUE  TRUE 91.52% (NA: 0.17%) 91.12% (NA: 0.14%) 94.30% (NA: 0.11%)
 #+end_example
 
 Average width of the confidence intervals
@@ -1735,24 +1725,24 @@ dcast(res3stage.width, hypo + missing + ar + binding + fixC ~ method.char, value
 #+RESULTS:
 #+begin_example
      hypo missing ar binding  fixC method 1 method 2 method 3
- 1: power   FALSE  5    TRUE FALSE   1.0729   1.0729    1.073
- 2: power    TRUE  5   FALSE FALSE   1.0552   1.0562    1.054
- 3: power    TRUE  5   FALSE  TRUE   1.0592   1.0596    1.055
- 4: power    TRUE  5    TRUE FALSE   1.0722   1.0722    1.072
- 5: power    TRUE  5    TRUE  TRUE   1.0759   1.0753    1.072
- 6: power    TRUE 10   FALSE FALSE   1.0834   1.0843    1.079
- 7: power    TRUE 10   FALSE  TRUE   1.0899   1.0905    1.079
- 8: power    TRUE 10    TRUE FALSE   1.0983   1.0985    1.097
- 9: power    TRUE 10    TRUE  TRUE   1.1040   1.1031    1.097
-10: typeI   FALSE  5    TRUE FALSE   1.0757   1.0756    1.080
-11: typeI    TRUE  5   FALSE FALSE   1.0000   0.9999    1.016
-12: typeI    TRUE  5   FALSE  TRUE   0.9997   0.9995    1.016
-13: typeI    TRUE  5    TRUE FALSE   1.0722   1.0722    1.077
-14: typeI    TRUE  5    TRUE  TRUE   1.0749   1.0758    1.077
-15: typeI    TRUE 10   FALSE FALSE   1.0013   1.0005    1.056
-16: typeI    TRUE 10   FALSE  TRUE   1.0010   0.9999    1.056
-17: typeI    TRUE 10    TRUE FALSE   1.0984   1.0980    1.109
-18: typeI    TRUE 10    TRUE  TRUE   1.0929   1.0936    1.109
+ 1: power   FALSE  5    TRUE FALSE   1.0789   1.0790    1.077
+ 2: power    TRUE  5   FALSE FALSE   1.0707   1.0707    1.069
+ 3: power    TRUE  5   FALSE  TRUE   1.0757   1.0757    1.069
+ 4: power    TRUE  5    TRUE FALSE   1.0782   1.0783    1.077
+ 5: power    TRUE  5    TRUE  TRUE   1.0834   1.0830    1.077
+ 6: power    TRUE 10   FALSE FALSE   1.1011   1.1012    1.096
+ 7: power    TRUE 10   FALSE  TRUE   1.1101   1.1110    1.096
+ 8: power    TRUE 10    TRUE FALSE   1.1085   1.1087    1.104
+ 9: power    TRUE 10    TRUE  TRUE   1.1176   1.1176    1.104
+10: typeI   FALSE  5    TRUE FALSE   1.0788   1.0788    1.084
+11: typeI    TRUE  5   FALSE FALSE   0.9997   0.9997    1.018
+12: typeI    TRUE  5   FALSE  TRUE   0.9998   0.9998    1.018
+13: typeI    TRUE  5    TRUE FALSE   1.0743   1.0742    1.079
+14: typeI    TRUE  5    TRUE  TRUE   1.0755   1.0764    1.079
+15: typeI    TRUE 10   FALSE FALSE   0.9995   0.9995    1.061
+16: typeI    TRUE 10   FALSE  TRUE   0.9990   0.9994    1.061
+17: typeI    TRUE 10    TRUE FALSE   1.1013   1.1005    1.114
+18: typeI    TRUE 10    TRUE  TRUE   1.0942   1.0953    1.114
 #+end_example
 
 Average ratio between the length of the MUE CIs vs. the ML CIs
@@ -1769,24 +1759,24 @@ dcast(res3stage.length, hypo + missing + ar + binding + fixC ~ method.char, valu
 #+RESULTS:
 #+begin_example
      hypo missing ar binding  fixC method 1 method 2 method 3
- 1: power   FALSE  5    TRUE FALSE   1.0753   1.0753    1.075
- 2: power    TRUE  5   FALSE FALSE   1.0660   1.0671    1.066
- 3: power    TRUE  5   FALSE  TRUE   1.0691   1.0692    1.066
- 4: power    TRUE  5    TRUE FALSE   1.0754   1.0755    1.076
- 5: power    TRUE  5    TRUE  TRUE   1.0778   1.0770    1.076
- 6: power    TRUE 10   FALSE FALSE   1.0890   1.0901    1.085
- 7: power    TRUE 10   FALSE  TRUE   1.0951   1.0950    1.085
- 8: power    TRUE 10    TRUE FALSE   1.0984   1.0986    1.097
- 9: power    TRUE 10    TRUE  TRUE   1.1028   1.1017    1.097
-10: typeI   FALSE  5    TRUE FALSE   1.0826   1.0825    1.088
-11: typeI    TRUE  5   FALSE FALSE   0.9999   0.9997    1.016
-12: typeI    TRUE  5   FALSE  TRUE   0.9999   0.9996    1.016
-13: typeI    TRUE  5    TRUE FALSE   1.0796   1.0797    1.085
-14: typeI    TRUE  5    TRUE  TRUE   1.0840   1.0848    1.085
-15: typeI    TRUE 10   FALSE FALSE   1.0013   1.0005    1.058
-16: typeI    TRUE 10   FALSE  TRUE   1.0013   1.0002    1.058
-17: typeI    TRUE 10    TRUE FALSE   1.1034   1.1031    1.116
-18: typeI    TRUE 10    TRUE  TRUE   1.0996   1.1002    1.116
+ 1: power   FALSE  5    TRUE FALSE   1.0825   1.0826    1.081
+ 2: power    TRUE  5   FALSE FALSE   1.0776   1.0776    1.076
+ 3: power    TRUE  5   FALSE  TRUE   1.0811   1.0808    1.076
+ 4: power    TRUE  5    TRUE FALSE   1.0827   1.0828    1.081
+ 5: power    TRUE  5    TRUE  TRUE   1.0859   1.0854    1.081
+ 6: power    TRUE 10   FALSE FALSE   1.1040   1.1041    1.098
+ 7: power    TRUE 10   FALSE  TRUE   1.1117   1.1120    1.098
+ 8: power    TRUE 10    TRUE FALSE   1.1100   1.1103    1.105
+ 9: power    TRUE 10    TRUE  TRUE   1.1173   1.1171    1.105
+10: typeI   FALSE  5    TRUE FALSE   1.0854   1.0854    1.091
+11: typeI    TRUE  5   FALSE FALSE   0.9996   0.9996    1.018
+12: typeI    TRUE  5   FALSE  TRUE   0.9998   0.9997    1.018
+13: typeI    TRUE  5    TRUE FALSE   1.0815   1.0814    1.087
+14: typeI    TRUE  5    TRUE  TRUE   1.0844   1.0851    1.087
+15: typeI    TRUE 10   FALSE FALSE   0.9995   0.9995    1.062
+16: typeI    TRUE 10   FALSE  TRUE   0.9994   0.9996    1.062
+17: typeI    TRUE 10    TRUE FALSE   1.1060   1.1052    1.120
+18: typeI    TRUE 10    TRUE  TRUE   1.1006   1.1013    1.120
 #+end_example
 
 \clearpage
@@ -1826,24 +1816,24 @@ res2stageS.nXinterim[method==1]
 #+RESULTS:
 #+begin_example
     method missing ar  hypo  fixC binding     N pc.all pc.missing3 pc.missing23
- 1:      1    TRUE  5 power FALSE    TRUE 10000  79.52       9.591       10.888
- 2:      1    TRUE  5 typeI FALSE    TRUE 10000  79.52       9.591       10.888
- 3:      1    TRUE  5 power  TRUE    TRUE 10000  79.52       9.591       10.888
- 4:      1    TRUE  5 typeI  TRUE    TRUE 10000  79.52       9.591       10.888
- 5:      1    TRUE  5 power  TRUE   FALSE 10000  79.64       9.442       10.914
- 6:      1    TRUE  5 typeI  TRUE   FALSE 10000  79.64       9.442       10.914
- 7:      1    TRUE  5 power FALSE   FALSE 10000  79.64       9.442       10.914
- 8:      1    TRUE  5 typeI FALSE   FALSE 10000  79.64       9.442       10.914
- 9:      1   FALSE  5 power FALSE    TRUE 10000  87.79       6.090        6.121
-10:      1   FALSE  5 typeI FALSE    TRUE 10000  87.79       6.090        6.121
-11:      1    TRUE 10 power FALSE    TRUE 10000  71.60      13.354       15.049
-12:      1    TRUE 10 typeI FALSE    TRUE 10000  71.60      13.354       15.049
-13:      1    TRUE 10 power  TRUE    TRUE 10000  71.60      13.354       15.049
-14:      1    TRUE 10 typeI  TRUE    TRUE 10000  71.60      13.354       15.049
-15:      1    TRUE 10 power  TRUE   FALSE 10000  71.80      13.162       15.042
-16:      1    TRUE 10 typeI  TRUE   FALSE 10000  71.80      13.162       15.042
-17:      1    TRUE 10 power FALSE   FALSE 10000  71.80      13.162       15.042
-18:      1    TRUE 10 typeI FALSE   FALSE 10000  71.80      13.162       15.042
+ 1:      1    TRUE  5 power FALSE    TRUE 10000  78.81       9.833       11.360
+ 2:      1    TRUE  5 typeI FALSE    TRUE 10000  78.81       9.833       11.360
+ 3:      1    TRUE  5 power  TRUE    TRUE 10000  78.81       9.833       11.360
+ 4:      1    TRUE  5 typeI  TRUE    TRUE 10000  78.81       9.833       11.360
+ 5:      1    TRUE  5 power  TRUE   FALSE  9900  78.73       9.861       11.410
+ 6:      1    TRUE  5 typeI  TRUE   FALSE 10000  78.73       9.860       11.410
+ 7:      1    TRUE  5 power FALSE   FALSE  9900  78.73       9.861       11.410
+ 8:      1    TRUE  5 typeI FALSE   FALSE 10000  78.73       9.860       11.410
+ 9:      1   FALSE  5 power FALSE    TRUE 10000  86.82       6.570        6.610
+10:      1   FALSE  5 typeI FALSE    TRUE  9900  86.82       6.570        6.609
+11:      1    TRUE 10 power FALSE    TRUE 10000  70.41      13.802       15.791
+12:      1    TRUE 10 typeI FALSE    TRUE 10000  70.41      13.802       15.791
+13:      1    TRUE 10 power  TRUE    TRUE 10000  70.41      13.802       15.791
+14:      1    TRUE 10 typeI  TRUE    TRUE 10000  70.41      13.802       15.791
+15:      1    TRUE 10 power  TRUE   FALSE  9900  70.42      13.807       15.776
+16:      1    TRUE 10 typeI  TRUE   FALSE 10000  70.42      13.806       15.776
+17:      1    TRUE 10 power FALSE   FALSE  9900  70.42      13.807       15.776
+18:      1    TRUE 10 typeI FALSE   FALSE 10000  70.42      13.806       15.776
 #+end_example
 
 \clearpage
@@ -1865,24 +1855,24 @@ print(tablePrint.2stage, row.names = FALSE)
 #+RESULTS:
 #+begin_example
  scenario missing binding  fixC ar interim decision  final
-        1    TRUE    TRUE FALSE 10   54.64    75.34 102.70
-        2    TRUE    TRUE FALSE 10   54.64    74.98 102.37
-        3    TRUE    TRUE FALSE  5   53.27    64.04 102.74
-        4    TRUE    TRUE FALSE  5   53.27    63.58 102.37
-        5    TRUE    TRUE  TRUE 10   54.64    75.34 102.70
-        6    TRUE    TRUE  TRUE 10   54.64    74.98 102.37
-        7    TRUE    TRUE  TRUE  5   53.27    64.04 102.74
-        8    TRUE    TRUE  TRUE  5   53.27    63.58 102.37
-        9    TRUE   FALSE  TRUE 10   54.50    74.96 102.54
-       10    TRUE   FALSE  TRUE 10   54.50    75.17 103.13
-       11    TRUE   FALSE  TRUE  5   53.16    63.72 102.63
-       12    TRUE   FALSE  TRUE  5   53.16    64.61 103.13
-       13    TRUE   FALSE FALSE 10   54.50    74.96 102.54
-       14    TRUE   FALSE FALSE 10   54.50    75.17 103.13
-       15    TRUE   FALSE FALSE  5   53.16    63.72 102.63
-       16    TRUE   FALSE FALSE  5   53.16    64.61 103.13
-       17   FALSE    TRUE FALSE  5   52.07    63.77  99.97
-       18   FALSE    TRUE FALSE  5   52.07    63.22  99.63
+        1    TRUE    TRUE FALSE 10   54.92    77.30 103.07
+        2    TRUE    TRUE FALSE 10   54.92    77.05 102.89
+        3    TRUE    TRUE FALSE  5   53.43    64.89 103.08
+        4    TRUE    TRUE FALSE  5   53.43    64.61 102.94
+        5    TRUE    TRUE  TRUE 10   54.92    77.30 103.07
+        6    TRUE    TRUE  TRUE 10   54.92    77.05 102.89
+        7    TRUE    TRUE  TRUE  5   53.43    64.89 103.08
+        8    TRUE    TRUE  TRUE  5   53.43    64.61 102.94
+        9    TRUE   FALSE  TRUE 10   54.72    76.74 102.63
+       10    TRUE   FALSE  TRUE 10   54.71    76.11 103.18
+       11    TRUE   FALSE  TRUE  5   53.25    64.47 102.68
+       12    TRUE   FALSE  TRUE  5   53.25    64.35 103.18
+       13    TRUE   FALSE FALSE 10   54.72    76.74 102.63
+       14    TRUE   FALSE FALSE 10   54.71    76.11 103.18
+       15    TRUE   FALSE FALSE  5   53.25    64.47 102.68
+       16    TRUE   FALSE FALSE  5   53.25    64.35 103.18
+       17   FALSE    TRUE FALSE  5   52.13    64.38 100.18
+       18   FALSE    TRUE FALSE  5   52.12    64.19  99.81
 #+end_example
 
 Similar results for other methods.
@@ -1902,24 +1892,24 @@ print(tablePrint.3stage, row.names = FALSE)
 #+RESULTS:
 #+begin_example
  scenario missing binding  fixC ar interim1 decision1 interim2 decision2 final3
-        1    TRUE    TRUE FALSE 10    38.86     59.57    64.51     85.16 102.36
-        2    TRUE    TRUE FALSE 10    38.86     59.16    64.31     84.25 102.24
-        3    TRUE    TRUE FALSE  5    37.56     48.40    63.17     73.86 102.46
-        4    TRUE    TRUE FALSE  5    37.56     48.00    62.95     73.10 102.23
-        5    TRUE    TRUE  TRUE 10    38.86     59.57    64.51     85.16 102.36
-        6    TRUE    TRUE  TRUE 10    38.86     59.16    64.31     84.25 102.24
-        7    TRUE    TRUE  TRUE  5    37.56     48.40    63.17     73.86 102.46
-        8    TRUE    TRUE  TRUE  5    37.56     48.00    62.95     73.10 102.23
-        9    TRUE   FALSE  TRUE 10    38.82     59.12    64.30     84.50 102.19
-       10    TRUE   FALSE  TRUE 10    38.82     60.66    64.58     90.57 103.04
-       11    TRUE   FALSE  TRUE  5    37.54     48.15    62.99     73.43 102.29
-       12    TRUE   FALSE  TRUE  5    37.54     50.04    63.24     74.77 103.11
-       13    TRUE   FALSE FALSE 10    38.82     59.12    64.30     84.50 102.19
-       14    TRUE   FALSE FALSE 10    38.82     60.66    64.58     90.57 103.04
-       15    TRUE   FALSE FALSE  5    37.54     48.15    62.99     73.43 102.29
-       16    TRUE   FALSE FALSE  5    37.54     50.04    63.24     74.77 103.11
-       17   FALSE    TRUE FALSE  5    36.91     48.66    61.76     73.28  99.66
-       18   FALSE    TRUE FALSE  5    36.91     48.19    61.53     72.56  99.38
+        1    TRUE    TRUE FALSE 10    39.08     61.13    64.87     86.70 102.65
+        2    TRUE    TRUE FALSE 10    39.08     61.04    64.66     86.27 102.16
+        3    TRUE    TRUE FALSE  5    37.69     48.99    63.40     74.47 102.73
+        4    TRUE    TRUE FALSE  5    37.69     48.93    63.17     74.09 102.19
+        5    TRUE    TRUE  TRUE 10    39.08     61.13    64.87     86.70 102.65
+        6    TRUE    TRUE  TRUE 10    39.08     61.04    64.66     86.27 102.16
+        7    TRUE    TRUE  TRUE  5    37.69     48.99    63.40     74.47 102.73
+        8    TRUE    TRUE  TRUE  5    37.69     48.93    63.17     74.09 102.19
+        9    TRUE   FALSE  TRUE 10    38.85     60.43    64.52     85.88 102.34
+       10    TRUE   FALSE  TRUE 10    38.85     61.18    64.76     90.06 102.97
+       11    TRUE   FALSE  TRUE  5    37.47     48.55    63.08     73.93 102.43
+       12    TRUE   FALSE  TRUE  5    37.47     49.96    63.30     75.12 103.00
+       13    TRUE   FALSE FALSE 10    38.85     60.43    64.52     85.88 102.34
+       14    TRUE   FALSE FALSE 10    38.85     61.18    64.76     90.06 102.97
+       15    TRUE   FALSE FALSE  5    37.47     48.55    63.08     73.93 102.43
+       16    TRUE   FALSE FALSE  5    37.47     49.96    63.30     75.12 103.00
+       17   FALSE    TRUE FALSE  5    36.89     49.06    61.81     73.70  99.93
+       18   FALSE    TRUE FALSE  5    36.89     48.91    61.69     73.42  99.67
 #+end_example
 
 

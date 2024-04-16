@@ -56,7 +56,7 @@ R CMD BATCH --vanilla '--args missing=TRUE binding=FALSE cNotBelowFixedc=TRUE ar
                       ## rm -r Results/3stage_missing_fixC_nonbinding_ar10_power/*;rm -r Results/3stage_missing_fixC_nonbinding_ar10_typeI/*;
 
 ## submission command ## sbatch SUBM_threestage.slurm
-## submission output  ## Submitted batch job 6056333 (time using C-c t: tirsdag 23-10-31 at 17:22) 
+## submission output  ## Submitted batch job 6327341 (time using C-c t: mandag 24-04-15 at 18:08) 
 
 ## init               ## module module load gcc/11.2.0 R/4.1.2
                       ## cat .bash_profile (in the root directory on the server to visualize the current configuration)

@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: okt 19 2023 (10:24) 
 ## Version: 
-## Last-Updated: nov  1 2023 (12:17) 
+## Last-Updated: nov  9 2023 (16:24) 
 ##           By: Brice Ozenne
-##     Update #: 56
+##     Update #: 60
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -176,6 +176,29 @@ table2stage.ar5binding
 ## 10:  median bias MUE 0.06%/-0.35%  0.06%/-0.87% 0.06%/-0.34%  0.08%/-0.76% 0.07%/-0.55%
 createTableResSim(res2stage.ar5binding, xtable = TRUE)
 
+res2stage.ar5binding[type %in% c("decision","final") & hypo=="power" & method == 1 & method.char == "method 1", mean(estimate_MUE<truth, na.rm = TRUE)]
+res2stage.ar5binding[type %in% c("decision","final") & hypo=="power" & method == 1 & method.char == "method 1 fixC", mean(estimate_MUE<truth, na.rm = TRUE)]
+res2stage.ar5binding[type %in% c("decision","final") & hypo=="typeI" & method == 1 & method.char == "method 1", mean(estimate_MUE<truth, na.rm = TRUE)]
+res2stage.ar5binding[type %in% c("decision","final") & hypo=="typeI" & method == 1 & method.char == "method 1 fixC", mean(estimate_MUE<truth, na.rm = TRUE)]
+
+## [1] 0.7006
+debug2stage <- res2stage.ar5binding[type %in% c("decision","final") & hypo=="typeI" & method == 1]
+
+debug2stage[method.char == "method 1", mean(ck<=1.95)]
+debug2stage[method.char == "method 1 fixC", mean(ck<=1.95)]
+
+debug2stage[method.char == "method 1", estimate_MUE] - debug2stage[method.char == "method 1 fixC", estimate_MUE]
+debug2stage[method.char == "method 1", estimate_MUE] - debug2stage[method.char == "method 1 fixC", estimate_MUE]
+
+debug2stage[method.char == "method 1"]
+
+res2stage.ar5binding[type %in% c("decision","final") & hypo=="typeI" & method == 1 & method.char == "method 1"]
+res2stage.ar5binding[type %in% c("decision","final") & hypo=="typeI" & method == 1 & method.char == "method 1 fixC", hist(ck)]
+
+
+## res2stage.ar5binding[type %in% c("decision","final") & hypo=="typeI" & method == 1 & seed == 402321297]
+## res2stage[type %in% "decision" & hypo=="typeI" & method == 1 & seed == 402321297 & ar == 5 & binding == TRUE & missing == TRUE]
+
 power2stage.ar5binding <- as.numeric(gsub("%","",unlist(table2stage.ar5binding[2,.SD,.SDcols = names(table2stage.ar5binding)[-1]]),fixed=TRUE))
 power2stage.ar5binding[1:2]-power2stage.ar5binding[3:4]
 power2stage.ar5binding[1:2]-power2stage.ar5binding[5]
@@ -185,6 +208,13 @@ power2stage.ar5binding[1:2]-power2stage.ar5binding[5]
 ## *** ar 10 binding
 res2stage.ar10binding <- res2stage[method.char != "method 3 fixC" & missing==TRUE & binding==TRUE & ar==10 & !is.na(decision),.SD,.SDcols=keep.col]
 res2stage.ar10binding[,.N,by=c("method.char","type","hypo")][type=="interim",unique(N)]
+
+res2stage.ar10binding[hypo=="power",.(statistic = "reversal",
+                                      value = paste(mean2pc(decision.interim=="stop (futility)" & decision=="efficacy"),
+                                                    mean2pc(decision.interim=="stop (efficacy)" & decision=="futility"),
+                                                    sep="/")),
+                      by="method.char"]
+
 ## [1] 10000
 table2stage.ar10binding <- createTableResSim(res2stage.ar10binding, xtable = FALSE)
 table2stage.ar10binding

@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: okt  7 2022 (16:40) 
 ## Version: 
-## Last-Updated: okt 25 2023 (19:33) 
+## Last-Updated: apr 16 2024 (18:32) 
 ##           By: Brice Ozenne
-##     Update #: 81
+##     Update #: 83
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -86,6 +86,15 @@ loadRes <- function(path, tempo.file = FALSE, type = NULL,
     return(out)
 }
 
+readSampleSize <- function(n.stage){
+    out.dir <- grep(paste0(n.stage,"stage"),list.files("output"), value = TRUE)
+    out.file <- sapply(out.dir, function(iDir){list.files(file.path("output",iDir),full.names = TRUE)[1]})
+    out.nchar <- sapply(out.file, function(iFile){gsub("Sample size:| ","",grep(readLines(iFile), pattern = "^Sample size", value = TRUE))})
+    out.n <-  apply(do.call(rbind,strsplit(out.nchar,split =",",fixed=TRUE)),2,as.numeric)
+    rownames(out.n) <- names(out.nchar)
+    return(out.n)
+}
+
 ## * Process results (2 stages)
 ## ** Aggregate files and export 
 dir.2stage <- grep("2stage",list.dirs(path = path.results), value = TRUE)
@@ -105,6 +114,11 @@ for(iDir in dir.2stage){ ## iDir <- dir.2stage[1]
 ## dt[, .N, by = "file"]
 ## length(unique(dt$file))
 ## dt[file=="sim-2stage_missing_binding_ar10_power-1(tempo)_100.rds"]
+
+
+## quantile(readSampleSize(2)[,1])
+##  0%  25%  50%  75% 100% 
+## 656  734  734  741  741 
 
 
 ## length(unique(res2stage_missing_binding_ar10_power$file)) ## 99
@@ -166,6 +180,10 @@ for(iDir in dir.3stage){ ## iDir <- dir.3stage[1]
         saveRDS(eval(parse(text=iName)), file = file.path(path.results,paste0(iName,".rds") ))
     }
 }
+
+## quantile(readSampleSize(3)[,1])
+ ##  0%  25%  50%  75% 100% 
+ ## 671  750  750  762  762 
 
 ## ** Aggregate scenario and export 
 legend.3stage <- data.frame(name = name.3stage,

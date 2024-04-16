@@ -62,7 +62,7 @@ method <- 1:3 # methods used to compute the boundaries
                                         #--- to plan the trial ----
 kMax <- 3  #max number of analyses (including final)
 alpha <- 0.025  #type I error (one sided)
-beta <- 0.2  #type II error
+beta <- 0.1  #type II error
 informationRates <- c(0.40,0.65,1)  #planned  information rates
 rho_alpha <- 2  # rho parameter for alpha error spending function
 rho_beta <- 2  # rho parameter for beta error spending function
@@ -75,7 +75,7 @@ block <- c(1,1,0,0)
 allsd <- c(2.5,2.1,2.4) # sd, first from baseline measurement, then the two changes from baseline
 mean0 <- c(10,0,0) # mean placebo group (again, first is absolute value, then change from baseline)
 delta <- c(0,0.5,1)*delta.factor # treatment effect
-ar <- (0.86*2)*2*ar.factor # orginial accrual rate from data from Corine is 0.86 per week, hence we multiply by 2 for by 14 days. As too low, we further multiply by 2
+ar <- 2.5*2*ar.factor # orginial accrual rate from data from Corine is 0.86 per week, hence we multiply by 2 for by 14 days. As too low, we further multiply by 2
 cor011 <- -0.15 # ~ from data from Corine
 corij1 <- 0.68  # ~ from data from Corine
 cor0j1 <- -0.27  # ~ from data from Corine

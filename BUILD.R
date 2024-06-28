@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: okt  7 2022 (16:40) 
 ## Version: 
-## Last-Updated: apr 30 2024 (18:05) 
+## Last-Updated: maj 31 2024 (09:09) 
 ##           By: Brice Ozenne
-##     Update #: 94
+##     Update #: 95
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -234,40 +234,5 @@ if(export){
 ## res3stage <- readRDS(file = file.path(path.Bresults,"res3stage.rds"))
 ## unique(res3stage[,.N, by = c("scenario","method","type")]$N)
 ## [1] 10000
-
-
-## * debug
-library(DelayedGSD)
-## Sample size: 270, 270, 270
-## "seed 529169576 for j=9903 (index 3) out of 100"
-##  missing binding cNotBelowFixedc ar.factor delta.factor n.method
-##     TRUE    TRUE           FALSE         1            1        3
-
-
-df.method <- data.frame(method = 1:3, binding = TRUE, fixC = c(FALSE,FALSE,TRUE))
- 
-MyMissProb <- matrix(c(0.04807692, 0.05769231, 0.00961538, 0.88461538),  nrow = 2, ncol = 2,
-                     dimnames = list(c("V1 missing", "V1 not missing"),c("V2 missing", "V2 not missing")))
- 
-args.GenData <- list(rand.block = c(1, 1, 0, 0),
-                     allsd = c(2.5, 2.1, 2.4),
-                     mean0 = c(10, 0, 0),
-                     delta = c(0, 0.5, 1)*1,
-                     ar = 15,
-                     cor.01.1 = -0.15,
-                     cor.ij.1 = 0.68,
-                     cor.0j.1 = -0.27,
-                     MissProb = MyMissProb,
-                     DigitsOutcome = 2,
-                     TimeFactor = 42,
-                     DigitsTime = 0)
-
-res3stage <- operatingDelayedGSD(n.sim = 1, 
-                                 method = df.method,
-                                 args.GenData = args.GenData,
-                                 kMax = 3, InfoR.i = c(0.40,0.65,1), InfoR.d = c(0.50,0.75, 1), delta = 1,
-                                 PropForInterim = c(0.35,0.6), lag = 21,
-                                 seed = 529169576)
-
 ##----------------------------------------------------------------------
 ### BUILD.R ends here

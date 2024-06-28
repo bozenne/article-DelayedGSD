@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: aug  7 2023 (14:59) 
 ## Version: 
-## Last-Updated: okt 31 2023 (16:38) 
+## Last-Updated: jun 24 2024 (10:57) 
 ##           By: Brice Ozenne
-##     Update #: 5
+##     Update #: 6
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -73,6 +73,13 @@ gg.pip <- gg.pip + theme(legend.position="bottom",
 
 ggsave(gg.pip, filename = "figures/illustration-pipeline.pdf",
        width = 7.25, height = 5)
+
+
+library(DelayedGSD)
+e.GSD <- CalcBoundaries(kMax = 2, alpha = 0.025, beta = 0.1, delta = 1,
+                      InfoR.i = 0.56,  InfoR.d = c(0.65,1),
+                      rho_alpha = 2, rho_beta = 2, method = 3, cNotBelowFixedc = TRUE, bindingFutility = TRUE)
+summary(e.GSD)
 
 ##----------------------------------------------------------------------
 ### FIGURE-pipeline.R ends here

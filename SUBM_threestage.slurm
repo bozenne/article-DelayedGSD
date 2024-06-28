@@ -43,7 +43,6 @@ R CMD BATCH --vanilla '--args missing=TRUE binding=FALSE cNotBelowFixedc=TRUE ar
                       ## rm -r output/3stage_missing_fixC_nonbinding_ar1_power/*;rm -r output/3stage_missing_fixC_nonbinding_ar1_typeI/*;
                       ## rm -r output/3stage_missing_fixC_nonbinding_ar2_power/*;rm -r output/3stage_missing_fixC_nonbinding_ar2_typeI/*;
 
-
 ## clean results      ## 
                       ## rm -r Results/3stage_nomissing_binding_ar1_power/*;rm -r Results/3stage_nomissing_binding_ar1_typeI/*;
                       ## rm -r Results/3stage_missing_binding_ar1_power/*;rm -r Results/3stage_missing_binding_ar1_typeI/*;
@@ -56,7 +55,7 @@ R CMD BATCH --vanilla '--args missing=TRUE binding=FALSE cNotBelowFixedc=TRUE ar
                       ## rm -r Results/3stage_missing_fixC_nonbinding_ar2_power/*;rm -r Results/3stage_missing_fixC_nonbinding_ar2_typeI/*;
 
 ## submission command ## sbatch SUBM_threestage.slurm
-## submission output  ## Submitted batch job 6332445 (time using C-c t: tirsdag 24-04-30 at 11:02) 
+## submission output  ## Submitted batch job 6378331 (time using C-c t: onsdag 24-06-05 at 09:58) 
 
 ## init               ## module module load gcc/11.2.0 R/4.1.2
                       ## cat .bash_profile (in the root directory on the server to visualize the current configuration)

@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: okt 19 2023 (10:24) 
 ## Version: 
-## Last-Updated: maj  1 2024 (11:09) 
+## Last-Updated: jun  5 2024 (13:49) 
 ##           By: Brice Ozenne
-##     Update #: 104
+##     Update #: 160
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -175,12 +175,14 @@ res2stage[, truth := ifelse(hypo=="power",1,0)]
 
 ## method 3 fixC same as method 3
 res2stage.red <- res2stage[method.char != "method 3 fixC" & missing==TRUE]
+res2stage.red[, type := factor(type, c("interim","decision","final"))]
+setkeyv(res2stage.red, c("scenario","method","type"))
 ## unique(res2stage.red$scenario)
 
 
 ## ** Generate table
 keep.col <- c("scenario", "hypo", "method", "stage", "type", "statistic", "ck",
-              "nX1.interim", "nX3.interim", "sample.size",
+              "nX1", "nX2", "nX3", "infoPC",
               "estimate_ML", "se_ML", "p.value_ML", "lower_ML", "upper_ML",
               "estimate_MUE", "p.value_MUE", "lower_MUE", "upper_MUE",
               "decision", "reason", "method.char", "stage.char", "truth","seed")       
@@ -189,20 +191,19 @@ keep.col <- c("scenario", "hypo", "method", "stage", "type", "statistic", "ck",
 res2stage.ar1binding <- res2stage.red[infoBias==0 & binding==TRUE & ar==1 & !is.na(decision),.SD,.SDcols=keep.col]
 
 ## sample size
-unique(unlist(res2stage.ar1binding$sample.size))
-## [1] 265
+res2stage.ar1binding[, .(n.patients = paste0(median(nX1),"[",min(nX1),";",max(nX1),"]"),
+                         n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
+                         n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]"),
+                         pc.info = mean(infoPC)), by = "type"]
+##        type   n.patients    n.outcome n.missing pc.info
+##      <fctr>       <char>       <char>    <char>   <num>
+## 1:  interim 163[153;179] 119[109;128] 44[29;60]  0.5457
+## 2: decision 170[158;189] 152[139;170]  18[9;27]  0.6781
+## 3:    final 265[265;265] 237[237;237] 28[28;28]  1.0178
 
 ## number of simulations
 res2stage.ar1binding[,.N,by=c("method.char","type","hypo")][type=="interim",unique(N)]
 ## [1] 10000
-
-## number of patients: included/with final outcome value
-res2stage.ar1binding[, .(included = paste0("[",min(nX1.interim),";", median(nX1.interim), ";", max(nX1.interim),"]"),
-                            incomplete = paste0("[",min(nX1.interim-nX3.interim),";",median(nX1.interim-nX3.interim),";", max(nX1.interim-nX3.interim),"]"),
-                            outcome = paste0("[",min(nX3.interim),";", median(nX3.interim),";", max(nX3.interim),"]")), by = "hypo"]
-##     hypo      included incomplete       outcome
-## 1: power [153;163;179] [29;44;60] [109;119;128]
-## 2: typeI [153;163;179] [29;44;60] [109;119;128]
 
 ## table
 table2stage.ar1binding <- createTableResSim(res2stage.ar1binding, xtable = FALSE)
@@ -225,65 +226,23 @@ res2stage.ar1binding[type %in% c("decision","final") & method.char == "method 1"
 ## 1: power 10000     0.5327
 ## 2: typeI 10000     0.7114
 
-## *** ar 2 binding
-res2stage.ar2binding <- res2stage.red[infoBias==0 & binding==TRUE & ar==2 & !is.na(decision),.SD,.SDcols=keep.col]
-
-## sample size
-unique(unlist(res2stage.ar2binding$sample.size))
-## [1] 265
-
-## number of simulations
-res2stage.ar2binding[,.N,by=c("method.char","type","hypo")][type=="interim",unique(N)]
-## [1] 10000
-
-## number of patients: included/with final outcome value
-res2stage.ar2binding[, .(included = paste0("[",min(nX1.interim),";", median(nX1.interim), ";", max(nX1.interim),"]"),
-                         incomplete = paste0("[",min(nX1.interim-nX3.interim),";",median(nX1.interim-nX3.interim),";", max(nX1.interim-nX3.interim),"]"),
-                         outcome = paste0("[",min(nX3.interim),";", median(nX3.interim),";", max(nX3.interim),"]")), by = "hypo"]
-##     hypo      included incomplete       outcome
-## 1: power [178;193;211] [58;74;93] [109;119;129]
-## 2: typeI [178;193;211] [58;74;93] [109;119;129]
-
-## table
-table2stage.ar2binding <- createTableResSim(res2stage.ar2binding, xtable = FALSE)
-table2stage.ar2binding
-##            statistic       method 1   method 1 fixC       method 2   method 2 fixC        method 3
-##  1:     type 1 error          2.56%           2.31%          2.51%           2.33%           2.41%
-##  2:            power         91.40%          90.86%         91.29%          90.90%          90.74%
-##  3:       CI [NA,NA]              0               0              0               0               0
-##  4:         coverage         94.95%          95.52%         94.93%          95.58%          95.26%
-##  5:         reversal    0.64%/0.18%     0.41%/0.49%    0.78%/0.20%     0.40%/0.50%         0/0.88%
-##  6:         abnormal        0.54%/0             0/0        0.49%/0             0/0         0/0.29%
-##  7:   mean bias LMME -0.015 / 0.021  -0.015 / 0.021 -0.015 / 0.021  -0.016 / 0.022  -0.016 / 0.021
-##  8:    mean bias MUE  0.001 / 0.007 -0.053 / -0.027  0.001 / 0.007 -0.055 / -0.028 -0.024 / -0.014
-##  9: median bias LMME -0.45% / 2.94%  -0.45% / 2.94% -0.35% / 2.93%  -0.63% / 2.98%  -0.81% / 2.75%
-## 10:  median bias MUE 0.59% / -0.47% -6.89% / -2.94% 0.59% / -0.46% -6.77% / -2.98% -3.15% / -1.40%
-createTableResSim(res2stage.ar2binding, xtable = TRUE)
-
-power2stage.ar2binding <- as.numeric(gsub("%","",unlist(table2stage.ar2binding[2,.SD,.SDcols = names(table2stage.ar2binding)[-1]]),fixed=TRUE))
-power2stage.ar2binding[1:2]-power2stage.ar2binding[3:4]
-power2stage.ar2binding[1:2]-power2stage.ar2binding[5]
-## [1]  0.11 -0.04
-## [1] 0.66 0.12
-
 ## *** ar 1 non-binding
 res2stage.ar1nonbinding <- res2stage.red[infoBias==0 & binding==FALSE & ar==1 & !is.na(decision),.SD,.SDcols=keep.col]
 
 ## sample size
-unique(unlist(res2stage.ar1nonbinding$sample.size))
-## [1] 268
+res2stage.ar1nonbinding[, .(n.patients = paste0(median(nX1),"[",min(nX1),";",max(nX1),"]"),
+                            n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
+                            n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]"),
+                         pc.info = mean(infoPC)), by = "type"]
+##        type   n.patients    n.outcome n.missing pc.info
+##      <fctr>       <char>       <char>    <char>   <num>
+## 1:  interim 164[154;178] 120[111;128] 44[30;60]  0.5426
+## 2: decision 171[161;187] 153[141;169]  18[8;26]  0.6780
+## 3:    final 268[268;268] 240[240;240] 28[28;28]  1.0292
 
 ## number of simulations
 res2stage.ar1nonbinding[,.N,by=c("method.char","type","hypo")][type=="interim",unique(N)]
 ## [1] 10000
-
-## number of patients: included/with final outcome value
-res2stage.ar1nonbinding[, .(included = paste0("[",min(nX1.interim),";", median(nX1.interim), ";", max(nX1.interim),"]"),
-                            incomplete = paste0("[",min(nX1.interim-nX3.interim),";",median(nX1.interim-nX3.interim),";", max(nX1.interim-nX3.interim),"]"),
-                            outcome = paste0("[",min(nX3.interim),";", median(nX3.interim),";", max(nX3.interim),"]")), by = "hypo"]
-##     hypo      included incomplete       outcome
-## 1: power [154;164;178] [30;44;60] [111;120;128]
-## 2: typeI [154;164;178] [30;44;60] [111;120;128]
 
 ## table
 table2stage.ar1nonbinding <- createTableResSim(res2stage.ar1nonbinding, xtable = FALSE)
@@ -307,24 +266,64 @@ power2stage.ar1nonbinding[1:2]-power2stage.ar1nonbinding[5]
 ## [1]  0.01 -0.11
 ## [1]  0.31 -0.13
 
+## *** ar 2 binding
+res2stage.ar2binding <- res2stage.red[infoBias==0 & binding==TRUE & ar==2 & !is.na(decision),.SD,.SDcols=keep.col]
+
+## sample size
+res2stage.ar2binding[, .(n.patients = paste0(median(nX1),"[",min(nX1),";",max(nX1),"]"),
+                         n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
+                         n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]"),
+                         pc.info = mean(infoPC)), by = "type"]
+##        type   n.patients    n.outcome n.missing pc.info
+##      <fctr>       <char>       <char>    <char>   <num>
+## 1:  interim 193[178;211] 119[109;129] 74[58;93]  0.5672
+## 2: decision 208[190;230] 186[169;206] 22[13;28]  0.8239
+## 3:    final 265[265;265] 237[237;237] 28[28;28]  1.0157
+
+## number of simulations
+res2stage.ar2binding[,.N,by=c("method.char","type","hypo")][type=="interim",unique(N)]
+## [1] 10000
+
+## table
+table2stage.ar2binding <- createTableResSim(res2stage.ar2binding, xtable = FALSE)
+table2stage.ar2binding
+##            statistic       method 1   method 1 fixC       method 2   method 2 fixC        method 3
+##  1:     type 1 error          2.56%           2.31%          2.51%           2.33%           2.41%
+##  2:            power         91.40%          90.86%         91.29%          90.90%          90.74%
+##  3:       CI [NA,NA]              0               0              0               0               0
+##  4:         coverage         94.95%          95.52%         94.93%          95.58%          95.26%
+##  5:         reversal    0.64%/0.18%     0.41%/0.49%    0.78%/0.20%     0.40%/0.50%         0/0.88%
+##  6:         abnormal        0.54%/0             0/0        0.49%/0             0/0         0/0.29%
+##  7:   mean bias LMME -0.015 / 0.021  -0.015 / 0.021 -0.015 / 0.021  -0.016 / 0.022  -0.016 / 0.021
+##  8:    mean bias MUE  0.001 / 0.007 -0.053 / -0.027  0.001 / 0.007 -0.055 / -0.028 -0.024 / -0.014
+##  9: median bias LMME -0.45% / 2.94%  -0.45% / 2.94% -0.35% / 2.93%  -0.63% / 2.98%  -0.81% / 2.75%
+## 10:  median bias MUE 0.59% / -0.47% -6.89% / -2.94% 0.59% / -0.46% -6.77% / -2.98% -3.15% / -1.40%
+createTableResSim(res2stage.ar2binding, xtable = TRUE)
+
+power2stage.ar2binding <- as.numeric(gsub("%","",unlist(table2stage.ar2binding[2,.SD,.SDcols = names(table2stage.ar2binding)[-1]]),fixed=TRUE))
+power2stage.ar2binding[1:2]-power2stage.ar2binding[3:4]
+power2stage.ar2binding[1:2]-power2stage.ar2binding[5]
+## [1]  0.11 -0.04
+## [1] 0.66 0.12
+
+
 ## *** ar 2 non-binding
 res2stage.ar2nonbinding <- res2stage.red[infoBias==0 & binding==FALSE & ar==2 & !is.na(decision),.SD,.SDcols=keep.col]
 
 ## sample size
-unique(unlist(res2stage.ar2nonbinding$sample.size))
-## [1] 268
+res2stage.ar2nonbinding[, .(n.patients = paste0(median(nX1),"[",min(nX1),";",max(nX1),"]"),
+                            n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
+                            n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]"),
+                            pc.info = mean(infoPC)), by = "type"]
+##        type   n.patients    n.outcome  n.missing pc.info
+##      <fctr>       <char>       <char>     <char>   <num>
+## 1:  interim 194[179;215] 120[111;129] 74[55;100]  0.5639
+## 2: decision 209[194;230] 187[171;206]  22[14;28]  0.8244
+## 3:    final 268[268;268] 240[240;240]  28[28;28]  1.0275
 
 ## number of simulations
 res2stage.ar2nonbinding[,.N,by=c("method.char","type","hypo")][type=="interim",unique(N)]
 ## [1] 10000
-
-## number of patients: included/with final outcome value
-res2stage.ar2nonbinding[, .(included = paste0("[",min(nX1.interim),";", median(nX1.interim), ";", max(nX1.interim),"]"),
-                            incomplete = paste0("[",min(nX1.interim-nX3.interim),";",median(nX1.interim-nX3.interim),";", max(nX1.interim-nX3.interim),"]"),
-                            outcome = paste0("[",min(nX3.interim),";", median(nX3.interim),";", max(nX3.interim),"]")), by = "hypo"]
-##     hypo      included  incomplete       outcome
-## 1: power [179;194;215] [55;74;100] [111;120;129]
-## 2: typeI [179;194;215] [55;74;100] [111;120;129]
 
 ## table
 table2stage.ar2nonbinding <- createTableResSim(res2stage.ar2nonbinding, xtable = FALSE)
@@ -399,9 +398,12 @@ res3stage[, truth := ifelse(hypo=="power",1,0)]
 
 ## method 3 fixC same as method 3
 res3stage.red <- res3stage[method.char != "method 3 fixC" & missing==TRUE]
+res3stage.red[, type := factor(type, c("interim","decision","final"))]
+setkeyv(res3stage.red, c("scenario","method","stage","type"))
 
 ## ** Generate table
 keep.col <- c("scenario", "hypo", "method", "stage", "type", "statistic", "ck",
+              "nX1", "nX2", "nX3", "infoPC",
               "estimate_ML", "se_ML", "p.value_ML", "lower_ML", "upper_ML",
               "estimate_MUE", "p.value_MUE", "lower_MUE", "upper_MUE",
               "decision", "reason", "method.char", "stage.char", "truth","seed")       
@@ -409,6 +411,18 @@ keep.col <- c("scenario", "hypo", "method", "stage", "type", "statistic", "ck",
 ## *** ar 1 binding
 res3stage.ar1binding <- res3stage.red[binding==TRUE & ar==1 & !is.na(decision),.SD,.SDcols=keep.col]
 
+## sample size
+res3stage.ar1binding[, .(n.patients = paste0(median(nX1),"[",min(nX1),";",max(nX1),"]"),
+                         n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
+                         n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]"),
+                         pc.info = mean(infoPC)), by = c("stage","type")]
+##    stage     type   n.patients    n.outcome n.missing pc.info
+##    <num>   <fctr>       <char>       <char>    <char>   <num>
+## 1:     1  interim 125[115;138]    85[77;93] 40[27;57]  0.3897
+## 2:     1 decision 132[121;148] 118[105;135]  14[5;23]  0.5247
+## 3:     2  interim 192[181;206] 145[136;156] 47[33;65]  0.6361
+## 4:     2 decision 199[189;214] 178[165;195] 21[12;28]  0.7662
+## 5:     3    final 270[270;270] 241[241;241] 29[29;29]  1.0123
 
 ## number of simulations
 res3stage.ar1binding[type!="interim",.N,by=c("method.char","hypo")][,unique(N)]
@@ -429,31 +443,21 @@ table3stage.ar1binding
 ## 10:  median bias MUE 0.75% / -0.25% -4.73% / -4.66% 0.74% / -0.26% -4.98% / -4.89% -1.46% / -2.47%
 createTableResSim(res3stage.ar1binding, xtable = TRUE)
 
-## *** ar 2 binding
-res3stage.ar2binding <- res3stage.red[binding==TRUE & ar==2 & !is.na(decision),.SD,.SDcols=keep.col]
-
-
-## number of simulations
-res3stage.ar2binding[type!="interim",.N,by=c("method.char","hypo")][,unique(N)]
-## [1] 10000
-
-table3stage.ar2binding <- createTableResSim(res3stage.ar2binding, xtable = FALSE)
-table3stage.ar2binding
-##            statistic       method 1   method 1 fixC       method 2   method 2 fixC        method 3
-##  1:     type 1 error          2.65%           2.29%          2.63%           2.27%           2.39%
-##  2:            power         91.04%          90.36%         90.95%          90.48%          90.41%
-##  3:       CI [NA,NA]              0               0              0               0               0
-##  4:         coverage         94.65%          95.50%         94.61%          95.61%          95.19%
-##  5:         reversal    0.72%/0.22%     0.51%/0.69%    0.92%/0.27%     0.52%/0.71%         0/1.17%
-##  6:         abnormal        0.68%/0             0/0        0.64%/0             0/0         0/0.30%
-##  7:   mean bias LMME -0.039 / 0.031  -0.039 / 0.031 -0.039 / 0.030  -0.039 / 0.032  -0.039 / 0.033
-##  8:    mean bias MUE -0.018 / 0.017 -0.084 / -0.019 -0.018 / 0.017 -0.087 / -0.020 -0.049 / -0.005
-##  9: median bias LMME -3.17% / 2.95%  -3.17% / 2.96% -3.20% / 2.94%  -3.24% / 2.99%  -3.39% / 3.02%
-## 10:  median bias MUE 0.49% / -0.28% -3.06% / -2.89% 0.53% / -0.32% -3.22% / -2.99% -1.44% / -2.67%
-createTableResSim(res3stage.ar2binding, xtable = TRUE)
-
 ## *** ar 1 non-binding
 res3stage.ar1nonbinding <- res3stage.red[binding==FALSE & ar==1 & !is.na(decision),.SD,.SDcols=keep.col]
+
+## sample size
+res3stage.ar1nonbinding[, .(n.patients = paste0(median(nX1),"[",min(nX1),";",max(nX1),"]"),
+                            n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
+                            n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]"),
+                            pc.info = mean(infoPC)), by = c("stage","type")]
+##    stage     type   n.patients    n.outcome n.missing pc.info
+##    <num>   <fctr>       <char>       <char>    <char>   <num>
+## 1:     1  interim 126[117;140]    86[76;95] 40[26;57]  0.3869
+## 2:     1 decision 133[123;147] 119[107;134]  14[5;24]  0.5264
+## 3:     2  interim 195[185;209] 148[138;158] 47[33;64]  0.6423
+## 4:     2 decision 202[191;215] 181[168;198] 21[13;28]  0.7700
+## 5:     3    final 274[274;274] 245[245;245] 29[29;29]  1.0251
 
 ## number of simulations
 res3stage.ar1nonbinding[type!="interim",.N,by=c("method.char","hypo")][,unique(N)]
@@ -474,8 +478,55 @@ table3stage.ar1nonbinding
 ## 10:  median bias MUE 0.61% / 2.52% 0.58% / -1.68% 0.62% / 2.57% 0.60% / -2.18% 0.68% / 0.42%
 createTableResSim(res3stage.ar1nonbinding, xtable = TRUE)
 
+## *** ar 2 binding
+res3stage.ar2binding <- res3stage.red[binding==TRUE & ar==2 & !is.na(decision),.SD,.SDcols=keep.col]
+
+## sample size
+res3stage.ar2binding[, .(n.patients = paste0(median(nX1),"[",min(nX1),";",max(nX1),"]"),
+                         n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
+                         n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]"),
+                         pc.info = mean(infoPC)), by = c("stage","type")]
+##    stage     type   n.patients    n.outcome  n.missing pc.info
+##    <num>   <fctr>       <char>       <char>     <char>   <num>
+## 1:     1  interim 155[139;174]    85[77;93]  70[53;93]  0.4094
+## 2:     1 decision 170[153;191] 152[135;173]   18[9;26]  0.6660
+## 3:     2  interim 222[207;243] 145[136;157] 77[59;102]  0.6570
+## 4:     2 decision 237[221;256] 212[196;230]  26[18;29]  0.9116
+## 5:     3    final 270[270;270] 241[241;241]  29[29;29]  1.0056
+
+## number of simulations
+res3stage.ar2binding[type!="interim",.N,by=c("method.char","hypo")][,unique(N)]
+## [1] 10000
+
+table3stage.ar2binding <- createTableResSim(res3stage.ar2binding, xtable = FALSE)
+table3stage.ar2binding
+##            statistic       method 1   method 1 fixC       method 2   method 2 fixC        method 3
+##  1:     type 1 error          2.65%           2.29%          2.63%           2.27%           2.39%
+##  2:            power         91.04%          90.36%         90.95%          90.48%          90.41%
+##  3:       CI [NA,NA]              0               0              0               0               0
+##  4:         coverage         94.65%          95.50%         94.61%          95.61%          95.19%
+##  5:         reversal    0.72%/0.22%     0.51%/0.69%    0.92%/0.27%     0.52%/0.71%         0/1.17%
+##  6:         abnormal        0.68%/0             0/0        0.64%/0             0/0         0/0.30%
+##  7:   mean bias LMME -0.039 / 0.031  -0.039 / 0.031 -0.039 / 0.030  -0.039 / 0.032  -0.039 / 0.033
+##  8:    mean bias MUE -0.018 / 0.017 -0.084 / -0.019 -0.018 / 0.017 -0.087 / -0.020 -0.049 / -0.005
+##  9: median bias LMME -3.17% / 2.95%  -3.17% / 2.96% -3.20% / 2.94%  -3.24% / 2.99%  -3.39% / 3.02%
+## 10:  median bias MUE 0.49% / -0.28% -3.06% / -2.89% 0.53% / -0.32% -3.22% / -2.99% -1.44% / -2.67%
+createTableResSim(res3stage.ar2binding, xtable = TRUE)
+
+
 ## *** ar 2 non-binding
 res3stage.ar2nonbinding <- res3stage.red[binding==FALSE & ar==2 & !is.na(decision),.SD,.SDcols=keep.col]
+
+## sample size
+res3stage.ar2nonbinding[, .(n.patients = paste0(median(nX1),"[",min(nX1),";",max(nX1),"]"),
+                            n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
+                            n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]")), by = c("stage","type")]
+##    stage     type   n.patients    n.outcome n.missing
+## 1:     1  interim 156[141;178]    86[76;95] 70[51;91]
+## 2:     1 decision 171[155;193] 153[135;176]  18[9;26]
+## 3:     2  interim 225[206;244] 148[138;158] 77[57;98]
+## 4:     2 decision 240[224;261] 215[196;233] 26[18;29]
+## 5:     3    final 274[274;274] 245[245;245] 29[29;29]
 
 ## number of simulations
 res3stage.ar2nonbinding[type!="interim",.N,by=c("method.char","hypo")][,unique(N)]
@@ -499,57 +550,29 @@ createTableResSim(res3stage.ar2nonbinding, xtable = TRUE)
 
 ## * text article
 
-## ** Boundaries below 1.96
-table2stage.Ck <- res2stage[decision %in% c("efficacy","futility"),
-                        .(.N, rejection = mean2pc(decision=="efficacy"), rejectionBelow196 = mean2pc((statistic<qnorm(0.975))*(decision=="efficacy"))), by = c("scenario","missing","method","binding","fixC","ar","hypo")]
-table2stage.Ck[method %in% 1:2 & fixC == FALSE & ar==10 & hypo == "power",
-               range(rejectionBelow196)]
-## [1] "0.64%" "0.85%"
+## ** sample size
+res2stage[type == "final", .(n.patients = paste0(median(nX1),"[",min(nX1),";",max(nX1),"]"),
+                             n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
+                             n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]")), by = c("stage","type")]
+##    stage     type   n.patients    n.outcome  n.missing
+## 2:     2    final 268[237;268] 240[237;240]   28[0;28]
+res3stage[type=="final", .(n.patients = paste0(median(nX1),"[",min(nX1),";",max(nX1),"]"),
+                           n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
+                           n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]")), by = c("stage","type")]
+## +    stage   type   n.patients    n.outcome n.missing
+## 1:     3  final 274[242;274] 245[241;245]  29[0;29]
 
-table3stage.Ck <- res3stage[decision %in% c("efficacy","futility"),
-                        .(.N, rejection = mean2pc(decision=="efficacy"), rejectionBelow196 = mean2pc((statistic<qnorm(0.975))*(decision=="efficacy"))), by = c("scenario","missing","method","binding","fixC","ar","hypo")]
-table3stage.Ck[method %in% 1:2 & fixC == FALSE & ar==10 & hypo == "power",
-               range(rejectionBelow196)]
-## [1] "0.92%" "1.03%"
 
-## ** Special cases
-res2stage[, reasonNA := ifelse(is.na(reason),"NA",reason)]
-res3stage[, reasonNA := ifelse(is.na(reason),"NA",reason)]
-normal.case <- c("efficacy","futility","no boundary crossed","NA")
+## ** Type 1 error & power
 
-table2stage.special <- ftable(reason = res2stage[reasonNA %in% normal.case == FALSE,reason],
-                              method = res2stage[reasonNA %in% normal.case == FALSE,method],
-                              scenario = res2stage[reasonNA %in% normal.case == FALSE,scenario])
-table2stage.special
-##                                     scenario  1  2  3  4  5  6  7  8  9 13 17
-## reason                       method                                          
-## decreasing information       1                0  0  1  1  0  0  1  1  0  0  0
-##                              2                0  0  1  1  0  0  1  1  0  0  0
-##                              3                0  0  1  1  0  0  1  1  0  0  0
-## Imax reached                 1                1  1  0  0  1  1  0  0  0  0  0
-##                              2                1  1  0  0  1  1  0  0  0  0  0
-##                              3                1  1  0  0  1  1  0  0  0  0  0
-## stop for futility at interim 1                0  0  0  0  0  0  0  0  0  0  0
-##                              2                0  0  0  0  0  0  0  0  0  0  0
-##                              3               11  1  2  0 11  1  2  0  8  8  1
+## monte carlo error
+quantile(100*sapply(1:10000, function(i){mean(rbinom(1e4, size = 1, prob = 0.025))}), probs = c(0.025,0.975))
+## 2.5% 97.5% 
+## 2.20  2.81 
+## quantile(100*sapply(1:10000, function(i){mean(rbinom(1e5, size = 1, prob = 0.025))}), probs = c(0.025,0.975))
+##  2.5% 97.5% 
+## 2.402 2.597 
 
-table3stage.special <- ftable(reason = res3stage[reasonNA %in% normal.case == FALSE,reason],
-                              method = res3stage[reasonNA %in% normal.case == FALSE,method],
-                              scenario = res3stage[reasonNA %in% normal.case == FALSE,scenario])
-table3stage.special
-##                                     scenario  1  2  3  4  5  6  7  8  9 10 11 13 14 15 17
-## reason                       method                                                      
-## decreasing information       1                0  0  0  1  0  0  0  1  0  0  1  0  0  1  0
-##                              2                0  0  0  1  0  0  0  1  0  0  1  0  0  1  0
-##                              3                0  0  0  1  0  0  0  1  0  0  1  0  0  1  0
-## Imax reached                 1               28 13  0  0 28 13  0  0 24 43  0 24 43  0  0
-##                              2               31 13  0  0 23 10  0  0 18 29  0 25 44  0  0
-##                              3               25 15  0  0 25 15  0  0 24 44  0 24 44  0  0
-## stop for futility at interim 1                0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
-##                              2                0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
-##                              3               28  2  1  0 28  2  1  0 26  0  1 26  0  1  3
-
-## ** Type 1 error
 ## *** 2 stages
 ## For each run, create a binary indicator for rejection for efficacy
 res2stage.rejection <- res2stage[,.(n.stage = .N, rejection = "efficacy" %in% na.omit(decision)),
@@ -560,20 +583,20 @@ res2stageS.rejection <- res2stage.rejection[,.(n.sim = .N, rejectionRate = 100*m
                                             by=c("method.char","scenario","binding","missing","fixC","ar","hypo")]
 
 
-res2stageS.rejection[missing & ar == 10 & hypo == "typeI", range(rejectionRate)]
-## [1] 2.22 2.57
-res2stageS.rejection[missing & ar == 10 & hypo == "power", range(rejectionRate)]
-## [1] 79.86 81.00
+res2stageS.rejection[missing & hypo == "typeI", range(rejectionRate)]
+## [1] 2.31 2.61
 
-res2stageS.rejection[missing & ar == 10 & hypo == "power" & method.char == "method 1",
-                     rejectionRate]- res2stageS.rejection[missing & ar == 10 & hypo == "power" & method.char == "method 2",
-                     rejectionRate]
-## [1] 0.07 0.06
+res2stage[missing == FALSE & hypo == "power" & method == 3 & type != "interim", 100*mean(decision=="efficacy")]
+## [1] 89.85
 
-res2stageS.rejection[missing & ar == 10 & hypo == "power" & method.char == "method 1",
-                     rejectionRate]- res2stageS.rejection[missing & ar == 10 & hypo == "power" & method.char == "method 3",
-                     rejectionRate]
-## [1] 0.57 0.24
+res2stageS.rejection[missing & ar == 1 & hypo == "power", range(rejectionRate)]
+## [1] 90.53 91.20
+
+range(res2stageS.rejection[hypo == "power" & method.char == "method 1", rejectionRate]- res2stageS.rejection[hypo == "power" & method.char == "method 2", rejectionRate])
+## [1] 0.00 0.13
+
+range(res2stageS.rejection[hypo == "power" & method.char == "method 1", rejectionRate]- res2stageS.rejection[hypo == "power" & method.char == "method 3", rejectionRate])
+## [1] 0.30 0.66
 
 ## *** 3 stages
 ## For each run, create a binary indicator for rejection for efficacy
@@ -586,81 +609,164 @@ res3stageS.rejection <- res3stage.rejection[,.(n.sim = .N, rejectionRate = 100*m
 
 
 res3stageS.rejection[missing & hypo == "typeI", range(rejectionRate)]
-## [1] 2.31 2.61
+## [1] 2.07 2.71
+
+res3stage[missing == FALSE & hypo == "power" & method == 3 & type != "interim", mean(decision=="efficacy")]
+## [1] 0.8951
+
 res3stageS.rejection[missing & hypo == "power", range(rejectionRate)]
-## [1] 79.58 80.87
+## [1] 89.78 91.43
 
-res3stageS.rejection[missing & hypo == "power" & method.char == "method 1",
-                     rejectionRate]- res3stageS.rejection[missing & hypo == "power" & method.char == "method 2",
-                     rejectionRate]
-## [1] 0.08 0.01 0.08 0.02
 
-res3stageS.rejection[missing & hypo == "power" & method.char == "method 1",
-                     rejectionRate]- res3stageS.rejection[missing & hypo == "power" & method.char == "method 3",
-                     rejectionRate]
-## [1] 0.73 0.47 0.46 0.48
+range(res3stageS.rejection[hypo == "power" & method.char == "method 1", rejectionRate]- res3stageS.rejection[hypo == "power" & method.char == "method 2", rejectionRate])
+## [1] 0.06 0.09
 
-## ** reversal
-## *** 2 stages
-res2stageS.reversal <- res2stage.conclusion[missing & hypo == "power" & ar == 10, .(N = .N,
-                                                fu2eff = 100*mean(stage.interim == stage.conclusion & decision.interim == "stop" & reason.interim == "futility" & conclusion == "efficacy"),
-                                                eff2fu = 100*mean(stage.interim == stage.conclusion & decision.interim == "stop" & reason.interim == "efficacy" & conclusion == "futility")),
-                                            by = c("method","scenario","missing","binding","fixC","ar","hypo")]
-res2stageS.reversalW <- dcast(res2stageS.reversal, scenario + N + hypo + missing + ar + binding + fixC ~ method, value.var = c("fu2eff","eff2fu"))
+range(res3stageS.rejection[hypo == "power" & method.char == "method 1", rejectionRate]- res3stageS.rejection[hypo == "power" & method.char == "method 3", rejectionRate])
+## [1] 0.5 0.9
 
-range(c(res2stageS.reversalW$fu2eff_1,res2stageS.reversalW$fu2eff_2))
-## [1] 0.11 0.61
-range(c(res2stageS.reversalW$eff2fu_1,res2stageS.reversalW$eff2fu_2))
-## [1] 0.17 0.67
-range(res2stageS.reversalW$eff2fu_3)
-## [1] 1.04 1.07
-
-## *** 3 stages
-res3stageS.reversal <- res3stage.conclusion[missing == TRUE, .(N = .N,
-                                                fu2eff = 100*mean(stage.interim == stage.conclusion & decision.interim == "stop" & reason.interim == "futility" & conclusion == "efficacy"),
-                                                eff2fu = 100*mean(stage.interim == stage.conclusion & decision.interim == "stop" & reason.interim == "efficacy" & conclusion == "futility")),
-                                            by = c("method","scenario","missing","binding","fixC","ar","hypo")]
-res3stageS.reversalW <- dcast(res3stageS.reversal, N + scenario + hypo + missing + ar + binding + fixC ~ method, value.var = c("fu2eff","eff2fu"))
-
-range(c(res3stageS.reversalW$fu2eff_1,res3stageS.reversalW$fu2eff_2))
-## [1] 0.00 0.69
-range(c(res3stageS.reversalW$eff2fu_1,res3stageS.reversalW$eff2fu_2))
-## [1] 0.01 1.10
-range(res3stageS.reversalW$eff2fu_3)
-## [1] 0.12 1.60
 
 ## ** coverage
-res2stage.coverage <- res2stage[missing==TRUE & hypo=="power" & ar == 10 & decision %in% c("futility","efficacy"),
+res2stage.coverage <- res2stage[hypo=="power" & decision %in% c("futility","efficacy"),
                                 .(N = .N,
                                   "NA" = 100*mean(is.na(lower_MUE) | is.na(upper_MUE)),
                                   coverage = 100*mean( (lower_MUE <= truth) & (truth <= upper_MUE), na.rm=TRUE)),
                                 by = c("method.char","missing","binding","fixC")]
 
 range(res2stage.coverage$"NA",na.rm=TRUE)
-## [1] 0.00 6.57
+## [1] [1] 0.00 3.51
 range(res2stage.coverage$coverage,na.rm=TRUE)
-## [1] 94.83 97.47
+## [1] 94.79 97.19
 
-res3stage.coverage <- res3stage[missing==TRUE & hypo=="power" & ar == 10 & decision %in% c("futility","efficacy"),
+res3stage.coverage <- res3stage[hypo=="power" & decision %in% c("futility","efficacy"),
                                 .(N = .N,
                                   "NA" = 100*mean(is.na(lower_MUE) | is.na(upper_MUE)),
                                   coverage = 100*mean( (lower_MUE <= truth) & (truth <= upper_MUE), na.rm=TRUE)),
                                 by = c("method.char","missing","binding","fixC")]
 
 range(res3stage.coverage$"NA",na.rm=TRUE)
-## [1] 0.01 9.05
+##  0.000 4.755
 range(res3stage.coverage$coverage,na.rm=TRUE)
-## [1] 95.29 98.09
+## 94.63 98.12
 
+
+## ** Rejection below 1.96
+table2stage.below196 <- res2stage[type %in% c("decision","final"),
+                                  .(.N, rejection = mean2pc(decision=="efficacy"), rejectionBelow196 = mean2pc((statistic<qnorm(0.975))*(decision=="efficacy"))),
+                                  by = c("scenario","missing","method","binding","fixC","ar","hypo")]
+table2stage.below196[method %in% 1:2 & fixC == FALSE,range(rejectionBelow196)]
+## [1] "0.04%" "0.54%"
+
+
+table3stage.below196 <- res3stage[type %in% c("decision","final"),
+                            .(.N, rejection = mean2pc(decision=="efficacy"), rejectionBelow196 = mean2pc((statistic<qnorm(0.975))*(decision=="efficacy"))),
+                            by = c("scenario","missing","method","binding","fixC","ar","hypo")]
+table3stage.below196[method %in% 1:2 & fixC == FALSE,range(rejectionBelow196)]
+## [1] "0.05%" "0.79%"
+
+## ** Acceptance above 1.96
+table2stage.above196 <- res2stage[type %in% c("decision","final"),
+                                  .(.N, rejection = mean2pc(decision=="futility"), rejectionAbove196 = mean2pc((statistic>qnorm(0.975))*(decision=="futility"))),
+                                  by = c("scenario","missing","method","binding","fixC","ar","hypo")]
+table2stage.above196[method == 3 | fixC,range(rejectionAbove196)]
+## [1] "0.12%" "1.01%"
+
+
+table3stage.above196 <- res3stage[type %in% c("decision","final"),
+                            .(.N, rejection = mean2pc(decision=="futility"), rejectionAbove196 = mean2pc((statistic>qnorm(0.975))*(decision=="futility"))),
+                            by = c("scenario","missing","method","binding","fixC","ar","hypo")]
+table3stage.above196[method == 3 | fixC,range(rejectionAbove196)]
+## [1] "0.21%" "1.16%"
+
+
+## ** Special cases
+res2stage[, reasonNA := ifelse(is.na(reason),"NA",reason)]
+res3stage[, reasonNA := ifelse(is.na(reason),"NA",reason)]
+normal.case <- c("efficacy","futility","no boundary crossed","NA")
+
+table2stage.special <- ftable(reason = res2stage[reasonNA %in% normal.case == FALSE,reason],
+                              method = res2stage[reasonNA %in% normal.case == FALSE,method],
+                              scenario = res2stage[reasonNA %in% normal.case == FALSE,scenario])
+table2stage.special
+##                                     scenario   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+## reason                       method                                                                                         
+## decreasing information       1                18  27   0   0  18  27   0   0  18   2   0   0  18  18  19   2   0   0  11  17
+##                              2                18  27   0   0  18  27   0   0  18   2   0   0  18  18  19   2   0   0  11  17
+##                              3                18  27   0   0  18  27   0   0  18   2   0   0  18  18  20   2   0   0  11  17
+## Imax reached                 1                 3   3 118 118   3   3 118 118   5   5 103 103   5   0  22   5 103 103   4   4
+##                              2                 3   3 123 123   3   3 107 107   3   3  90  90   5   0  22   5 103 103   4   4
+##                              3                 3   3 114 114   3   3 114 114   5   5 101 101   5   0  21   5 101 101   4   4
+## stop for futility at interim 1                 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+##                              2                 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+##                              3                 2   1  29   3   2   1  29   3   3   0  29   0   3   7   0   0  29   0   5   1
+range(as.double(table2stage.special[1:3,]))/100
+## [1] 0.00 0.27
+range(as.double(table2stage.special[4:6,]))/100
+## [1] 0.00 1.23
+
+table3stage.special <- ftable(reason = res3stage[reasonNA %in% normal.case == FALSE,reason],
+                              method = res3stage[reasonNA %in% normal.case == FALSE,method],
+                              scenario = res3stage[reasonNA %in% normal.case == FALSE,scenario])
+table3stage.special
+##                                     scenario   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+## reason                       method                                                                                 
+## decreasing information       1                27  23   0   0  27  23   0   0  21   8   0   0  21   8   0   0  17  10
+##                              2                27  23   0   0  27  22   0   0  23   6   0   0  21   8   0   0  17  10
+##                              3                24  21   0   0  24  21   0   0  21   8   0   0  21   8   0   0  17  10
+## Imax reached                 1                27  16 365 244  27  16 365 244  18  52 308 649  18  52 308 649  18  11
+##                              2                27  16 377 237  21  17 317 221  15  43 275 584  18  53 309 655  19  11
+##                              3                25  18 319 256  25  18 319 256  17  51 278 646  17  51 278 646  16  12
+## stop for futility at interim 1                 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+##                              2                 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+##                              3                10   1  30   7  10   1  30   7   7   0  41   0   7   0  41   0  11   1
+range(as.double(table3stage.special[1:3,]))/100
+## [1] 0.00 0.27
+range(as.double(table3stage.special[4:6,]))/100
+## [1] 0.11 6.55
+
+## ** reversal
+
+## *** 2 stages
+res2stage[,decision2 := ifelse(type=="interim",reason, decision)]
+res2stage.reversal <- dcast(res2stage, seed+method+scenario+missing+binding+fixC+ar+hypo ~ type, value.var = "decision2")
+
+res2stage.reversal[, reversal.fu2eff := (interim == "futility")*(decision == "efficacy")]
+res2stage.reversal[is.na(reversal.fu2eff), reversal.fu2eff:=0]
+res2stage.reversal[, reversal.eff2fu := (interim == "efficacy")*(decision == "futility")]
+res2stage.reversal[is.na(reversal.eff2fu), reversal.eff2fu:=0]
+res2stage.reversalS <- res2stage.reversal[, .(.N,fu2eff = 100*mean(reversal.fu2eff), eff2fu = 100*mean(reversal.eff2fu)), by = c("method","scenario","missing","binding","fixC","ar","hypo")]
+
+res2stage.reversalS[,.(fu2eff = paste0("min=",min(fu2eff),", median = ", median(fu2eff),", max = ",max(fu2eff)),
+                       eff2fu = paste0("min=",min(eff2fu),", median = ", median(eff2fu),", max = ",max(eff2fu))),
+                       by = "method"]
+##    method                            fu2eff                               eff2fu
+##     <int>                            <char>                               <char>
+## 1:      1 min=0, median = 0.125, max = 0.69   min=0.05, median = 0.175, max = 0.49
+## 2:      2  min=0, median = 0.12, max = 0.78   min=0.05, median = 0.175, max = 0.5
+## 3:      3        min=0, median = 0, max = 0   min=0.23, median = 0.585, max = 1.01
+
+
+
+
+## *** 3 stages
+res3stage[,decision2 := ifelse(type=="interim",reason, decision)]
+res3stage.reversal <- dcast(res3stage, seed+method+scenario+missing+binding+fixC+ar+hypo ~ paste0(type,stage), value.var = "decision2")
+
+res3stage.reversal[, c("reversal.fu2eff","reversal.eff2fu"):=0]
+res3stage.reversal[(interim1 == "futility")*(decision1 == "efficacy") | (interim2 == "futility")*(decision2 == "efficacy"), reversal.fu2eff := 1]
+res3stage.reversal[(interim1 == "efficacy")*(decision1 == "futility") | (interim2 == "efficacy")*(decision2 == "futility"), reversal.eff2fu := 1]
+res3stage.reversalS <- res3stage.reversal[, .(.N,fu2eff = 100*mean(reversal.fu2eff), eff2fu = 100*mean(reversal.eff2fu)), by = c("method","scenario","missing","binding","fixC","ar","hypo")]
+
+res3stage.reversalS[,.(fu2eff = paste0("min=",min(fu2eff),", median = ", median(fu2eff),", max = ",max(fu2eff)),
+                       eff2fu = paste0("min=",min(eff2fu),", median = ", median(eff2fu),", max = ",max(eff2fu))),
+                    by = "method"]
+##    method                            fu2eff                               eff2fu
+##     <int>                            <char>                               <char>
+## 1:      1  min=0, median = 0.15, max = 0.85 min=0.07, median = 0.235, max = 0.83
+## 2:      2 min=0, median = 0.135, max = 1.02 min=0.07, median = 0.275, max = 0.83
+## 3:      3        min=0, median = 0, max = 0 min=0.24, median = 0.865, max = 1.25
 
 ## ** coherence
-res2stage.PmismatchFU <- res2stage[decision=="futility",.(N = .N,
-                                                          mismatchP = 100*mean(p.value_MUE<0.025),
-                                                          mismatchCI = 100*mean(lower_MUE>0, na.rm=TRUE)),
-                                  by = c("method.char","scenario","missing","binding","fixC","ar","hypo")]
-res2stage.PmismatchFU[,.(max(mismatchP),max(mismatchCI))]
-## 1:  0  0
-
+## *** 2 stages
 res2stage.PmismatchEFF <- res2stage[decision=="efficacy",.(N = .N,
                                                            mismatchP = 100*mean(p.value_MUE>0.025),
                                                            mismatchCI = 100*mean(lower_MUE<0, na.rm=TRUE)),
@@ -668,24 +774,50 @@ res2stage.PmismatchEFF <- res2stage[decision=="efficacy",.(N = .N,
 res2stage.PmismatchEFF[,.(max(mismatchP),max(mismatchCI))]
 ## 1:  0  0
 
-res3stage.PmismatchFU <- res3stage[decision=="futility",.(N = .N,
+res2stage.PmismatchFU <- res2stage[decision=="futility",.(N = .N,
                                                           mismatchP = 100*mean(p.value_MUE<0.025),
                                                           mismatchCI = 100*mean(lower_MUE>0, na.rm=TRUE)),
-                                  by = c("method.char","scenario","missing","binding","fixC","ar","hypo")]
-res3stage.PmismatchFU[,.(max(mismatchP),max(mismatchCI))]
-## 1: 0.04985  0
-print(res3stage[decision=="futility" & p.value_MUE<0.025,min(p.value_MUE)], digits = 10)
-## 0.02500576079
+                                   by = c("method.char","scenario","missing","binding","fixC","ar","hypo")]
+res2stage.PmismatchFU[,.(max(mismatchP),max(mismatchCI))]
+## 1:     0     0
 
+## *** 3 stages (no rounding)
 res3stage.PmismatchEFF <- res3stage[decision=="efficacy",.(N = .N,
                                                            mismatchP = 100*mean(p.value_MUE>0.025),
                                                            mismatchCI = 100*mean(lower_MUE<0, na.rm=TRUE)),
                                   by = c("method.char","scenario","missing","binding","fixC","ar","hypo")]
 res3stage.PmismatchEFF[,.(max(mismatchP),max(mismatchCI))]
-## 1: 0.4115 0.01249
-print(res3stage[decision=="efficacy" & p.value_MUE>0.025,max(p.value_MUE)], digits = 10)
-## [1] 0.02500576079
-print(res3stage[decision=="efficacy",min(lower_MUE)], digits = 10)
+## 1: 0.8584 0.8584
+
+res3stage.PmismatchFU <- res3stage[decision=="futility",.(N = .N,
+                                                          mismatchP = 100*mean(p.value_MUE<0.025),
+                                                          mismatchCI = 100*mean(lower_MUE>0, na.rm=TRUE)),
+                                   by = c("method.char","scenario","missing","binding","fixC","ar","hypo")]
+res3stage.PmismatchFU[,.(max(mismatchP),max(mismatchCI))]
+## 1: 0.09785     0
+
+## *** 3 stages (rounding)
+res3stage.PmismatchEFF <- res3stage[decision=="efficacy",.(N = .N,
+                                                           mismatchP = 100*mean(round(p.value_MUE,5)>0.025),
+                                                           mismatchCI = 100*mean(round(lower_MUE,5)<0, na.rm=TRUE)),
+                                  by = c("method.char","scenario","missing","binding","fixC","ar","hypo")]
+res3stage.PmismatchEFF[,.(max(mismatchP),max(mismatchCI))]
+## 1: 0.8584 0.8584
+
+res3stage.PmismatchFU <- res3stage[decision=="futility",.(N = .N,
+                                                          mismatchP = 100*mean(round(p.value_MUE,5)<0.025),
+                                                          mismatchCI = 100*mean(round(lower_MUE,5)>0, na.rm=TRUE)),
+                                   by = c("method.char","scenario","missing","binding","fixC","ar","hypo")]
+res3stage.PmismatchFU[,.(max(mismatchP),max(mismatchCI))]
+## 1:     0     0
+
+
+res3stage.PmismatchEFF[mismatchP>0 | mismatchCI >0]
+res3stage.PmismatchFU[mismatchP>0 | mismatchCI >0]
+
+res3stage[method == 3 & decision=="efficacy" & round(p.value_MUE,5)>0.025]
+
+res3stage[scenario == 4 & method == 3 & decision=="efficacy" & round(p.value_MUE,5)>0.025]
 
 ## ** bias
 

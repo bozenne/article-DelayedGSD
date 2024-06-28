@@ -24,39 +24,33 @@ occurs: a tutorial". It is organized as follows:
 
 #+BEGIN_SRC R :exports both :results output :session *R* :cache no
 library(DelayedGSD)
-library(data.table)
-library(ggplot2)
-library(xtable)
 sessionInfo()
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-data.table 1.14.2 using 4 threads (see ?getDTthreads).  Latest news: r-datatable.com
-Advarselsbesked:
-pakke 'ggplot2' blev bygget under R version 4.2.3
-R version 4.2.0 (2022-04-22 ucrt)
-Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 19045)
+R version 4.1.2 (2021-11-01)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Red Hat Enterprise Linux 8.9 (Ootpa)
 
 Matrix products: default
+BLAS:   /maps/direct/software/R/4.1.2/lib64/R/lib/libRblas.so
+LAPACK: /maps/direct/software/R/4.1.2/lib64/R/lib/libRlapack.so
 
 locale:
-[1] LC_COLLATE=Danish_Denmark.utf8  LC_CTYPE=Danish_Denmark.utf8   
-[3] LC_MONETARY=Danish_Denmark.utf8 LC_NUMERIC=C                   
-[5] LC_TIME=Danish_Denmark.utf8    
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C
 
 attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
+[1] stats     graphics  grDevices utils     datasets  methods   base
 
 other attached packages:
-[1] xtable_1.8-4      ggplot2_3.4.3     data.table_1.14.2 DelayedGSD_0.0.5 
+[1] DelayedGSD_0.0.7
 
 loaded via a namespace (and not attached):
- [1] fansi_1.0.4      withr_2.5.1      dplyr_1.1.3      utf8_1.2.3      
- [5] grid_4.2.0       R6_2.5.1         lifecycle_1.0.3  gtable_0.3.4    
- [9] magrittr_2.0.3   scales_1.2.1     pillar_1.9.0     rlang_1.1.1     
-[13] cli_3.6.1        generics_0.1.3   vctrs_0.6.3      glue_1.6.2      
-[17] munsell_0.5.0    compiler_4.2.0   pkgconfig_2.0.3  colorspace_2.1-0
-[21] tidyselect_1.2.0 tibble_3.2.1
+[1] compiler_4.1.2
 #+end_example

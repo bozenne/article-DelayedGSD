@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: mar 10 2023 (13:16) 
 ## Version: 
-## Last-Updated: nov  1 2023 (09:57) 
+## Last-Updated: jun  5 2024 (14:49) 
 ##           By: Brice Ozenne
-##     Update #: 49
+##     Update #: 50
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -136,6 +136,7 @@ attr(pval3stage.m3nb,"terms")
 if(export){
     pdf("figures/illustration-pvalue-3stage.pdf", width = 11, height = 10)
 }
+
 par(mfrow = c(2,3), mar = rep(2.5,4))
 plot(pval3stage.m12b, xlim = c(0.7,3.3), title = "method 1 or 2")
 plot(pval3stage.m12b.fixC, xlim = c(0.7,3.3), title = "method 1 or 2 (ck>1.96)")

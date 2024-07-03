@@ -13,14 +13,14 @@ if(length(args)>0){
     }
 }
 if(is.na(iter_sim)){ ## arguments for interactive R session (when not running on the server via slurm, iter_sim will be NA)
-    iter_sim <- 1
-    n.iter_sim <- 100
+    iter_sim <- 162
+    n.iter_sim <- 200
 
     if("missing" %in% ls() == FALSE){ missing <- TRUE }
-    if("binding" %in% ls() == FALSE){ binding <- TRUE }
+    if("binding" %in% ls() == FALSE){ binding <- FALSE }
     if("cNotBelowFixedc" %in% ls() == FALSE){ cNotBelowFixedc <- FALSE }
-    if("ar.factor" %in% ls() == FALSE){ ar.factor <- 1 }
-    if("delta.factor" %in% ls() == FALSE){ delta.factor <- 1 }
+    if("ar.factor" %in% ls() == FALSE){ ar.factor <- 2 }
+    if("delta.factor" %in% ls() == FALSE){ delta.factor <- 0 }
     if("n.method" %in% ls() == FALSE){ n.method <- 3 }
 }
 

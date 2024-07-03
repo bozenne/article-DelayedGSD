@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=3stageGST  # Job name
-#SBATCH --array=1-100     # Number of jobs
+#SBATCH --array=1-200     # Number of jobs
 #SBATCH --partition=long    # Queue. Use long for run time >8h and standard otherwise
 #SBATCH --mem=1G # Memory limit, e.g. reserve 1 GB memory 
 #SBATCH --output=output/slurm/slurm-%x-%a-%J.out # Direct output to subdirectory
@@ -55,7 +55,7 @@ R CMD BATCH --vanilla '--args missing=TRUE binding=FALSE cNotBelowFixedc=TRUE ar
                       ## rm -r Results/3stage_missing_fixC_nonbinding_ar2_power/*;rm -r Results/3stage_missing_fixC_nonbinding_ar2_typeI/*;
 
 ## submission command ## sbatch SUBM_threestage.slurm
-## submission output  ## Submitted batch job 6378331 (time using C-c t: onsdag 24-06-05 at 09:58) 
+## submission output  ## Submitted batch job 4378570 (time using C-c t: onsdag 24-06-05 at 09:58) 
 
 ## init               ## module module load gcc/11.2.0 R/4.1.2
                       ## cat .bash_profile (in the root directory on the server to visualize the current configuration)

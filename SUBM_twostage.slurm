@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=2stageGST  # Job name
-#SBATCH --array=1-100     # Number of jobs
+#SBATCH --array=1-200     # Number of jobs
 #SBATCH --partition=long    # Queue. Use long for run time >8h and standard otherwise
 #SBATCH --mem=1G # Memory limit, e.g. reserve 1 GB memory 
 #SBATCH --output=output/slurm/slurm-%x-%a-%J.out # Direct output to subdirectory
@@ -61,7 +61,7 @@ R CMD BATCH --vanilla '--args missing=TRUE binding=FALSE cNotBelowFixedc=FALSE a
                       ## rm -r Results/2stage_missing_nonbinding_ar1_power_missinfo0x5/*;rm -r Results/2stage_missing_nonbinding_ar1_power_missinfo1x5/*;
 
 ## submission command ## sbatch SUBM_twostage.slurm
-## submission output  ## Submitted batch job 6378231 (time using C-c t: onsdag 24-06-05 at 09:57) 
+## submission output  ## Submitted batch job 6378441 (time using C-c t: onsdag 24-06-05 at 15:35) 
 
 ## init               ## module module load gcc/11.2.0 R/4.1.2
                       ## cat .bash_profile (in the root directory on the server to visualize the current configuration)

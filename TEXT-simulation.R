@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: jun  5 2024 (13:55) 
 ## Version: 
-## Last-Updated: jun  6 2024 (13:06) 
+## Last-Updated: sep 26 2024 (10:30) 
 ##           By: Brice Ozenne
-##     Update #: 75
+##     Update #: 83
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -91,7 +91,7 @@ quantile(100*sapply(1:20000, function(i){mean(rbinom(2e4, size = 1, prob = 0.025
 
 ## *** 2 stages
 ## For each run, create a binary indicator for rejection for efficacy
-res2stage.rejection <- res2stage[type != "interim",.(n.stage = .N, rejection = "efficacy" %in% decision),
+res2stage.rejection <- res2stage[type != "interim" & infoBias == 0,.(n.stage = .N, rejection = "efficacy" %in% decision),
                                  by = c("method.char","seed","scenario","missing","binding","fixC","ar","hypo")]
 
 ## Average over runs and method within scenario
@@ -487,7 +487,7 @@ rbind(bias_MLE = quantile(abs(res3stageS.biasS2$bias_MLE)),
 
 ## ** information
 ## *** 2 stages
-res2stage.info1 <- res2stage[ar == 1 & missing == TRUE, .(n.interim = sum(type=="interim"), infoPC.interim = .SD[type=="interim", mean(infoPC)],
+res2stage.info1 <- res2stage[ar == 1 & infoBias == 0 & missing == TRUE, .(n.interim = sum(type=="interim"), infoPC.interim = .SD[type=="interim", mean(infoPC)],
                                                           n.decision = sum(type=="decision"), infoPC.decision = .SD[type=="decision", mean(infoPC)],
                                                           n.final = sum(type=="final"), infoPC.final = .SD[type=="final", mean(infoPC)]),
                              by = c("method","binding","fixC","ar","scenario")]
@@ -499,7 +499,7 @@ rbind(interim = quantile(res2stage.info1$infoPC.interim),
 ## decision 0.6720 0.6774 0.6781 0.6827 0.7163
 ## final    1.0114 1.0177 1.0208 1.0217 1.0359
 
-res2stage.info2 <- res2stage[ar == 2 & missing == TRUE, .(n.interim = sum(type=="interim"), infoPC.interim = .SD[type=="interim", mean(infoPC)],
+res2stage.info2 <- res2stage[ar == 2 & infoBias == 0 & missing == TRUE, .(n.interim = sum(type=="interim"), infoPC.interim = .SD[type=="interim", mean(infoPC)],
                                                           n.decision = sum(type=="decision"), infoPC.decision = .SD[type=="decision", mean(infoPC)],
                                                           n.final = sum(type=="final"), infoPC.final = .SD[type=="final", mean(infoPC)]),
                              by = c("method","binding","fixC","ar","scenario")]
@@ -549,42 +549,57 @@ rbind(interim1 = quantile(res3stage.info2$infoPC.interim1),
 ## final     0.9935 1.0030 1.0051 1.0108 1.0241
 
 
-## * Debug
+## * Review
+## ** ck in table 1
 
-df.method <- data.frame(method = 1:3, binding = FALSE, fixC = c(FALSE,FALSE,TRUE))
- 
-MyMissProb <- matrix(c(0.04807692, 0.05769231, 0.00961538, 0.88461538),  nrow = 2, ncol = 2,
-                     dimnames = list(c("V1 missing", "V1 not missing"),c("V2 missing", "V2 not missing")))
- 
-args.GenData <- list(rand.block = c(1, 1, 0, 0),
-                     allsd = c(2.5, 2.1, 2.4),
-                     mean0 = c(10, 0, 0),
-                     delta = c(0, 0.5, 1)*1,
-                     ar = 30,
-                     cor.01.1 = -0.15,
-                     cor.ij.1 = 0.68,
-                     cor.0j.1 = -0.27,
-                     MissProb = MyMissProb,
-                     DigitsOutcome = 2,
-                     TimeFactor = 42,
-                     DigitsTime = 0)
- 
-##### 2 stages #### 
-debug2stage <- operatingDelayedGSD(n.sim = 10, 
-                                 method = df.method,
-                                 args.GenData = args.GenData,
-                                 kMax = 2, InfoR.i = c(0.56,1), InfoR.d = c(0.65, 1), delta = 1,
-                                 PropForInterim = 0.5, lag = 21,
-                                 seed = 1:10)
+res2stage[method %in% 1:2 & fixC == FALSE & missing == TRUE & ar == 1 & type == "decision" & infoBias == 0,
+          .(n.sim = .N, ckBelow1.96 = 100*mean(ck<qnorm(0.975)), statisticBelow1.96 = 100*mean(statistic < qnorm(0.975))),
+          by = c("method.char","hypo","binding")]
+##    method.char   hypo binding n.sim ckBelow1.96 statisticBelow1.96
+##         <char> <char>  <lgcl> <int>       <num>              <num>
+## 1:    method 1  power    TRUE 10625       99.92              7.501
+## 2:    method 2  power    TRUE 10632       99.90              7.543
+## 3:    method 1  typeI    TRUE 14264       99.94             98.829
+## 4:    method 2  typeI    TRUE 14293       99.92             98.832
+## 5:    method 1  power   FALSE 10596       99.93              6.663
+## 6:    method 2  power   FALSE 10605       99.90              6.723
+## 7:    method 1  typeI   FALSE   201       96.52             15.423
+## 8:    method 2  typeI   FALSE   201       96.02             15.423
 
-##### 3 stages ####
-debug3stage <- operatingDelayedGSD(n.sim = 1, 
-                                   method = df.method[1,,drop=FALSE],
-                                   args.GenData = args.GenData,
-                                   kMax = 3, InfoR.i = c(0.40,0.65,1), InfoR.d = c(0.50,0.75, 1), delta = 1,
-                                   PropForInterim = c(0.35,0.6), lag = 21,
-                                   seed = 284923476)
+res2stage[method == 1 & fixC == FALSE & missing == TRUE & ar == 1 & type == "decision" & hypo == "typeI" & binding == TRUE & infoBias == 0,hist(ck)]
+res2stage[method == 1 & fixC == FALSE & missing == TRUE & ar == 1 & type == "decision" & hypo == "typeI" & binding == TRUE & infoBias == 0,quantile(ck, c(0,0.01,0.25,0.5,0.75,1), na.rm=TRUE)]
+##     0%     1%    25%    50%    75%   100% 
+## 0.8417 1.4545 1.5726 1.6249 1.6788 1.9600 
 
+res2stage[method == 1 & fixC == FALSE & missing == TRUE & ar == 1 & type == "decision" & hypo == "typeI" & binding == FALSE & infoBias == 0, hist(ck)]
+res2stage[method == 1 & fixC == FALSE & missing == TRUE & ar == 1 & type == "decision" & hypo == "typeI" & binding == FALSE & infoBias == 0,quantile(ck, c(0,0.01,0.25,0.5,0.75,1))]
+##    0%    1%   25%   50%   75%  100% 
+## 1.468 1.500 1.609 1.664 1.730 1.960 
+
+
+res2stage[method %in% 1:2 & fixC == FALSE & missing == TRUE & ar == 1 & type != "interim" & infoBias == 0,
+          .(n.sim = .N, ckBelow1.96 = 100*mean(ck<qnorm(0.975)), statisticBelow1.96 = 100*mean(statistic < qnorm(0.975))),
+          by = c("method.char","hypo","binding")]
+##    method.char   hypo binding n.sim ckBelow1.96 statisticBelow1.96
+##         <char> <char>  <lgcl> <int>       <num>              <num>
+## 1:    method 1  power    TRUE 20000      53.085              9.650
+## 2:    method 2  power    TRUE 20000      53.120              9.655
+## 3:    method 1  typeI    TRUE 20000      71.280             97.295
+## 4:    method 2  typeI    TRUE 20000      71.430             97.295
+## 5:    method 1  power   FALSE 20000      52.945              8.870
+## 6:    method 2  power   FALSE 20000      52.970              8.880
+## 7:    method 1  typeI   FALSE 20000       0.970             97.110
+## 8:    method 2  typeI   FALSE 20000       0.965             97.110
+
+res2stage[method == 1 & fixC == FALSE & missing == TRUE & ar == 1 & type != "interim" & hypo == "typeI" & binding == TRUE & infoBias == 0,hist(ck)]
+res2stage[method == 1 & fixC == FALSE & missing == TRUE & ar == 1 & type != "interim" & hypo == "typeI" & binding == TRUE & infoBias == 0,quantile(ck, c(0,0.01,0.25,0.5,0.75,1))]
+##     0%     1%    25%    50%    75%   100% 
+## 0.8417 1.4638 1.5949 1.6671 1.9943 2.0299 
+
+res2stage[method == 1 & fixC == FALSE & missing == TRUE & ar == 1 & type != "interim" & hypo == "typeI" & binding == FALSE & infoBias == 0, hist(ck)]
+res2stage[method == 1 & fixC == FALSE & missing == TRUE & ar == 1 & type != "interim" & hypo == "typeI" & binding == FALSE & infoBias == 0,quantile(ck, c(0,0.01,0.25,0.5,0.75,1))]
+##    0%    1%   25%   50%   75%  100% 
+## 1.468 1.960 2.015 2.028 2.043 2.250
 
 ##----------------------------------------------------------------------
 ### TEXT-simulation.R ends here

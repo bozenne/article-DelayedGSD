@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: jun  5 2024 (13:50) 
 ## Version: 
-## Last-Updated: jun  5 2024 (14:17) 
+## Last-Updated: sep 26 2024 (09:38) 
 ##           By: Brice Ozenne
-##     Update #: 2
+##     Update #: 19
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -15,12 +15,15 @@
 ## 
 ### Code:
 
+library(data.table)
 library(DelayedGSD)
+library(ggplot2)
 
-df.method <- data.frame(method = 1:3, binding = TRUE, fixC = c(FALSE,FALSE,TRUE))
- 
 MyMissProb <- matrix(c(0.04807692, 0.05769231, 0.00961538, 0.88461538),  nrow = 2, ncol = 2,
                      dimnames = list(c("V1 missing", "V1 not missing"),c("V2 missing", "V2 not missing")))
+
+df.method <- data.frame(method = 1:3, binding = TRUE, fixC = c(FALSE,FALSE,TRUE))
+
  
 args.GenData <- list(rand.block = c(1, 1, 0, 0),
                      allsd = c(2.5, 2.1, 2.4),
@@ -34,14 +37,13 @@ args.GenData <- list(rand.block = c(1, 1, 0, 0),
                      DigitsOutcome = 2,
                      TimeFactor = 42,
                      DigitsTime = 0)
- 
 ##### 2 stages #### 
 debug2 <- operatingDelayedGSD(n.sim = 10, 
-                                 method = df.method,
-                                 args.GenData = args.GenData,
-                                 kMax = 2, InfoR.i = c(0.56,1), InfoR.d = c(0.65, 1), delta = 1,
-                                 PropForInterim = 0.5, lag = 21,
-                                 seed = 1:10)
+                              method = df.method,
+                              args.GenData = args.GenData,
+                              kMax = 2, InfoR.i = c(0.56,1), InfoR.d = c(0.65, 1), delta = 1,
+                              PropForInterim = 0.5, lag = 21,
+                              seed = 1:10)
 
 ##### 3 stages ####
 res3stage[scenario == 4 & method == 3 & seed == 407971177]

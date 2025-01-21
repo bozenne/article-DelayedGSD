@@ -36,7 +36,7 @@ R CMD BATCH --vanilla '--args missing=TRUE binding=FALSE cNotBelowFixedc=FALSE a
                       ## cd /projects/biostat01/people/hpl802/DelayedGSD/
 
 ## clean outputs      ## rm -r output/slurm/*;
-                      ## rm -r output/2stage_nomissing_binding_ar1_power/*;rm -r output/2stage_nomissing_binding_ar1_typeI/*;
+## rm -r output/2stage_nomissing_binding_ar1_power/*;rm -r output/2stage_nomissing_binding_ar1_typeI/*;
                       ## rm -r output/2stage_missing_binding_ar1_power/*;rm -r output/2stage_missing_binding_ar1_typeI/*;
                       ## rm -r output/2stage_missing_binding_ar2_power/*;rm -r output/2stage_missing_binding_ar2_typeI/*;
                       ## rm -r output/2stage_missing_nonbinding_ar1_power/*;rm -r output/2stage_missing_nonbinding_ar1_typeI/*;
@@ -61,7 +61,7 @@ R CMD BATCH --vanilla '--args missing=TRUE binding=FALSE cNotBelowFixedc=FALSE a
                       ## rm -r Results/2stage_missing_nonbinding_ar1_power_missinfo0x5/*;rm -r Results/2stage_missing_nonbinding_ar1_power_missinfo1x5/*;
 
 ## submission command ## sbatch SUBM_twostage.slurm
-## submission output  ## Submitted batch job 6378441 (time using C-c t: onsdag 24-06-05 at 15:35) 
+## submission output  ## Submitted batch job 7608274 (time using C-c t: mandag 25-01-20 at 19:25) 
 
 ## init               ## module module load gcc/11.2.0 R/4.1.2
                       ## cat .bash_profile (in the root directory on the server to visualize the current configuration)

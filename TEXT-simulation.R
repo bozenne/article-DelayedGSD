@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: jun  5 2024 (13:55) 
 ## Version: 
-## Last-Updated: sep 26 2024 (10:30) 
+## Last-Updated: jan 21 2025 (10:20) 
 ##           By: Brice Ozenne
-##     Update #: 83
+##     Update #: 142
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -72,6 +72,7 @@ res2stage[type == "final", .(n.patients = paste0(median(nX1),"[",min(nX1),";",ma
                              n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]")), by = c("stage","type")]
 ##    stage     type   n.patients    n.outcome  n.missing
 ## 2:     2    final 268[237;268] 240[237;240]   28[0;28]
+
 res3stage[type=="final", .(n.patients = paste0(median(nX1),"[",min(nX1),";",max(nX1),"]"),
                            n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
                            n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]")), by = c("stage","type")]
@@ -109,7 +110,7 @@ res2stageS.rejection[missing & ar == 1 & hypo == "power", range(rejectionRate)]
 ## [1] 89.92 90.72
 
 range(res2stageS.rejection[hypo == "power" & method.char == "method 1", rejectionRate]- res2stageS.rejection[hypo == "power" & method.char == "method 2", rejectionRate])
-## [1] 0.0 0.1
+## [1] 0.01 0.10
 
 range(res2stageS.rejection[hypo == "power" & method.char == "method 1", rejectionRate]- res2stageS.rejection[hypo == "power" & method.char == "method 3", rejectionRate])
 ## [1] 0.28 0.69
@@ -133,7 +134,6 @@ res3stageS.rejection[missing == FALSE & hypo == "power" & method.char == "method
 res3stageS.rejection[missing & hypo == "power", range(rejectionRate)]
 ## [1] 89.63 90.98
 
-
 range(res3stageS.rejection[hypo == "power" & method.char == "method 1", rejectionRate]- res3stageS.rejection[hypo == "power" & method.char == "method 2", rejectionRate])
 ## [1] 0.045 0.075
 
@@ -141,62 +141,60 @@ range(res3stageS.rejection[hypo == "power" & method.char == "method 1", rejectio
 ## [1] 0.645 0.865
 
 ## ** coverage
-res2stage.coverage <- res2stage[hypo=="power" & decision %in% c("futility","efficacy"),
+res2stage.coverage <- res2stage[decision %in% c("futility","efficacy"),
                                 .(N = .N,
                                   lowerNA = 100*mean(is.na(lower_MUE)),
                                   upperNA = 100*mean(is.na(upper_MUE)),
-                                  CINA = 100*mean(is.na(lower_MUE) & is.na(upper_MUE)),
-                                  onlylower = 100*mean(!is.na(lower_MUE) & is.na(upper_MUE)),
                                   coverage = 100*mean( (lower_MUE <= truth) & (truth <= upper_MUE), na.rm=TRUE)),
-                                by = c("method.char","scenario","binding","fixC","missing","ar")]
+                                by = c("hypo","method.char","scenario","binding","fixC","missing","ar")]
 
-res2stage.coverage[,.(lowerNA = max(lowerNA), upperNA = max(upperNA), CINA = max(CINA), onlylower = max(onlylower)), by = c("binding")]
-##    binding lowerNA upperNA  CINA onlylower
-##     <lgcl>   <num>   <num> <num>     <num>
-## 1:    TRUE   0.000    0.00  0.00         0
-## 2:   FALSE   3.695    3.52  3.52         0
+res2stage.coverage[,.(lowerNA = paste0("[",min(lowerNA),"; ",max(lowerNA),"]"), upperNA = paste0("[",min(upperNA),"; ",max(upperNA),"]")), by = c("binding")]
+##    binding        lowerNA       upperNA
+##     <lgcl>         <char>        <char>
+## 1:    TRUE         [0; 0]        [0; 0]
+## 2:   FALSE [0.045; 3.695] [0.045; 3.65]
 range(res2stage.coverage$coverage,na.rm=TRUE)
-## [1] 94.55 97.10
+## [1] 91.84 97.17
+range(res2stage.coverage[hypo=="power",coverage],na.rm=TRUE)
+## [1] 94.54 97.17
+res2stage[type != "interim" & is.na(lower_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","decision","stage")]
+##    binding decision stage     N minp.value_MUE
+##     <lgcl>   <char> <num> <int>          <num>
+## 1:   FALSE futility     1 12315         0.9783
+res2stage[type != "interim" & is.na(upper_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","decision","stage")]
+## Empty data.table (0 rows and 5 cols): binding,decision,stage,N,minp.value_MUE
 
-
-res2stage[type != "interim" & is.na(lower_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","stage")]
-##    binding stage     N minp.value_MUE
-##     <lgcl> <num> <int>          <num>
-## 1:   FALSE     1 12315         0.9783
-res2stage[type != "interim" & !is.na(lower_MUE) & is.na(upper_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","stage")]
-##    binding stage     N minp.value_MUE
-##     <lgcl> <num> <int>          <num>
-## 1:   FALSE     2     4         0.8477
-
-res3stage.coverage <- res3stage[hypo=="power" & decision %in% c("futility","efficacy"),
+res3stage.coverage <- res3stage[decision %in% c("futility","efficacy"),
                                 .(N = .N,
                                   lowerNA = 100*mean(is.na(lower_MUE)),
                                   upperNA = 100*mean(is.na(upper_MUE)),
-                                  CINA = 100*mean(is.na(lower_MUE) & is.na(upper_MUE)),
-                                  onlylower = 100*mean(!is.na(lower_MUE) & is.na(upper_MUE)),
                                   coverage = 100*mean( (lower_MUE <= truth) & (truth <= upper_MUE), na.rm=TRUE)),
-                                by = c("method.char","scenario","binding","fixC","missing","ar")]
+                                by = c("hypo","method.char","scenario","binding","fixC","missing","ar")]
 
-res3stage.coverage[,.(lowerNA = max(lowerNA), upperNA = max(upperNA), CINA = max(CINA), onlylower = mean(onlylower)), by = c("binding")]
-##    binding lowerNA upperNA  CINA onlylower
-##     <lgcl>   <num>   <num> <num>     <num>
-## 1:    TRUE   0.000   0.015 0.000  0.004667
-## 2:   FALSE   5.125   4.925 4.925  0.001250
+res3stage.coverage[,.(lowerNA = paste0("[",min(lowerNA),"; ",max(lowerNA),"]"), upperNA = paste0("[",min(upperNA),"; ",max(upperNA),"]")), by = c("binding")]
+##    binding       lowerNA       upperNA
+##     <lgcl>        <char>        <char>
+## 1:    TRUE        [0; 0]        [0; 0]
+## 2:   FALSE [0.07; 5.125] [0.07; 5.085]
 range(res3stage.coverage$coverage,na.rm=TRUE)
-## 94.51 97.93
-
-res3stage[type != "interim" & is.na(lower_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","stage")]
-##    binding stage     N minp.value_MUE
-##     <lgcl> <num> <int>          <num>
-## 1:   FALSE     2  6523         0.9831
-## 2:   FALSE     1  5065         0.9874
-## 3:   FALSE     3     6         1.0000
-res3stage[type != "interim" & !is.na(lower_MUE) & is.na(upper_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","stage")]
-##    binding stage     N minp.value_MUE
-##     <lgcl> <num> <int>          <num>
-## 1:    TRUE     2   332         0.2108
-## 2:    TRUE     3    43         0.1395
-## 3:   FALSE     3   824         0.3013
+## [1] 89.52 97.89
+range(res3stage.coverage[hypo=="power",coverage],na.rm=TRUE)
+## [1] 94.50 97.89
+res3stage[type != "interim" & is.na(lower_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","decision","stage")]
+##    binding decision stage     N minp.value_MUE
+##     <lgcl>   <char> <num> <int>          <num>
+## 1:   FALSE futility     2  6523         0.9831
+## 2:   FALSE futility     1  5065         0.9874
+res3stage[type != "interim" & is.na(upper_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","decision","stage")]
+##    binding decision stage     N minp.value_MUE
+##     <lgcl>   <char> <num> <int>          <num>
+## 1:   FALSE futility     2  6439         0.9913
+## 2:   FALSE futility     1  5051         0.9954
+res3stage[type != "interim", table(lower = is.na(lower_MUE),upper = is.na(upper_MUE))]
+##        upper
+## lower     FALSE    TRUE
+##   FALSE 1068412       0
+##   TRUE       98   11490
 
 ## ** reversal
 
@@ -310,9 +308,6 @@ table3stage.special
 100*range(as.double(table3stage.special[4:6,]))/res3stage[scenario == 1 & method == 1 & stage == 1  & type == "interim",.N]
 ## [1] 0.115 6.465
 
-
-
-
 ## ** coherence
 ## *** 2 stages
 res2stage.PmismatchEFF <- res2stage[type != "interim",.(N = .N,
@@ -330,54 +325,32 @@ res2stage.PmismatchFU[,.(max(mismatchP),max(mismatchCI))]
 ## 1:     0     0
 
 ## *** 3 stages
-res3stage[(decision=="efficacy" & (p.value_MUE>0.025 | lower_MUE<0)) | (decision=="futility" & (p.value_MUE<0.025 | lower_MUE>0)), .N]
-## [1] 25
-res3stage[(decision=="efficacy" & (round(p.value_MUE,4)>0.025 | round(lower_MUE,4)<0)) | (decision=="futility" & (round(p.value_MUE,4)<0.025 | round(lower_MUE,4)>0)), .N]
-## [1] 18
+res3stage.mismatch <- res3stage[(decision=="efficacy" & (p.value_MUE>0.025 | lower_MUE<0)) | (decision=="futility" & (p.value_MUE<0.025 | lower_MUE>0))]
+NROW(res3stage.mismatch)
+## [1] 24
+print(res3stage.mismatch[type == "final", .(statistic = statistic-ck, p.value = p.value_MUE, lower = lower_MUE, upper = upper_MUE)],digits = 5)
+##      statistic  p.value       lower  upper
+##          <num>    <num>       <num>  <num>
+## 1:  2.4897e-05 0.025005  1.9565e-05 1.1936
+## 2:  6.6121e-05 0.025004 -1.3442e-05 1.2674
+## 3:  2.4897e-05 0.025002 -1.1246e-06 1.1936
+## 4: -1.0330e-04 0.025002  1.5304e-05 1.1901
+## 5: -1.0330e-04 0.025002  1.5304e-05 1.1901
+## 6:  8.0310e-05 0.025001  1.2907e-05 1.2013
 
-res3stage.PmismatchEFF <- res3stage[type != "interim",.(N = .N,
-                                                        mismatchP = 100*mean(decision=="efficacy" & round(p.value_MUE,4)>0.025),
-                                                        mismatchCI = 100*mean(decision=="efficacy" & round(lower_MUE,4)<0, na.rm=TRUE)),
-                                    by = c("method.char","scenario","missing","binding","fixC","ar","hypo")]
-res3stage.PmismatchEFF[mismatchP>0 | mismatchCI>0,]
-##      method.char scenario missing binding   fixC    ar   hypo     N mismatchP mismatchCI
-##           <char>    <int>  <lgcl>  <lgcl> <lgcl> <num> <char> <int>     <num>      <num>
-## 1:      method 3        4    TRUE    TRUE  FALSE     2  typeI 20000     0.015      0.015
-## 2: method 3 fixC        8    TRUE    TRUE   TRUE     2  typeI 20000     0.015      0.015
-## 3: method 3 fixC       11    TRUE   FALSE   TRUE     2  power 20000     0.020      0.020
-## 4: method 3 fixC       12    TRUE   FALSE   TRUE     2  typeI 20000     0.010      0.010
-## 5:      method 3       15    TRUE   FALSE  FALSE     2  power 20000     0.020      0.020
-## 6:      method 3       16    TRUE   FALSE  FALSE     2  typeI 20000     0.010      0.010
+res3stage.mismatch[type != "final", .(.N, method = unique(method), stage = unique(stage),
+                                      statVSbound = paste("[",round(min(statistic-ck),5),";",round(max(statistic-ck),5),"]"),
+                                      p.value = paste("[",round(min(p.value_MUE),5),";",round(max(p.value_MUE),5),"]")
+                                      )]
+##        N method stage          statVSbound               p.value
+##    <int>  <int> <num>               <char>                <char>
+## 1:    18      3     2 [ 0.00067 ; 0.0283 ] [ 0.02508 ; 0.02628 ]
 
-res3stage.pbCIp <- res3stage[decision=="efficacy" & (round(p.value_MUE,5)>0.025 | round(lower_MUE,5)<0)]
-res3stage.pbCIp[,.(.N, n.scenario = length(unique(scenario)),minP.value_MUE = min(p.value_MUE) ,maxP.value_MUE = max(p.value_MUE), mindiff.statck = min(statistic-ck), maxdiff.statck = max(statistic-ck))]
-##        N n.scenario minP.value_MUE maxP.value_MUE mindiff.statck maxdiff.statck
-##    <int>      <int>          <num>          <num>          <num>          <num>
-## 1:    19          7        0.02501        0.02628      6.941e-05         0.0283
-
-res3stage.incoherence <- res3stage[method == 3][paste0(scenario,"_",seed) %in% paste0(res3stage.pbCIp$scenario,"_",res3stage.pbCIp$seed)]
-table(res3stage.incoherence$stage,res3stage.incoherence$reason)
-  ##   futility Imax reached no boundary crossed
-  ## 1        2            0                  17
-  ## 2        0           18                   1
-  ## 3        0            0                   0
-
-res3stage.PmismatchFU <- res3stage[type != "interim",.(N = .N,
-                                                       mismatchP = 100*mean(decision=="futility" & p.value_MUE<0.025),
-                                                       mismatchCI = 100*mean(decision=="futility" & lower_MUE>0, na.rm=TRUE)),
-                                   by = c("method.char","scenario","missing","binding","fixC","ar","hypo")]
-res3stage.PmismatchFU[,.(max(mismatchP),max(mismatchCI))]
-## 1: 0.005 0.005
-res3stage[decision=="futility" & p.value_MUE<0.025,.(diff.p = p.value_MUE-0.025, diff.stat = statistic-ck)]
-## 1: -3.317e-06 -0.0001982
-
-res3stage.PmismatchFU.round <- res3stage[type != "interim",.(N = .N,
-                                                       mismatchP = 100*mean(decision=="futility" & round(p.value_MUE,4)<0.025),
-                                                       mismatchCI = 100*mean(decision=="futility" & round(lower_MUE,4)>0, na.rm=TRUE)),
-                                   by = c("method.char","scenario","missing","binding","fixC","ar","hypo")]
-res3stage.PmismatchFU.round[,.(max(mismatchP),max(mismatchCI))]
-## 1:     0     0
-
+res3stage.mismatch3 <- res3stage[method == 3][paste(file,seed,sep="_:_") %in% res3stage.mismatch[type != "final", paste(file,seed,sep="_:_")]]
+NROW(res3stage.mismatch3)/18 ## number of line per run
+## [1] 3
+res3stage.mismatch3[stage==2 & type == "interim",unique(reason)]
+## [1] "Imax reached"
 
 ## ** bias
 true_eff <- 1
@@ -411,27 +384,17 @@ rbind(bias_MLE = quantile(abs(res2stageS.biasS$bias_MLE)),
       ratio = quantile(res2stageS.biasS$bias_ratio),
       mbias_MLE = 100*quantile(abs(res2stageS.biasS$mbias_MLE)),
       mbias_MUE = 100*quantile(abs(res2stageS.biasS$mbias_MUE)))
-##                 0%     25%     50%     75%    100%
-## bias_MLE  0.017139 0.01894 0.03560 0.03644 0.03993
-## bias_MUE  0.002697 0.00431 0.01436 0.01540 0.01623
-## ratio     2.166171 2.46698 2.58882 4.04062 7.06944
-## mbias_MLE 1.340000 2.16875 3.25750 3.89125 4.20000
-## mbias_MUE 0.350105 0.36453 0.68510 0.88652 1.02276
+##                 0%      25%     50%     75%    100%
+## bias_MLE  0.017139 0.018943 0.03560 0.03644 0.03993
+## bias_MUE  0.002606 0.004265 0.01428 0.01533 0.01623
+## ratio     2.166379 2.475683 2.60432 4.08294 7.31607
+## mbias_MLE 1.340000 2.168750 3.25750 3.89125 4.20000
+## mbias_MUE 0.335000 0.343750 0.67500 0.90125 1.03500
 
-res2stageS.biasS2 <- res2stageS.bias[method == 3 | binding == FALSE & fixC == TRUE,
-                                     .(N, missing, ar, hypo, bias_MLE,bias_MUE,bias_ratio=abs(bias_MLE)/abs(bias_MUE),mbias_MLE,mbias_MUE,mbias_ratio=abs(mbias_MLE)/abs(mbias_MUE)),
-                                     by = c("method","scenario")]
-rbind(bias_MLE = quantile(abs(res2stageS.biasS2$bias_MLE)),
-      bias_MUE = quantile(abs(res2stageS.biasS2$bias_MUE)),
-      ratio = quantile(res2stageS.biasS2$bias_ratio),
-      mbias_MLE = 100*quantile(abs(res2stageS.biasS2$mbias_MLE)),
-      mbias_MUE = 100*quantile(abs(res2stageS.biasS2$mbias_MUE)))
-##                  0%      25%      50%     75%    100%
-## bias_MLE  0.0011216 0.003121 0.019009 0.03732 0.04035
-## bias_MUE  0.0009865 0.002541 0.007115 0.02513 0.04645
-## ratio     0.7123371 0.964598 1.372466 2.74177 9.60792
-## mbias_MLE 0.3600000 0.370000 1.832500 3.98750 4.06500
-## mbias_MUE 0.2236518 0.426120 1.915575 2.76892 3.79883
+res2stage[type != "interim" & is.na(estimate_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","decision","stage")]
+##    binding decision stage     N minp.value_MUE
+##     <lgcl>   <char> <num> <int>          <num>
+## 1:   FALSE futility     1 12315         0.9783
 
 ## *** three stage
 res3stage[, truth := c(0,true_eff)[(hypo=="power")+1]]
@@ -462,26 +425,21 @@ rbind(bias_MLE = quantile(abs(res3stageS.biasS$bias_MLE)),
       mbias_MUE = 100*quantile(abs(res3stageS.biasS$mbias_MUE)))
 ##                0%     25%     50%     75%    100%
 ## bias_MLE  0.02932 0.04256 0.05279 0.06484 0.06981
-## bias_MUE  0.01562 0.02073 0.02741 0.03423 0.03653
-## ratio     1.86135 1.87700 1.90333 1.99067 2.06608
+## bias_MUE  0.01560 0.02064 0.02743 0.03417 0.03643
+## ratio     1.85978 1.87851 1.90747 1.98972 2.07678
 ## mbias_MLE 2.74000 3.54250 4.88000 5.05875 5.42500
-## mbias_MUE 0.08251 0.33012 0.36009 0.43757 0.44761
+## mbias_MUE 0.08500 0.33875 0.36750 0.43125 0.45000
 
-res3stageS.biasS2 <- res3stageS.bias[method == 3 | binding == FALSE & fixC == TRUE,
-                                     .(N, missing, ar, hypo, bias_MLE,bias_MUE,bias_ratio=abs(bias_MLE)/abs(bias_MUE),mbias_MLE,mbias_MUE,mbias_ratio=abs(mbias_MLE)/abs(mbias_MUE)),
-                                     by = c("method","scenario")]
+res3stage[type != "interim" & is.na(estimate_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","decision","stage")]
+##    binding decision stage     N minp.value_MUE
+##     <lgcl>   <char> <num> <int>          <num>
+## 1:   FALSE futility     2  6523         0.9831
+## 2:   FALSE futility     1  5065         0.9874
 
-rbind(bias_MLE = quantile(abs(res3stageS.biasS2$bias_MLE)),
-      bias_MUE = quantile(abs(res3stageS.biasS2$bias_MUE)),
-      ratio = quantile(res3stageS.biasS2$bias_ratio),
-      mbias_MLE = 100*quantile(abs(res3stageS.biasS2$mbias_MLE)),
-      mbias_MUE = 100*quantile(abs(res3stageS.biasS2$mbias_MUE)))
-##                  0%      25%     50%     75%     100%
-## bias_MLE  0.0016265 0.003760 0.03229 0.05522  0.07032
-## bias_MUE  0.0008566 0.003037 0.01068 0.04430  0.07133
-## ratio     0.7112455 1.024108 1.42695 2.64220 25.27749
-## mbias_MLE 0.0350000 0.082500 3.01750 5.18500  5.30500
-## mbias_MUE 0.0131185 0.122673 0.23106 2.29703  3.11640
+res3stage[type != "interim", table(is.na(estimate_MUE), is.na(lower_MUE))]
+##         FALSE    TRUE
+## FALSE 1068412       0
+## TRUE        0   11588
 
 ## * Appendix
 

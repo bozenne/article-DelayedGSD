@@ -13,13 +13,13 @@ if(length(args)>0){
     }
 }
 if(is.na(iter_sim)){ ## arguments for interactive R session (when not running on the server via slurm, iter_sim will be NA)
-    iter_sim <- 162
+    iter_sim <- 132
     n.iter_sim <- 200
 
     if("missing" %in% ls() == FALSE){ missing <- TRUE }
-    if("binding" %in% ls() == FALSE){ binding <- FALSE }
-    if("cNotBelowFixedc" %in% ls() == FALSE){ cNotBelowFixedc <- FALSE }
-    if("ar.factor" %in% ls() == FALSE){ ar.factor <- 2 }
+    if("binding" %in% ls() == FALSE){ binding <- TRUE }
+    if("cNotBelowFixedc" %in% ls() == FALSE){ cNotBelowFixedc <- TRUE }
+    if("ar.factor" %in% ls() == FALSE){ ar.factor <- 1 }
     if("delta.factor" %in% ls() == FALSE){ delta.factor <- 0 }
     if("n.method" %in% ls() == FALSE){ n.method <- 3 }
 }
@@ -114,7 +114,7 @@ allseeds <- sample.int(n = 1000000000, size = nsimAll, replace=FALSE) #x=1:(.Mac
 
 ## * Load dependencies
 library(DelayedGSD) ## remotes::install_github("PauloWhite/DelayedGSD")
-DelayedGSD.options(FCT.p_value = "FinalPvalue2", continuity.correction = TRUE)
+DelayedGSD.options(FCT.p_value = "FinalPvalue2", continuity.correction = TRUE, tolerance = 2.5e-3) ## tolerance for CI/MUE = alpha/10
 source("FCT.R") ## exportGSD function
 
 ## * Planned boundaries

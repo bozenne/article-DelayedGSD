@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: jun  5 2024 (13:55) 
 ## Version: 
-## Last-Updated: jan 21 2025 (10:20) 
+## Last-Updated: feb  7 2025 (10:22) 
 ##           By: Brice Ozenne
-##     Update #: 142
+##     Update #: 148
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -162,7 +162,9 @@ res2stage[type != "interim" & is.na(lower_MUE), .(.N, minp.value_MUE = min(p.val
 ##     <lgcl>   <char> <num> <int>          <num>
 ## 1:   FALSE futility     1 12315         0.9783
 res2stage[type != "interim" & is.na(upper_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","decision","stage")]
-## Empty data.table (0 rows and 5 cols): binding,decision,stage,N,minp.value_MUE
+##    binding decision stage     N minp.value_MUE
+##     <lgcl>   <char> <num> <int>          <num>
+## 1:   FALSE futility     1 12170         0.9915
 
 res3stage.coverage <- res3stage[decision %in% c("futility","efficacy"),
                                 .(N = .N,
@@ -188,13 +190,13 @@ res3stage[type != "interim" & is.na(lower_MUE), .(.N, minp.value_MUE = min(p.val
 res3stage[type != "interim" & is.na(upper_MUE), .(.N, minp.value_MUE = min(p.value_MUE)), by = c("binding","decision","stage")]
 ##    binding decision stage     N minp.value_MUE
 ##     <lgcl>   <char> <num> <int>          <num>
-## 1:   FALSE futility     2  6439         0.9913
-## 2:   FALSE futility     1  5051         0.9954
+## 1:   FALSE futility     2  6383         0.9926
+## 2:   FALSE futility     1  5051         0.9936
 res3stage[type != "interim", table(lower = is.na(lower_MUE),upper = is.na(upper_MUE))]
 ##        upper
 ## lower     FALSE    TRUE
 ##   FALSE 1068412       0
-##   TRUE       98   11490
+##   TRUE      154   11434
 
 ## ** reversal
 
@@ -559,5 +561,67 @@ res2stage[method == 1 & fixC == FALSE & missing == TRUE & ar == 1 & type != "int
 ##    0%    1%   25%   50%   75%  100% 
 ## 1.468 1.960 2.015 2.028 2.043 2.250
 
+## ** NA in CI with method 3
+library(DelayedGSD)
+
+MyMissProb <- matrix(c(0.04807692, 0.05769231, 0.00961538, 0.88461538),  nrow = 2, ncol = 2,
+                     dimnames = list(c("V1 missing", "V1 not missing"),c("V2 missing", "V2 not missing")))
+
+df.method <- data.frame(method = 1:3, binding = FALSE, fixC = c(TRUE,TRUE,TRUE))
+ 
+args.GenData <- list(rand.block = c(1, 1, 0, 0),
+                     allsd = c(2.5, 2.1, 2.4),
+                     mean0 = c(10, 0, 0),
+                     delta = c(0, 0.5, 1)*1,
+                     ar = 15*1,
+                     cor.01.1 = -0.15,
+                     cor.ij.1 = 0.68,
+                     cor.0j.1 = -0.27,
+                     MissProb = MyMissProb,
+                     DigitsOutcome = 2,
+                     TimeFactor = 42,
+                     DigitsTime = 0)
+
+debug2 <- operatingDelayedGSD(n.sim = 1, n.obs = 268,
+                              method = df.method[3,,drop=FALSE],
+                              args.GenData = args.GenData,
+                              kMax = 2, InfoR.i = c(0.56,1), InfoR.d = c(0.65, 1), delta = 1,
+                              PropForInterim = 0.5, lag = 21,
+                              seed = 75625975)
+summary(tail(debug2$delayedGSD,1)[[1]])
+## Boundaries and observed statistics 
+## stage |         Interim             | Decision           |     Spent          
+##       | F-bound E-bound    Stat     |  C-bound    Stat   |     alpha      beta
+##     1 | 0.98937  2.1547 0.53382 S-F |  1.95996 0.60617 F | 0.0115849 0.0463396
+##     2 |                             |                    |                    
+
+## Observed and predicted information: 
+## stage | Interim     (%) | Decision     (%) |   n
+##     1 | 7.62388 0.68073 |  9.83843 0.87847 | 173
+##     2 |                 |                  |    
+
+## Current MUE-estimate of the treatment effect (Z1) 
+## estimate lower upper p.value
+##       NA    NA    NA 0.99999
+
+
+ls.prob <- lapply(seq(-1,1,by=0.1), function(iDelta){
+    resDelta <- FinalPvalue2(Info.d = 9.838426,  
+                             Info.i = 7.623884,  
+                             ck = 1.959964,
+                             ck.unrestricted = 1.844509,   
+                             lk = 0.9893669,  
+                             uk = 2.1547,
+                             reason.interim = c("futility"),
+                             kMax = 2, 
+                             delta = iDelta,  
+                             statistic = 0.6061674,
+                             method = 3,  
+                             bindingFutility = FALSE,
+                             cNotBelowFixedc = TRUE,
+                             continuity.correction = 1)
+    cbind(delta = iDelta, total = resDelta, attr(resDelta,"terms"))
+})
+do.call(rbind,ls.prob)
 ##----------------------------------------------------------------------
 ### TEXT-simulation.R ends here

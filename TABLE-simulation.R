@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: okt 19 2023 (10:24) 
 ## Version: 
-## Last-Updated: jan 21 2025 (10:37) 
+## Last-Updated: feb  7 2025 (10:14) 
 ##           By: Brice Ozenne
-##     Update #: 187
+##     Update #: 188
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -230,7 +230,7 @@ res2stage.ar1nonbinding[, .(n.patients = paste0(median(nX1),"[",min(nX1),";",max
                             n.outcome = paste0(median(nX3),"[",min(nX3),";",max(nX3),"]"),
                             n.missing = paste0(median(nX1-nX3),"[",min(nX1-nX3),";",max(nX1-nX3),"]"),
                          pc.info = mean(infoPC)), by = "type"]
-##       type   n.patients    n.outcome n.missing pc.info
+##        type   n.patients    n.outcome n.missing pc.info
 ##      <fctr>       <char>       <char>    <char>   <num>
 ## 1:  interim 164[153;178] 120[111;130] 44[28;60]  0.5428
 ## 2: decision 171[159;187] 153[139;171]  18[8;26]  0.6779
@@ -242,6 +242,7 @@ res2stage.ar1nonbinding[,.N,by=c("method.char","type","hypo")][type=="interim",u
 
 ## table
 table2stage.ar1nonbinding <- createTableResSim(res2stage.ar1nonbinding, xtable = FALSE)
+table2stage.ar1nonbinding
 ##            statistic       method 1   method 1 fixC       method 2   method 2 fixC        method 3
 ##               <fctr>         <char>          <char>         <char>          <char>          <char>
 ##  1:     type 1 error          2.62%           2.55%          2.62%           2.56%           2.62%
@@ -372,14 +373,14 @@ table3stage.ar1binding
 ##               <fctr>         <char>          <char>         <char>          <char>          <char>
 ##  1:     type 1 error          2.56%           2.36%          2.57%           2.35%           2.39%
 ##  2:            power         90.40%          89.88%         90.33%          90.10%          89.63%
-##  3:       CI [NA,NA]              0               0              0               0               0
-##  4:         coverage         94.69%          95.80%         94.70%          95.86%          94.97%
+##  3:       CI [NA,NA]          0.01%           0.01%         <0.01%           0.01%          <0.01%
+##  4:         coverage         94.71%          95.82%         94.72%          95.88%          94.98%
 ##  5:         reversal    0.32%/0.11%     0.16%/0.46%    0.32%/0.12%     0.14%/0.46%         0/0.98%
 ##  6:         abnormal        0.52%/0             0/0        0.50%/0             0/0         0/0.08%
 ##  7:   mean bias LMME -0.070 / 0.052  -0.070 / 0.052 -0.070 / 0.052  -0.070 / 0.053  -0.070 / 0.053
 ##  8:    mean bias MUE -0.036 / 0.026 -0.135 / -0.025 -0.036 / 0.026 -0.137 / -0.025  -0.068 / 0.002
-##  9: median bias LMME -5.05% / 5.42%  -5.05% / 5.42% -5.04% / 5.42%  -5.16% / 5.46%  -5.18% / 5.30%
-## 10:  median bias MUE 0.36% / -0.43% -5.05% / -4.71% 0.39% / -0.45% -5.24% / -4.90% -1.90% / -2.67%
+##  9: median bias LMME -5.05% / 5.42%  -5.05% / 5.42% -5.03% / 5.42%  -5.15% / 5.46%  -5.18% / 5.30%
+## 10:  median bias MUE 0.38% / -0.42% -5.06% / -4.72% 0.39% / -0.44% -5.24% / -4.90% -1.89% / -2.66%
 createTableResSim(res3stage.ar1binding, xtable = TRUE)
 
 ## *** ar 1 non-binding
@@ -392,11 +393,11 @@ res3stage.ar1nonbinding[, .(n.patients = paste0(median(nX1),"[",min(nX1),";",max
                             pc.info = mean(infoPC)), by = c("stage","type")]
 ##    stage     type   n.patients    n.outcome n.missing pc.info
 ##    <num>   <fctr>       <char>       <char>    <char>   <num>
-## 1:     1  interim 126[116;140]    86[76;95] 40[26;58]  0.3868
-## 2:     1 decision 133[123;149] 119[107;134]  14[5;24]  0.5254
-## 3:     2  interim 195[185;210] 148[138;158] 47[32;67]  0.6424
-## 4:     2 decision 202[191;216] 181[167;198] 21[12;29]  0.7699
-## 5:     3    final 274[274;274] 245[245;245] 29[29;29]  1.0257
+## 1:     1  interim 126[117;140]    86[76;95] 40[26;57]  0.3869
+## 2:     1 decision 133[123;147] 119[107;134]  14[5;24]  0.5264
+## 3:     2  interim 195[185;209] 148[138;158] 47[33;64]  0.6423
+## 4:     2 decision 202[191;215] 181[168;198] 21[13;28]  0.7700
+## 5:     3    final 274[274;274] 245[245;245] 29[29;29]  1.0251
 
 ## number of simulations
 res3stage.ar1nonbinding[type!="interim",.N,by=c("method.char","hypo")][,unique(N)]

@@ -3,9 +3,9 @@
 ## Author: Brice Ozenne
 ## Created: jun  5 2024 (13:55) 
 ## Version: 
-## Last-Updated: feb  7 2025 (10:22) 
+## Last-Updated: feb  7 2025 (10:26) 
 ##           By: Brice Ozenne
-##     Update #: 148
+##     Update #: 149
 ##----------------------------------------------------------------------
 ## 
 ### Commentary: 
@@ -606,22 +606,44 @@ summary(tail(debug2$delayedGSD,1)[[1]])
 
 
 ls.prob <- lapply(seq(-1,1,by=0.1), function(iDelta){
-    resDelta <- FinalPvalue2(Info.d = 9.838426,  
-                             Info.i = 7.623884,  
-                             ck = 1.959964,
-                             ck.unrestricted = 1.844509,   
-                             lk = 0.9893669,  
-                             uk = 2.1547,
-                             reason.interim = c("futility"),
-                             kMax = 2, 
-                             delta = iDelta,  
-                             statistic = 0.6061674,
-                             method = 3,  
-                             bindingFutility = FALSE,
-                             cNotBelowFixedc = TRUE,
-                             continuity.correction = 1)
+    resDelta <- DelayedGSD:::FinalPvalue2(Info.d = 9.838426,  
+                                          Info.i = 7.623884,  
+                                          ck = 1.959964,
+                                          ck.unrestricted = 1.844509,   
+                                          lk = 0.9893669,  
+                                          uk = 2.1547,
+                                          reason.interim = c("futility"),
+                                          kMax = 2, 
+                                          delta = iDelta,  
+                                          statistic = 0.6061674,
+                                          method = 3,  
+                                          bindingFutility = FALSE,
+                                          cNotBelowFixedc = TRUE,
+                                          continuity.correction = 1)
     cbind(delta = iDelta, total = resDelta, attr(resDelta,"terms"))
 })
 do.call(rbind,ls.prob)
+##       delta     total     efficacy reversal  continue
+##  [1,]  -1.0 1.0000000 4.242604e-07        0 0.9999996
+##  [2,]  -0.9 1.0000000 1.694719e-06        0 0.9999983
+##  [3,]  -0.8 0.9999999 6.270476e-06        0 0.9999936
+##  [4,]  -0.7 0.9999997 2.151125e-05        0 0.9999782
+##  [5,]  -0.6 0.9999994 6.848444e-05        0 0.9999309
+##  [6,]  -0.5 0.9999988 2.025152e-04        0 0.9997963
+##  [7,]  -0.4 0.9999980 5.567065e-04        0 0.9994413
+##  [8,]  -0.3 0.9999968 1.423829e-03        0 0.9985730
+##  [9,]  -0.2 0.9999955 3.390933e-03        0 0.9966045
+## [10,]  -0.1 0.9999941 7.526623e-03        0 0.9924675
+## [11,]   0.0 0.9999931 1.558578e-02        0 0.9844073
+## [12,]   0.1 0.9999927 3.014317e-02        0 0.9698495
+## [13,]   0.2 0.9999929 5.451848e-02        0 0.9454744
+## [14,]   0.3 0.9999937 9.235423e-02        0 0.9076395
+## [15,]   0.4 0.9999950 1.467978e-01        0 0.8531972
+## [16,]   0.5 0.9999964 2.194231e-01        0 0.7805733
+## [17,]   0.6 0.9999976 3.092336e-01        0 0.6907640
+## [18,]   0.7 0.9999986 4.121932e-01        0 0.5878054
+## [19,]   0.8 0.9999992 5.216155e-01        0 0.4783837
+## [20,]   0.9 0.9999996 6.294222e-01        0 0.3705774
+## [21,]   1.0 0.9999998 7.278879e-01        0 0.2721119
 ##----------------------------------------------------------------------
 ### TEXT-simulation.R ends here
